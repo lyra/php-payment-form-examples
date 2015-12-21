@@ -1,0 +1,403 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Payzen VADS\n"
+"POT-Creation-Date: 2015-12-21 18:09+0100\n"
+"PO-Revision-Date: 2015-12-21 18:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: Lyra Network\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _;__;_e\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: lib/payzenFormIpn.php:20
+msgid "### ERROR - An exception raised during IPN PayZen process:"
+msgstr "###ERREUR - une erreur est survenue pendant le process IPN"
+
+#: lib/payzenFormIpn.php:31
+msgid "INVALID SIGNATURE"
+msgstr "Signature Invalide"
+
+#: lib/payzenFormToolbox.php:53
+msgid "please fill your site ID in"
+msgstr "Merci d'ajouter votre identifiant boutique dans"
+
+#: lib/payzenFormToolbox.php:54 lib/payzenFormToolbox.php:59
+#: lib/payzenFormToolbox.php:64
+msgid "find some help on payzen.io"
+msgstr "Trouvez de l'aide sur payzen.io"
+
+#: lib/payzenFormToolbox.php:58
+msgid "please fill your certificate (TEST-version) in"
+msgstr "Merci de remplir votre certificat (version TEST) dans"
+
+#: lib/payzenFormToolbox.php:63
+msgid "please fill your certificate (PRODUCTION) in"
+msgstr "Merci d'ajouter votre certificat (de PRODUCTION) dans "
+
+#: lib/returnPayment.php:12
+msgid "Status"
+msgstr "Statut"
+
+#: lib/returnPayment.php:15
+msgid ""
+"The payment was abandonned by the customer. The transaction was not created "
+"on the gateway and therefore is not visible on the merchant back office."
+msgstr ""
+"Le paiement a été abandonné par le client. La transaction n’a pas été crée "
+"sur la plateforme de paiement et n’est donc pas visible dans le back office "
+"marchand."
+
+#: lib/returnPayment.php:18
+msgid "The payment is accepted and is waiting to be cashed."
+msgstr "Le paiement a été accepté et est en attente de remise en banque."
+
+#: lib/returnPayment.php:21
+msgid "The payment was refused."
+msgstr "Le paiement a été refusé."
+
+#: lib/returnPayment.php:24
+msgid ""
+"The transaction is accepted but it is waiting to be manually validated. It "
+"is on the merchant responsability to validate the transaction in order that "
+"it can be cashed from the back office or by web service request. The "
+"transaction can be validated as long as the capture delay is not expired. If "
+"the delay expires the payment status change to Expired. This status is "
+"definitive."
+msgstr ""
+"La transaction a été acceptée mais elle est en attente de validation "
+"manuelle. C'est à la charge du marchand de valider la transaction pour "
+"demander la remise en banque depuis le back office marchand ou par requête "
+"web service. La transaction pourra être validée tant que le délai de capture "
+"n’a pas été dépassé. Si ce délai est dépassé alors le paiement bascule dans "
+"le statut Expiré. Ce statut expiré est définitif."
+
+#: lib/returnPayment.php:27
+msgid ""
+"The transaction is waiting for an authorisation. During the payment, just an "
+"imprint was made because the capture delay is higher than 7 days. By default "
+"the auhorisation demand for the global amount will be made 2 days before the "
+"bank deposit date."
+msgstr ""
+"La transaction est en attente d’autorisation. Lors du paiement uniquement un "
+"prise d’empreinte a été réalisée car le délai de remise en banque est "
+"strictement supérieur à 7 jours. Par défaut la demande d’autorisation pour "
+"le montant global sera réalisée à j-2 avant la date de remise en banque.\";\n"
+"$La_transaction_est_expiree = \"La transaction est expirée. Ce statut est "
+"définitif, la transaction ne pourra plus être remisée en banque. Une "
+"transaction expire dans le cas d'une transaction créée en validation "
+"manuelle ou lorsque le délai de remise en banque (capture delay) dépassé."
+
+#: lib/returnPayment.php:30
+msgid ""
+"The transaction expired. This status is definitive, the transaction will not "
+"be able to be cashed. A transaction expires when it was created in manual "
+"validation or when the capture delay is passed."
+msgstr ""
+"La transaction est expirée. Ce statut est définitif, la transaction ne "
+"pourra plus être remisée en banque. Une transaction expire dans le cas d'une "
+"transaction créée en validation manuelle ou lorsque le délai de remise en "
+"banque (capture delay) dépassé."
+
+#: lib/returnPayment.php:33
+msgid ""
+"The payment was cancelled through the merchant back offfice or by a web "
+"service request. This status is definitive, the transaction will never be "
+"cashed."
+msgstr ""
+"La transaction a été annulée au travers du back office marchand ou par une "
+"requête web service. Ce statut est définitif, la transaction ne sera jamais "
+"remise en banque."
+
+#: lib/returnPayment.php:36
+msgid ""
+"The transaction is waiting for an authorisation and a manual validation. "
+"During the payment, just an imprint was made because the capture delay is "
+"higher than 7 days and the validation type is « manual validation ». This "
+"payment will be able to be cashed only after that the merchant validates it "
+"from the back office or by web service request."
+msgstr ""
+"La transaction est en attente d’autorisation et en attente de validation "
+"manuelle. Lors du paiement uniquement un prise d’empreinte a été réalisée "
+"car le délai de remise en banque est strictement supérieur à 7 jours et le "
+"type de validation demandé est « validation manuelle ». Ce paiement ne "
+"pourra être remis en banque uniquement après une validation du marchand "
+"depuis le back office marchand ou par un requête web services."
+
+#: lib/returnPayment.php:39
+msgid "The payment was cashed. This status is definitive."
+msgstr "La transaction a été remise en banque. Ce statut est définitif."
+
+#: lib/returnPayment.php:43
+msgid "Result"
+msgstr "Résultat"
+
+#: lib/returnPayment.php:46
+msgid "Payment successfully completed."
+msgstr "Paiement réalisé avec succès."
+
+#: lib/returnPayment.php:49
+msgid "The merchant must contact the holder’s bank."
+msgstr "Le commerçant doit contacter la banque du porteur."
+
+#: lib/returnPayment.php:52
+msgid "Payment denied."
+msgstr "Paiement refusé."
+
+#: lib/returnPayment.php:55
+msgid "Cancellation by customer."
+msgstr "Paiement annulé par le client."
+
+#: lib/returnPayment.php:58
+msgid ""
+"Request format error. To be linked with the value of the vads_extra_result "
+"field."
+msgstr ""
+"Erreur de format de la requête. A mettre en rapport avec la valorisation du "
+"champ vads_extra_result."
+
+#: lib/returnPayment.php:61
+msgid "Technical error occurred during payment."
+msgstr "Erreur technique lors du paiement."
+
+#: lib/returnPayment.php:65
+msgid "ID"
+msgstr "Identifiant"
+
+#: lib/returnPayment.php:67
+msgid "amount"
+msgstr "Montant"
+
+#: lib/returnPayment.php:69
+msgid "Effective amount"
+msgstr "Montant Effectif"
+
+#: lib/returnPayment.php:71
+msgid "Payment Type"
+msgstr "Type de paiement"
+
+#: lib/returnPayment.php:74
+msgid "Unique Payment."
+msgstr "Paiement simple."
+
+#: lib/returnPayment.php:78
+msgid "Sequence Number"
+msgstr "Numéro de séquence"
+
+#: lib/returnPayment.php:80
+msgid "Authorisation Result"
+msgstr "Résultat d'autorisation"
+
+#: lib/returnPayment.php:83
+msgid "Transaction approved or successfully treated."
+msgstr "Transaction approuvée ou traitée avec succès."
+
+#: lib/returnPayment.php:86
+msgid "Contact the card issuer."
+msgstr "Contacter l’émetteur de carte."
+
+#: lib/returnPayment.php:89
+msgid "Invalid acceptor."
+msgstr "Accepteur_invalide."
+
+#: lib/returnPayment.php:92
+msgid "Keep the card."
+msgstr "Conserver la carte."
+
+#: lib/returnPayment.php:95
+msgid "Do not honor."
+msgstr "Ne pas honorer."
+
+#: lib/returnPayment.php:98
+msgid "Keep the card, special conditions."
+msgstr "Conserver la carte, conditions spéciales."
+
+#: lib/returnPayment.php:101
+msgid "Approved after identification."
+msgstr "Approuver après identification."
+
+#: lib/returnPayment.php:104
+msgid "Invalid Transaction."
+msgstr "Transaction invalide."
+
+#: lib/returnPayment.php:107
+msgid "Invalid Amount."
+msgstr "Montant invalide."
+
+#: lib/returnPayment.php:110
+msgid "Invalid holder number."
+msgstr "Numéro de porteur invalide."
+
+#: lib/returnPayment.php:113
+msgid "Format error."
+msgstr "Erreur de format."
+
+#: lib/returnPayment.php:116
+msgid "Unknown buying organization identifier."
+msgstr "Identifiant de l’organisme acquéreur inconnu."
+
+#: lib/returnPayment.php:119 lib/returnPayment.php:134
+msgid "Expired card validity date."
+msgstr "Date de validité de la carte dépassée."
+
+#: lib/returnPayment.php:122 lib/returnPayment.php:146
+msgid "Fraud suspected."
+msgstr "Suspicion de fraude."
+
+#: lib/returnPayment.php:125
+msgid "Lost card."
+msgstr "Carte perdue."
+
+#: lib/returnPayment.php:128
+msgid "Stolen card."
+msgstr "Carte volée."
+
+#: lib/returnPayment.php:131
+msgid "Insufficient provision or exceeds credit."
+msgstr "Provision insuffisante ou crédit dépassé."
+
+#: lib/returnPayment.php:137
+msgid "Card not in database."
+msgstr "Carte absente du fichier."
+
+#: lib/returnPayment.php:140
+msgid "Transaction not allowed for this holder."
+msgstr "Transaction non permise à ce porteur."
+
+#: lib/returnPayment.php:143
+msgid "Transaction not allowed from this terminal."
+msgstr "Transaction interdite au terminal."
+
+#: lib/returnPayment.php:149
+msgid "The card acceptor must contact buyer."
+msgstr "L’accepteur de carte doit contacter l’acquéreur."
+
+#: lib/returnPayment.php:152
+msgid "Amount over withdrawal limits."
+msgstr "Montant de retrait hors limite."
+
+#: lib/returnPayment.php:155
+msgid "Does not abide to security rules."
+msgstr "Règles de sécurité non respectées."
+
+#: lib/returnPayment.php:158
+msgid "Response not received or received too late."
+msgstr "Réponse non parvenue ou reçue trop tard."
+
+#: lib/returnPayment.php:161
+msgid "System temporarily stopped."
+msgstr "Arrêt momentané du système."
+
+#: lib/returnPayment.php:164
+msgid "Inaccessible card issuer."
+msgstr "Emetteur de cartes inaccessible."
+
+#: lib/returnPayment.php:167
+msgid "Duplicated transaction."
+msgstr "Transaction dupliquée."
+
+#: lib/returnPayment.php:170
+msgid "Faulty system."
+msgstr "Mauvais fonctionnement du système."
+
+#: lib/returnPayment.php:173
+msgid "Global surveillance time out expired."
+msgstr "Echéance de la temporisation de surveillance globale."
+
+#: lib/returnPayment.php:176
+msgid "Unavailable server, repeat network routing requested."
+msgstr "Serveur indisponible routage réseau demandé à nouveau."
+
+#: lib/returnPayment.php:179
+msgid "Instigator domain incident."
+msgstr "Incident domaine initiateur."
+
+#: lib/returnPayment.php:184
+msgid "Payment Warranty"
+msgstr "Garantie de paiement"
+
+#: lib/returnPayment.php:187
+msgid "Payment is guaranteed."
+msgstr "Le paiement est garanti."
+
+#: lib/returnPayment.php:190
+msgid "Payment is not guaranteed."
+msgstr "Le paiement n’est pas garanti."
+
+#: lib/returnPayment.php:193
+msgid "Payment cannot be guaranteed, due to a technical error."
+msgstr "Suite à une erreur technique, le paiement ne peut pas être garanti."
+
+#: lib/returnPayment.php:196
+msgid "Payment guarantee not applicable."
+msgstr "Garantie de paiement non applicable."
+
+#: lib/returnPayment.php:200
+msgid "Statut 3DS"
+msgstr "Statut 3DS"
+
+#: lib/returnPayment.php:203
+msgid "3DS Authentified."
+msgstr "Authentifié 3DS."
+
+#: lib/returnPayment.php:206
+msgid "Authentification Error."
+msgstr "Erreur Authentification."
+
+#: lib/returnPayment.php:209
+msgid "Authentification Impossible."
+msgstr "Authentification impossible."
+
+#: lib/returnPayment.php:212
+msgid "Try to authenticate."
+msgstr "Essai d’authentification."
+
+#: lib/returnPayment.php:215
+msgid "Non valued."
+msgstr "Non renseigné."
+
+#: lib/returnPayment.php:219
+msgid "Capture delay"
+msgstr "Délai avant Remise en Banque"
+
+#: lib/returnPayment.php:219
+msgid "days"
+msgstr "jours"
+
+#: lib/returnPayment.php:221
+msgid "Validation Mode"
+msgstr "Mode de Validation"
+
+#: lib/returnPayment.php:224
+msgid "Manual Validation"
+msgstr "Validation Manuelle"
+
+#: lib/returnPayment.php:227
+msgid "Automatic Validation"
+msgstr "Validation Automatique"
+
+#: lib/returnPayment.php:230
+msgid "Default configuration of the merchant back office"
+msgstr "Configuration par défaut du back office marchand"
+
+#~ msgid ""
+#~ "The transaction expired. This status is definitive, the transaction will "
+#~ "not be able to be cashed. A transaction expires when it was created in "
+#~ "manual validation or when the capture delay is passed.\";\n"
+#~ "$La_transaction_a_ete_annulee = \"The payment was cancelled through the "
+#~ "merchant back offfice or by a web service request. This status is "
+#~ "definitive, the transaction will never be cashed."
+#~ msgstr ""
+#~ "La transaction a été annulée au travers du back office marchand ou par "
+#~ "une requête web service. Ce statut est définitif, la transaction ne sera "
+#~ "jamais remise en banque."

@@ -12,11 +12,11 @@ require "payzenFormToolbox.php";
 
 // Toolbox initialisation, using PayZen account informations
 $toolbox = new payzenFormToolbox(
-     '[***CHANGE-ME***]' // shopId
-   , '[***CHANGE-ME***]' // certificate, TEST-version
-   , '[***CHANGE-ME***]' // certificate, PRODUCTION-version
-   , 'TEST'              // TEST-mode toggle
-   );
+  '[***CHANGE-ME***]', // shopId
+  '[***CHANGE-ME***]', // certificate, TEST-version
+  '[***CHANGE-ME***]', // certificate, PRODUCTION-version
+  'TEST'              // PRODUCTION || TEST
+);
 
 /*
  * Toolbox can accept logging callback method
