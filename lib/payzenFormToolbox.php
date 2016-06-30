@@ -18,6 +18,19 @@ class payzenFormToolbox {
 
 
   /**************** CLASS PROPERTIES **************/
+
+  /**
+   * @var array
+   * url Value according to your country :
+   *  https://secure.payzen.eu/vads-payment/
+   *  https://de.payzen.eu/vads-payment/
+   *  https://secure.payzen.com.br/vads-payment/
+   *  https://secure.payzen.cl/vads-payment/
+   *  https://secure.payzen.co.in/vads-payment/
+   *
+   *  FOR DEMO ONLY:
+   *  https://demo.payzen.eu/vads-payment/
+   */
   public $platForm = [
     'url' => 'https://demo.payzen.eu/vads-payment/'
     // The URL of the PayZen plat-form
@@ -37,15 +50,15 @@ class payzenFormToolbox {
 
 
   /**************** CLASS METHODS - PUBLIC **************/
-  /*
-   * Constructor, stores the PayZen user's account informations
+
+  /**
+   * payzenFormToolbox constructor.
+   * stores the PayZen user's account informations
    *
    * @param $siteId string, the account site id as provided by Payzen
    * @param $certTest string, certificate, test-version, as provided by PayZen
    * @param $certProd string, certificate, production-version, as provided by PayZen
-   * @param $mode string ("TEST" or "PRODUCTION"), the PayZen mode to operate
-   * @param $ipnUrl string, the URL PayZen will notify the payments to
-   * @param $returnUrl string, the URL PayZen will use to send the customer back after payment
+   * @param $ctxMode string ("TEST" or "PRODUCTION"), the PayZen mode to operate
    */
   public function __construct($siteId, $certTest, $certProd, $ctxMode) {
 
@@ -82,10 +95,16 @@ class payzenFormToolbox {
     };
   }
 
+  /**
+   * @param $ipnUrl string, the URL PayZen will notify the payments to
+   */
   public function setIpnUrl($ipnUrl) {
     $this->shopPlatForm['ipnUrl'] = $ipnUrl;
   }
 
+  /**
+   * @param $returnUrl string, the URL PayZen will use to send the customer back after payment
+   */
   public function setReturnUrl($returnUrl) {
     $this->shopPlatForm['returnUrl'] = $returnUrl;
   }
@@ -361,7 +380,7 @@ class payzenFormToolbox {
 
   /**
    * Utility method, formats and prints log informations
-   * This is the default logging method, is no custom one
+   * This is the default logging method, if no custom one
    * has been previously provided.
    *
    * @param $level string, severity level of the log informations
