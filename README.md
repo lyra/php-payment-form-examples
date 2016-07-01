@@ -15,12 +15,11 @@ This code(/lib) is divided in 3 files:
 ## The first use
 1. Place the files on the same directory, under the root of your web-server
 2. In `payzenBootstrap.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
-3. Access `index.php` from your browser, optionnaly change the values of the form being displayed, and validate-it
+3. Access `index.html` from your browser.
 4. Follow the PayZen indications to perform the payment
 
 
 ## The next steps
-You can follow the on-file documentation in `example/form.php` to change the properties of the payment you want to initiate, like the amount or the informations of the customer payment card.
 
 You will also find here the instructions on how to plug the toolbox logging process to your own logging mechanism, how to override the IPN and RETURN URL defined for your PayZen account, and finally, you can change the `TEST` parameter to `PRODUCTION` to switch to _real_ payment mode, with *all* the caution this decision expects.
 

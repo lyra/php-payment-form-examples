@@ -9,10 +9,11 @@
  *
  */
 
-
 $toolbox = require "payzenBootstrap.php";
 include_once 'returnPayment.php';
 $key = '5964746647175265';
+
+
 try {
 // PayZen Response Authentification
  $toolbox->checkIpnRequest($_POST);
