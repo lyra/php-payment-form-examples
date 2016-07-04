@@ -11,8 +11,8 @@ $toolbox = require "../lib/payzenBootstrap.php";
  * You can check defaults and formats : vads-payment-php\lib\payzenFormToolbox.php  in function "getFormFields"
  */
 $args = array(
-    "vads_amount" => "100",//45EUROS
-    "vads_validation_mode" => "1" //manual validation
+    "vads_amount" => "100",//1,00 euro
+    "vads_validation_mode" => "1" //manual validation only
 );
 
 /**
