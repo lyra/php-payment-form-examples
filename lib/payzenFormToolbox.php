@@ -171,6 +171,24 @@ class payzenFormToolbox {
    *
    * @param $siteId string, the user site id
    * @param  $args array override the default values
+   *     $default_fields = array(
+            * "vads_site_id" => $siteId,
+            * "vads_ctx_mode" => $this->account['ctxMode'],
+            * "vads_trans_id" => substr(time(), -6), // no necessarly a safe option as 2 payments can occur at the same second and therefore provide the same ID, you should prefix it for example with the customer ID.
+            * "vads_trans_date" => gmdate('YmdHis'),
+            * "vads_action_mode" => "INTERACTIVE",
+            * "vads_page_action" => "PAYMENT",
+            * "vads_version" => "V2",
+            * "vads_capture_delay" => "0",
+            * "vads_validation_mode" => "0",
+            * "vads_return_mode"    => 'POST',
+            * "vads_payment_config" => "SINGLE",
+            * "vads_amount" => 1000,
+            * "vads_currency" => 978,
+            * );
+   * you can pass a string or array as a value, if you add an array with more information
+   * you will need to pass the value like this :
+   * "vads_site_id" => array('value' => 'YOUR_VALUE');
    *
    * @return array, the data to use in the fields of HTML payment form
    */

@@ -11,7 +11,7 @@ $toolbox = require "../lib/payzenBootstrap.php";
  * You can check defaults and formats : vads-payment-php\lib\payzenFormToolbox.php  in function "getFormFields"
  */
 $args = array(
-    "vads_amount" => "3000",//45EUROS
+    "vads_amount" => "3000",//30 EUROS
     "vads_capture_delay" => "3" // will be captured in 3 days
 );
 
