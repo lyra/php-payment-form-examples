@@ -11,7 +11,8 @@ $toolbox = require "../lib/payzenBootstrap.php";
  * You can check defaults and formats : vads-payment-php\lib\payzenFormToolbox.php  in function "getFormFields"
  */
 $args = array(
-    "vads_amount" => "4500", //45 EUROS
+    "vads_amount" => "4500", //The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
+    "vads_currency" => "978", // An ISO 4217 numerical code of the payment currency.
     "vads_payment_cards" => "CB"
 );
 

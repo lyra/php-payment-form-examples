@@ -18,11 +18,6 @@ class payzenFormToolbox {
 
 
   /**************** CLASS PROPERTIES **************/
-  public $platForm = array(
-      'url' => 'https://demo.payzen.eu/vads-payment/'
-    // The URL of the PayZen plat-form
-  );
-
 
   // Container for PayZen user's account informations
   public $account;
@@ -48,7 +43,7 @@ class payzenFormToolbox {
    * @param $ipnUrl string, the URL PayZen will notify the payments to
    * @param $returnUrl string, the URL PayZen will use to send the customer back after payment
    */
-  public function __construct($siteId, $certTest, $certProd, $ctxMode) {
+  public function __construct($siteId, $certTest, $certProd, $ctxMode, $platform) {
 
     if (empty($siteId) || $siteId == '[***CHANGE-ME***]') {
       echo _('please fill your site ID in').' lib/payzenBootstrap.php <br />';
@@ -72,7 +67,8 @@ class payzenFormToolbox {
             'TEST' => $certTest,
             'PRODUCTION' => $certProd
         ),
-        'ctxMode' => $ctxMode
+        'ctxMode' => $ctxMode,
+        'platform' => $platform
     );
 
     $this->logLevel = self::NO_LOG; // No logging by default
@@ -83,6 +79,10 @@ class payzenFormToolbox {
     };
   }
 
+  /**
+   * setIpnUrl
+   * @param $ipnUrl
+   */
   public function setIpnUrl($ipnUrl) {
     $this->shopPlatForm['ipnUrl'] = $ipnUrl;
   }
@@ -122,10 +122,6 @@ class payzenFormToolbox {
    * information needed to build an HTML form for an createPayment
    * request
    *
-   * @param $transId string, an external transaction id
-   * @param $amount string, the amount of the payment
-   * @param $currency string, the code of the currency to use
-   *
    * @return array, the form data, as follow:
    *
    *  [form] => Array
@@ -139,10 +135,10 @@ class payzenFormToolbox {
    *      (
    *          [vads_site_id] => 12345678
    *          [vads_ctx_mode] => TEST || PRODUCTION
-   *          [vads_trans_id] => 612435
+   *          [vads_trans_id] => 612435 //$transId string, an external transaction id
    *          [vads_trans_date] => 20151116183355
-   *          [vads_amount] => 4300
-   *          [vads_currency] => 978
+   *          [vads_amount] => 4300 //string, the amount of the payment
+   *          [vads_currency] => 978 //string, the code of the currency to use
    *          [vads_action_mode] => INTERACTIVE
    *          [vads_page_action] => PAYMENT
    *          [vads_version] => V2
@@ -156,7 +152,7 @@ class payzenFormToolbox {
   public function getFormData($args = ''){
     return array(
         "form" => array(
-            "action" => $this->platForm['url'],
+            "action" => $this->account['platform'],
             "method" => "POST",
             "accept-charset" => "UTF-8",
             "enctype" => "multipart/form-data"

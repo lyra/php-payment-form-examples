@@ -10,13 +10,28 @@
 
 require "payzenFormToolbox.php";
 
-// Toolbox initialisation, using PayZen account informations
+/**
+ * Toolbox initialisation, using PayZen account informations
+ *
+ * About the platform URL :
+ * the platform URL needs to be changed according to your needs (COUNTRY)
+ *
+ * France :
+ * https://secure.payzen.eu/vads-payment/ || https://demo.payzen.eu/vads-payment/
+ * Brazil :
+ * https://secure.payzen.com.br/vads-payment/
+ *
+ * Ask support at payzen.io for your platform URL if you don't know it
+ */
+
 $toolbox = new payzenFormToolbox(
   '[***CHANGE-ME***]', // shopId
   '[***CHANGE-ME***]', // certificate, TEST-version
   '[***CHANGE-ME***]', // certificate, PRODUCTION-version
-  'TEST'              // PRODUCTION || TEST
+  'TEST',              // PRODUCTION || TEST
+  '[***CHANGE-ME***]'  // Platform URL
 );
+
 
 /*
  * Toolbox can accept logging callback method
