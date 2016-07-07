@@ -27,7 +27,7 @@ try {
 //To ensure the integrity of the response, you must compare the value of the signature field received in the response with the one computed previously.
 $control = $toolbox->Check_Signature($_REQUEST,$key);
 if($control == 'true'){
- the_payment_response();
+ echo the_payment_response();
 }else{
  echo _('INVALID SIGNATURE');
  echo '<pre>';

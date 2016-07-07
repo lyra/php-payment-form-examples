@@ -33,17 +33,18 @@ class payzenFormToolbox {
 
 
   /**************** CLASS METHODS - PUBLIC **************/
-  /*
+  /**
+   * payzenFormToolbox constructor.
    * Constructor, stores the PayZen user's account informations
    *
    * @param $siteId string, the account site id as provided by Payzen
-   * @param $certTest string, certificate, test-version, as provided by PayZen
-   * @param $certProd string, certificate, production-version, as provided by PayZen
-   * @param $mode string ("TEST" or "PRODUCTION"), the PayZen mode to operate
-   * @param $ipnUrl string, the URL PayZen will notify the payments to
-   * @param $returnUrl string, the URL PayZen will use to send the customer back after payment
+   * @param $certTest string, certificate, test-version
+   * @param $certProd string, certificate, production-version
+   * @param $ctxMode string ("TEST" or "PRODUCTION"), the PayZen mode to operate
+   * @param $platform string URL
+   * @param $ipn_url string
    */
-  public function __construct($siteId, $certTest, $certProd, $ctxMode, $platform) {
+  public function __construct($siteId, $certTest, $certProd, $ctxMode, $platform, $ipn_url = null) {
 
     if (empty($siteId) || $siteId == '[***CHANGE-ME***]') {
       echo _('please fill your site ID in').' lib/payzenBootstrap.php <br />';
@@ -63,12 +64,13 @@ class payzenFormToolbox {
 
     $this->account = array(
         'vadsSiteId' => $siteId,
-        'cert' => array(
-            'TEST' => $certTest,
-            'PRODUCTION' => $certProd
+        'cert'        => array(
+            'TEST'        => $certTest,
+            'PRODUCTION'  => $certProd
         ),
-        'ctxMode' => $ctxMode,
-        'platform' => $platform
+        'ctxMode'     => $ctxMode,
+        'platform'    => $platform,
+        'ipn'         => $ipn_url
     );
 
     $this->logLevel = self::NO_LOG; // No logging by default
@@ -101,7 +103,7 @@ class payzenFormToolbox {
    * parse_args
    * Merge user defined arguments into defaults array.
    * @param  string|array $args     Value to merge with $defaults
-   * @param  array $defaults Optional. Array that serves as the defaults. Default empty.
+   * @param  array|string $defaults Optional. Array that serves as the defaults. Default empty.
    *
    * @return array Merged user defined values with defaults.
    */
@@ -121,7 +123,7 @@ class payzenFormToolbox {
    * Main function, returns an array containing all mandatory
    * information needed to build an HTML form for an createPayment
    * request
-   *
+   * @param $args array
    * @return array, the form data, as follow:
    *
    *  [form] => Array
@@ -149,7 +151,7 @@ class payzenFormToolbox {
    *      )
    *
    */
-  public function getFormData($args = ''){
+  public function getFormData($args){
     return array(
         "form" => array(
             "action" => $this->account['platform'],
@@ -157,20 +159,20 @@ class payzenFormToolbox {
             "accept-charset" => "UTF-8",
             "enctype" => "multipart/form-data"
         ),
-        "fields" => $this->getFormFields($this->account['vadsSiteId'], $args)
+        "fields" => $this->getFormFields($args)
     );
   }
 
   /**
+   * getFormFields
    * Utility function, returns all the mandatory data needed by a PayZen form payment
    * as an array
    *
-   * @param $siteId string, the user site id
-   * @param  $args array override the default values
+   * @param  $args array|string override the default values
    *     $default_fields = array(
-            * "vads_site_id" => $siteId,
+            * "vads_site_id" => $siteId,//8 digit
             * "vads_ctx_mode" => $this->account['ctxMode'],
-            * "vads_trans_id" => substr(time(), -6), // no necessarly a safe option as 2 payments can occur at the same second and therefore provide the same ID, you should prefix it for example with the customer ID.
+            * "vads_trans_id" => substr(time(), -6), //6 digits - not necessarily a safe option as 2 payments can occur at the same second and therefore provide the same ID, you should prefix it for example with the customer ID.
             * "vads_trans_date" => gmdate('YmdHis'),
             * "vads_action_mode" => "INTERACTIVE",
             * "vads_page_action" => "PAYMENT",
@@ -180,7 +182,7 @@ class payzenFormToolbox {
             * "vads_return_mode"    => 'POST',
             * "vads_payment_config" => "SINGLE",
             * "vads_amount" => 1000,
-            * "vads_currency" => 978,
+            * "vads_currency" => 978
             * );
    * you can pass a string or array as a value, if you add an array with more information
    * you will need to pass the value like this :
@@ -188,11 +190,12 @@ class payzenFormToolbox {
    *
    * @return array, the data to use in the fields of HTML payment form
    */
-  public function getFormFields($siteId,$args = '') {
+  public function getFormFields($args = '') {
+
 
     // Defaults arguments with mandatory fields
     $default_fields = array(
-        "vads_site_id" => $siteId,
+        "vads_site_id" => $this->account['vadsSiteId'],
         "vads_ctx_mode" => $this->account['ctxMode'],
         "vads_trans_id" => substr(time(), -6),
         "vads_trans_date" => gmdate('YmdHis'),
@@ -204,10 +207,15 @@ class payzenFormToolbox {
         "vads_return_mode"    => 'POST',
         "vads_payment_config" => "SINGLE",
         "vads_amount" => 1000,
-        "vads_currency" => 978,
+        "vads_currency" => 978
     );
-
-
+    //add IPN url override if specified
+    if( !is_null($this->account['ipn']) ){
+      $ipn = array(
+        'vads_url_check' => $this->account['ipn']
+      );
+      $default_fields = array_merge($ipn, $default_fields);
+    }
     /**
      * to calculate signature, extract value from optionnal field
      * merge with mandatory fields values
@@ -218,7 +226,6 @@ class payzenFormToolbox {
       //add values to args for signature calculation
       $form_data_signature = array();
       foreach($form_data as $arg => $value){
-        //var_dump($optional_field);
         $data = (isset($value['value']) && is_array($value)) ? $value['value'] : $value ;
         $form_data_signature[$arg] = $data;
       }
@@ -401,7 +408,7 @@ class payzenFormToolbox {
    * Contrôle de la signature reçue
    *
    * @param $field
-   * @param $key
+   * @param $key string
    * @return string
    */
   public function Check_Signature($field,$key) {
