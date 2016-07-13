@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Payzen VADS\n"
-"POT-Creation-Date: 2015-12-21 18:09+0100\n"
-"PO-Revision-Date: 2015-12-21 18:11+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2016-07-13 15:29+0200\n"
+"PO-Revision-Date: 2016-07-13 15:30+0200\n"
+"Last-Translator: LYRA NETWORK <support@payzen.eu>\n"
 "Language-Team: Lyra Network\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -20,36 +20,36 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: lib/payzenFormIpn.php:20
-msgid "### ERROR - An exception raised during IPN PayZen process:"
-msgstr "###ERREUR - une erreur est survenue pendant le process IPN"
-
-#: lib/payzenFormIpn.php:31
-msgid "INVALID SIGNATURE"
-msgstr "Signature Invalide"
-
-#: lib/payzenFormToolbox.php:53
+#: lib/payzenFormToolbox.php:32
 msgid "please fill your site ID in"
 msgstr "Merci d'ajouter votre identifiant boutique dans"
 
-#: lib/payzenFormToolbox.php:54 lib/payzenFormToolbox.php:59
-#: lib/payzenFormToolbox.php:64
+#: lib/payzenFormToolbox.php:33 lib/payzenFormToolbox.php:38
+#: lib/payzenFormToolbox.php:43
 msgid "find some help on payzen.io"
 msgstr "Trouvez de l'aide sur payzen.io"
 
-#: lib/payzenFormToolbox.php:58
+#: lib/payzenFormToolbox.php:37
 msgid "please fill your certificate (TEST-version) in"
 msgstr "Merci de remplir votre certificat (version TEST) dans"
 
-#: lib/payzenFormToolbox.php:63
+#: lib/payzenFormToolbox.php:42
 msgid "please fill your certificate (PRODUCTION) in"
 msgstr "Merci d'ajouter votre certificat (de PRODUCTION) dans "
 
-#: lib/returnPayment.php:12
+#: lib/payzenIpn.php:75
+msgid "### ERROR - An exception raised during IPN PayZen process:"
+msgstr "###ERREUR - une erreur est survenue pendant le process IPN"
+
+#: lib/payzenIpn.php:91
+msgid "INVALID SIGNATURE"
+msgstr "Signature Invalide"
+
+#: lib/payzenPaymentOutcome.php:22
 msgid "Status"
 msgstr "Statut"
 
-#: lib/returnPayment.php:15
+#: lib/payzenPaymentOutcome.php:25
 msgid ""
 "The payment was abandonned by the customer. The transaction was not created "
 "on the gateway and therefore is not visible on the merchant back office."
@@ -58,15 +58,15 @@ msgstr ""
 "sur la plateforme de paiement et n’est donc pas visible dans le back office "
 "marchand."
 
-#: lib/returnPayment.php:18
+#: lib/payzenPaymentOutcome.php:28
 msgid "The payment is accepted and is waiting to be cashed."
 msgstr "Le paiement a été accepté et est en attente de remise en banque."
 
-#: lib/returnPayment.php:21
+#: lib/payzenPaymentOutcome.php:31
 msgid "The payment was refused."
 msgstr "Le paiement a été refusé."
 
-#: lib/returnPayment.php:24
+#: lib/payzenPaymentOutcome.php:34
 msgid ""
 "The transaction is accepted but it is waiting to be manually validated. It "
 "is on the merchant responsability to validate the transaction in order that "
@@ -82,7 +82,7 @@ msgstr ""
 "n’a pas été dépassé. Si ce délai est dépassé alors le paiement bascule dans "
 "le statut Expiré. Ce statut expiré est définitif."
 
-#: lib/returnPayment.php:27
+#: lib/payzenPaymentOutcome.php:37
 msgid ""
 "The transaction is waiting for an authorisation. During the payment, just an "
 "imprint was made because the capture delay is higher than 7 days. By default "
@@ -98,7 +98,7 @@ msgstr ""
 "transaction expire dans le cas d'une transaction créée en validation "
 "manuelle ou lorsque le délai de remise en banque (capture delay) dépassé."
 
-#: lib/returnPayment.php:30
+#: lib/payzenPaymentOutcome.php:40
 msgid ""
 "The transaction expired. This status is definitive, the transaction will not "
 "be able to be cashed. A transaction expires when it was created in manual "
@@ -109,7 +109,7 @@ msgstr ""
 "transaction créée en validation manuelle ou lorsque le délai de remise en "
 "banque (capture delay) dépassé."
 
-#: lib/returnPayment.php:33
+#: lib/payzenPaymentOutcome.php:43
 msgid ""
 "The payment was cancelled through the merchant back offfice or by a web "
 "service request. This status is definitive, the transaction will never be "
@@ -119,7 +119,7 @@ msgstr ""
 "requête web service. Ce statut est définitif, la transaction ne sera jamais "
 "remise en banque."
 
-#: lib/returnPayment.php:36
+#: lib/payzenPaymentOutcome.php:46
 msgid ""
 "The transaction is waiting for an authorisation and a manual validation. "
 "During the payment, just an imprint was made because the capture delay is "
@@ -134,31 +134,31 @@ msgstr ""
 "pourra être remis en banque uniquement après une validation du marchand "
 "depuis le back office marchand ou par un requête web services."
 
-#: lib/returnPayment.php:39
+#: lib/payzenPaymentOutcome.php:49
 msgid "The payment was cashed. This status is definitive."
 msgstr "La transaction a été remise en banque. Ce statut est définitif."
 
-#: lib/returnPayment.php:43
+#: lib/payzenPaymentOutcome.php:59
 msgid "Result"
 msgstr "Résultat"
 
-#: lib/returnPayment.php:46
+#: lib/payzenPaymentOutcome.php:62
 msgid "Payment successfully completed."
 msgstr "Paiement réalisé avec succès."
 
-#: lib/returnPayment.php:49
+#: lib/payzenPaymentOutcome.php:65
 msgid "The merchant must contact the holder’s bank."
 msgstr "Le commerçant doit contacter la banque du porteur."
 
-#: lib/returnPayment.php:52
+#: lib/payzenPaymentOutcome.php:68
 msgid "Payment denied."
 msgstr "Paiement refusé."
 
-#: lib/returnPayment.php:55
+#: lib/payzenPaymentOutcome.php:71
 msgid "Cancellation by customer."
 msgstr "Paiement annulé par le client."
 
-#: lib/returnPayment.php:58
+#: lib/payzenPaymentOutcome.php:74
 msgid ""
 "Request format error. To be linked with the value of the vads_extra_result "
 "field."
@@ -166,227 +166,231 @@ msgstr ""
 "Erreur de format de la requête. A mettre en rapport avec la valorisation du "
 "champ vads_extra_result."
 
-#: lib/returnPayment.php:61
+#: lib/payzenPaymentOutcome.php:77
 msgid "Technical error occurred during payment."
 msgstr "Erreur technique lors du paiement."
 
-#: lib/returnPayment.php:65
+#: lib/payzenPaymentOutcome.php:87
 msgid "ID"
 msgstr "Identifiant"
 
-#: lib/returnPayment.php:67
+#: lib/payzenPaymentOutcome.php:94
 msgid "amount"
 msgstr "Montant"
 
-#: lib/returnPayment.php:69
+#: lib/payzenPaymentOutcome.php:101
 msgid "Effective amount"
 msgstr "Montant Effectif"
 
-#: lib/returnPayment.php:71
+#: lib/payzenPaymentOutcome.php:108
 msgid "Payment Type"
 msgstr "Type de paiement"
 
-#: lib/returnPayment.php:74
+#: lib/payzenPaymentOutcome.php:111
 msgid "Unique Payment."
 msgstr "Paiement simple."
 
-#: lib/returnPayment.php:78
+#: lib/payzenPaymentOutcome.php:114
+msgid "Installment Payment."
+msgstr "Paiement en plusieurs fois"
+
+#: lib/payzenPaymentOutcome.php:123
 msgid "Sequence Number"
 msgstr "Numéro de séquence"
 
-#: lib/returnPayment.php:80
+#: lib/payzenPaymentOutcome.php:131
 msgid "Authorisation Result"
 msgstr "Résultat d'autorisation"
 
-#: lib/returnPayment.php:83
+#: lib/payzenPaymentOutcome.php:134
 msgid "Transaction approved or successfully treated."
 msgstr "Transaction approuvée ou traitée avec succès."
 
-#: lib/returnPayment.php:86
+#: lib/payzenPaymentOutcome.php:137
 msgid "Contact the card issuer."
 msgstr "Contacter l’émetteur de carte."
 
-#: lib/returnPayment.php:89
+#: lib/payzenPaymentOutcome.php:140
 msgid "Invalid acceptor."
 msgstr "Accepteur_invalide."
 
-#: lib/returnPayment.php:92
+#: lib/payzenPaymentOutcome.php:143
 msgid "Keep the card."
 msgstr "Conserver la carte."
 
-#: lib/returnPayment.php:95
+#: lib/payzenPaymentOutcome.php:146
 msgid "Do not honor."
 msgstr "Ne pas honorer."
 
-#: lib/returnPayment.php:98
+#: lib/payzenPaymentOutcome.php:149
 msgid "Keep the card, special conditions."
 msgstr "Conserver la carte, conditions spéciales."
 
-#: lib/returnPayment.php:101
+#: lib/payzenPaymentOutcome.php:152
 msgid "Approved after identification."
 msgstr "Approuver après identification."
 
-#: lib/returnPayment.php:104
+#: lib/payzenPaymentOutcome.php:155
 msgid "Invalid Transaction."
 msgstr "Transaction invalide."
 
-#: lib/returnPayment.php:107
+#: lib/payzenPaymentOutcome.php:158
 msgid "Invalid Amount."
 msgstr "Montant invalide."
 
-#: lib/returnPayment.php:110
+#: lib/payzenPaymentOutcome.php:161
 msgid "Invalid holder number."
 msgstr "Numéro de porteur invalide."
 
-#: lib/returnPayment.php:113
+#: lib/payzenPaymentOutcome.php:164
 msgid "Format error."
 msgstr "Erreur de format."
 
-#: lib/returnPayment.php:116
+#: lib/payzenPaymentOutcome.php:167
 msgid "Unknown buying organization identifier."
 msgstr "Identifiant de l’organisme acquéreur inconnu."
 
-#: lib/returnPayment.php:119 lib/returnPayment.php:134
+#: lib/payzenPaymentOutcome.php:170 lib/payzenPaymentOutcome.php:185
 msgid "Expired card validity date."
 msgstr "Date de validité de la carte dépassée."
 
-#: lib/returnPayment.php:122 lib/returnPayment.php:146
+#: lib/payzenPaymentOutcome.php:173 lib/payzenPaymentOutcome.php:197
 msgid "Fraud suspected."
 msgstr "Suspicion de fraude."
 
-#: lib/returnPayment.php:125
+#: lib/payzenPaymentOutcome.php:176
 msgid "Lost card."
 msgstr "Carte perdue."
 
-#: lib/returnPayment.php:128
+#: lib/payzenPaymentOutcome.php:179
 msgid "Stolen card."
 msgstr "Carte volée."
 
-#: lib/returnPayment.php:131
+#: lib/payzenPaymentOutcome.php:182
 msgid "Insufficient provision or exceeds credit."
 msgstr "Provision insuffisante ou crédit dépassé."
 
-#: lib/returnPayment.php:137
+#: lib/payzenPaymentOutcome.php:188
 msgid "Card not in database."
 msgstr "Carte absente du fichier."
 
-#: lib/returnPayment.php:140
+#: lib/payzenPaymentOutcome.php:191
 msgid "Transaction not allowed for this holder."
 msgstr "Transaction non permise à ce porteur."
 
-#: lib/returnPayment.php:143
+#: lib/payzenPaymentOutcome.php:194
 msgid "Transaction not allowed from this terminal."
 msgstr "Transaction interdite au terminal."
 
-#: lib/returnPayment.php:149
+#: lib/payzenPaymentOutcome.php:200
 msgid "The card acceptor must contact buyer."
 msgstr "L’accepteur de carte doit contacter l’acquéreur."
 
-#: lib/returnPayment.php:152
+#: lib/payzenPaymentOutcome.php:203
 msgid "Amount over withdrawal limits."
 msgstr "Montant de retrait hors limite."
 
-#: lib/returnPayment.php:155
+#: lib/payzenPaymentOutcome.php:206
 msgid "Does not abide to security rules."
 msgstr "Règles de sécurité non respectées."
 
-#: lib/returnPayment.php:158
+#: lib/payzenPaymentOutcome.php:209
 msgid "Response not received or received too late."
 msgstr "Réponse non parvenue ou reçue trop tard."
 
-#: lib/returnPayment.php:161
+#: lib/payzenPaymentOutcome.php:212
 msgid "System temporarily stopped."
 msgstr "Arrêt momentané du système."
 
-#: lib/returnPayment.php:164
+#: lib/payzenPaymentOutcome.php:215
 msgid "Inaccessible card issuer."
 msgstr "Emetteur de cartes inaccessible."
 
-#: lib/returnPayment.php:167
+#: lib/payzenPaymentOutcome.php:218
 msgid "Duplicated transaction."
 msgstr "Transaction dupliquée."
 
-#: lib/returnPayment.php:170
+#: lib/payzenPaymentOutcome.php:221
 msgid "Faulty system."
 msgstr "Mauvais fonctionnement du système."
 
-#: lib/returnPayment.php:173
+#: lib/payzenPaymentOutcome.php:224
 msgid "Global surveillance time out expired."
 msgstr "Echéance de la temporisation de surveillance globale."
 
-#: lib/returnPayment.php:176
+#: lib/payzenPaymentOutcome.php:227
 msgid "Unavailable server, repeat network routing requested."
 msgstr "Serveur indisponible routage réseau demandé à nouveau."
 
-#: lib/returnPayment.php:179
+#: lib/payzenPaymentOutcome.php:230
 msgid "Instigator domain incident."
 msgstr "Incident domaine initiateur."
 
-#: lib/returnPayment.php:184
+#: lib/payzenPaymentOutcome.php:240
 msgid "Payment Warranty"
 msgstr "Garantie de paiement"
 
-#: lib/returnPayment.php:187
+#: lib/payzenPaymentOutcome.php:243
 msgid "Payment is guaranteed."
 msgstr "Le paiement est garanti."
 
-#: lib/returnPayment.php:190
+#: lib/payzenPaymentOutcome.php:246
 msgid "Payment is not guaranteed."
 msgstr "Le paiement n’est pas garanti."
 
-#: lib/returnPayment.php:193
+#: lib/payzenPaymentOutcome.php:249
 msgid "Payment cannot be guaranteed, due to a technical error."
 msgstr "Suite à une erreur technique, le paiement ne peut pas être garanti."
 
-#: lib/returnPayment.php:196
+#: lib/payzenPaymentOutcome.php:252
 msgid "Payment guarantee not applicable."
 msgstr "Garantie de paiement non applicable."
 
-#: lib/returnPayment.php:200
+#: lib/payzenPaymentOutcome.php:263
 msgid "Statut 3DS"
 msgstr "Statut 3DS"
 
-#: lib/returnPayment.php:203
+#: lib/payzenPaymentOutcome.php:266
 msgid "3DS Authentified."
 msgstr "Authentifié 3DS."
 
-#: lib/returnPayment.php:206
+#: lib/payzenPaymentOutcome.php:269
 msgid "Authentification Error."
 msgstr "Erreur Authentification."
 
-#: lib/returnPayment.php:209
+#: lib/payzenPaymentOutcome.php:272
 msgid "Authentification Impossible."
 msgstr "Authentification impossible."
 
-#: lib/returnPayment.php:212
+#: lib/payzenPaymentOutcome.php:275
 msgid "Try to authenticate."
 msgstr "Essai d’authentification."
 
-#: lib/returnPayment.php:215
+#: lib/payzenPaymentOutcome.php:278
 msgid "Non valued."
 msgstr "Non renseigné."
 
-#: lib/returnPayment.php:219
+#: lib/payzenPaymentOutcome.php:288
 msgid "Capture delay"
 msgstr "Délai avant Remise en Banque"
 
-#: lib/returnPayment.php:219
+#: lib/payzenPaymentOutcome.php:288
 msgid "days"
 msgstr "jours"
 
-#: lib/returnPayment.php:221
+#: lib/payzenPaymentOutcome.php:296
 msgid "Validation Mode"
 msgstr "Mode de Validation"
 
-#: lib/returnPayment.php:224
+#: lib/payzenPaymentOutcome.php:299
 msgid "Manual Validation"
 msgstr "Validation Manuelle"
 
-#: lib/returnPayment.php:227
+#: lib/payzenPaymentOutcome.php:302
 msgid "Automatic Validation"
 msgstr "Validation Automatique"
 
-#: lib/returnPayment.php:230
+#: lib/payzenPaymentOutcome.php:305
 msgid "Default configuration of the merchant back office"
 msgstr "Configuration par défaut du back office marchand"
 

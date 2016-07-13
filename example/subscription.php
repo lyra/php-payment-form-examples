@@ -12,7 +12,7 @@ $toolbox = require "../lib/payzenBootstrap.php";
  */
 $next_month = date('Ymd', strtotime('+1 month'));
 $args = array(
-    "vads_amount" => null, //3,50 EURO
+    "vads_amount" => null,
     'vads_sub_amount' => '350',
     'vads_cust_email' => 'customer@example.com',
     'vads_page_action' => 'REGISTER_SUBSCRIBE',
