@@ -345,8 +345,6 @@ class payzenFormToolbox {
       if($count < 0 || $count > 899999) {
         $count = 0;
       }
-
-
       // write & lock file
       if (fwrite($handle, $count) === FALSE) {
         // if we can't write to file
