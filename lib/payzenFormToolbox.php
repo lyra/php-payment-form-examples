@@ -43,7 +43,11 @@ class payzenFormToolbox {
       echo _('find some help on payzen.io');
       exit;
     }
-
+    elseif ( empty($platform) ||  $platform == '[***CHANGE-ME***]') {
+      echo _('please fill the platform URL').'lib/payzenBootstrap.php <br />';
+      echo _('find some help on payzen.io');
+      exit;
+    }
     $this->account = array(
         'vadsSiteId' => $siteId,
         'cert'        => array(

@@ -1,23 +1,6 @@
-<?php $toolbox = require "../lib/payzenBootstrap.php"; ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <title>Simple form</title>
-
-</head>
-
-<body>
-
 <?php
+$toolbox = require "../lib/payzenBootstrap.php";
+
 /**
  * Payment arguments
  * If none is mentioned, defaults will be used
@@ -53,7 +36,6 @@ foreach ($formData['fields'] as $name => $value) {
     $class = (isset($value['class']) && is_array($value)) ? $value['class'] : '';
     $help = (isset($value['help']) && $value['help'] !== '' && is_array($value)) ? ' '.$value['help'] : '';
     $wrapper_class = (isset($value['wrapper_class']) && is_array($value)) ? $value['wrapper_class'] : 'hidden';
-    $readonly = (isset($value['readonly']) && $value['readonly'] == true && is_array($value) ) ? 'readonly="readonly"' : ''; ;
     $type = (isset($value['type']) && is_array($value) ) ? $value['type'] : 'text';
     $help_link = '<small id="helpBlock" class="help-block">'.$help.'</small>';
     $addon = '';
@@ -75,29 +57,43 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '<div class="col-sm-10">';
     $form .= $addon;
     $form .= $hidden_field;
-    $form .= '<input type="'.$type.'" '.$readonly.'  class="form-control '.$class.'"  name="'.$name.'" value="'.$display_value.'" />';
+    $form .= '<input type="'.$type.'" readonly="readonly"  class="form-control '.$class.'"  name="'.$name.'" value="'.$display_value.'" />';
     $form .= $help_link;
     $form .= $addon_end;
     $form .= '</div></div>';
 }
 
-$form .= '<button type="submit" class="btn btn-default">Process to payment</button>';
+$form .= '<button type="submit" class="btn btn-default">Pay</button>';
 $form .= '</form>';
-
-
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title>Simple form</title>
+
+</head>
+
+<body>
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
         <div class="col-lg-12" style="max-width: 320px;">
-            <h1>A Simple form</h1>
+            <h1>Payment form</h1>
             <?php echo $form; ?>
-
         </div>
     </div>
     <!-- /.row -->
-
 </div>
 <!-- /.container -->
 
