@@ -36,7 +36,9 @@ function saveIpn($data = null){
 }
 
 
-if(isset($_POST['vads_hash'])){
+$control = $toolbox->checkSignature($_POST);
+
+if(isset($_POST['vads_hash']) && $control){
     $toolbox = require "payzenBootstrap.php";
     $response = $toolbox->getIpn();
     saveIpn($response);
