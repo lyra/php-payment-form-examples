@@ -2,12 +2,24 @@
 /**
  * You can set the return URL in your back office for IPN
  * this file serves the Instant Payment Notification URL first
- * By default, payzenIpn will write logs to a file
  *
- * to handle the Return URL of the shop
- * you can use the_payment_response() in payzenPaymentOutcome class to get an html ouptput and display it to the the customer
- *
+ * IPN
+ * URL of the page that analyzes the payment outcome must be specified in the Back Office
+ * The merchant has to make sure that this URL is available from the payment gateway without redirection.
+ * Redirection leads to losing data presented in POST.
  */
-include '../lib/payzenIpn.php';
 
+$toolbox = require "payzenBootstrap.php";
 
+$control = $toolbox->checkSignature($_POST);
+if($control){
+    $response = $toolbox->getIpn();
+    $status = (isset($response['vads_trans_status']) && is_array($response)) ? $response['vads_trans_status'] : 'undefined';
+
+    echo '<h1>Payment status : '.$status.'</h1>';
+    echo '<pre>';
+    var_dump($response);
+    echo '</pre>';
+} else {
+    echo 'INVALID SIGNATURE';
+}

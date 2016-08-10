@@ -8,21 +8,21 @@
  *
  */
 
-require "payzenFormToolbox.php";
+require "../lib/payzenFormToolbox.php";
 
 /**
  * Toolbox initialisation, using PayZen account informations
  *
- * Shop ID
+ * Shop ID (shopID)
  * 8-digit shop ID provided in your Back Office (Menu: Settings > Shop > Certificates).
  *
- * Certificate
+ * Certificate (certTest || certProd)
  * provided in your Back Office (Menu: Settings > Shop > Certificates).
  *
- * Mode
+ * Mode (ctxMode)
  * Allows to indicate the operating mode of the module (TEST or PRODUCTION)
  *
- * Platform URL :
+ * Platform URL (platform)
  * the platform URL needs to be changed according to your needs (COUNTRY)
  * DEMO: https://demo.payzen.eu/vads-payment/
  * France: https://secure.payzen.eu/vads-payment/
@@ -38,14 +38,14 @@ require "payzenFormToolbox.php";
  * will override the IPN URL and popuplate the vads_url_check field
  */
 
-$toolbox = new payzenFormToolbox(
-  '[***CHANGE-ME***]', // shopId
-  '[***CHANGE-ME***]', // certificate, TEST-version
-  '[***CHANGE-ME***]', // certificate, PRODUCTION-version
-  'TEST',              // PRODUCTION || TEST
-  '[***CHANGE-ME***]'  // Platform URL
+$args = array(
+    'shopID'    => '[***CHANGE-ME***]', // shopID
+    'certTest'  => '[***CHANGE-ME***]', // certificate, TEST-version
+    'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
+    'ctxMode'   => 'TEST',              // PRODUCTION || TEST
+    'platform'  => '[***CHANGE-ME***]', // Platform URL
 );
 
-
+$toolbox = new payzenFormToolbox($args);
 
 return $toolbox;

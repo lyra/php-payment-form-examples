@@ -4,17 +4,17 @@
 The code presented here is a demonstration of the implementation of the VADS PayZen payment system, aimed to ease its use and learning.
 
 
-
 ## Contents
-This code(/lib) is divided in 3 files:
-* payzenBootstrap.php, a centralized configuration and initialisation file
-* payzenFormIpn.php, a minimal implementation of the IPN callback, the second step in the VADS payment process
 * payzenFormToolBox.php, the core file, defining an utility class encapsulating all the PayZen logics of this example
 
+## Example
+* `payzenBootstrap.php`, a centralized configuration and initialisation file
+* `form-return.php`, the file for the return URL after payment
+* `ipn-return.php`, a minimal implementation of the IPN callback (notification must be turned on in the back-office with the correct URL)
 
 ## The first use
 1. Place the files on the same directory, under the root of your web-server
-2. In `payzenBootstrap.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
+2. In `example/payzenBootstrap.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
 3. Access `index.html` from your browser.
 4. Follow the PayZen indications to perform the payment
 

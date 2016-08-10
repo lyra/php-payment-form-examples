@@ -1,5 +1,5 @@
 <?php
-$toolbox = require "../lib/payzenBootstrap.php";
+$toolbox = require "payzenBootstrap.php";
 
 /**
  * Payment arguments
