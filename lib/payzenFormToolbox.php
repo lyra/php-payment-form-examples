@@ -52,15 +52,11 @@ class payzenFormToolbox {
         }
         $this->account = array(
             'vadsSiteId'        => $shopID,
-            'cert'              => array(
-                'TEST'          => $certTest,
-                'PRODUCTION'    => $certProd
-            ),
             'ctxMode'           => $ctxMode,
             'platform'          => $platform
         );
 
-        $this->certificate = ($ctxMode == 'TEST') ? $certTest : $certProd;
+        $this->certificate = ($ctxMode == 'PRODUCTION') ? $certProd : $certTest ;
     }
 
     /**
@@ -214,12 +210,10 @@ class payzenFormToolbox {
      * @return String, the signature
      */
     public function sign(Array $vads_form) {
-        // Choice between TEST and PRODUCTION certificates
-        $cert = $this->account['cert'][$this->account['ctxMode']];
         ksort($vads_form);           // VADS values sorted by name, ascending order
         return sha1(                 // SHA1 encryption of ...
             implode('+', $vads_form)    // ... VADS array values joined with '+' ...
-            . "+$cert"                  // ... concatenated with '+' and the certificate.
+            . "+$this->certificate"                  // ... concatenated with '+' and the certificate.
         );
     }
 
