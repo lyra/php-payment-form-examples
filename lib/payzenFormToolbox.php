@@ -26,7 +26,7 @@ class payzenFormToolbox {
     public function __construct($args) {
         $shopID = (isset($args['shopID']))? $args['shopID'] : '';
         $certTest = (isset($args['certTest']))? $args['certTest'] : '';
-        $certProd = (isset($args['$certProd']))? $args['$certProd'] : '';
+        $certProd = (isset($args['certProd']))? $args['certProd'] : '';
         $ctxMode = (isset($args['ctxMode']))? $args['ctxMode'] : 'TEST';
         $platform = (isset($args['platform']))? $args['platform'] : '';
 
