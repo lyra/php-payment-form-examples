@@ -3,7 +3,7 @@
  * Toolbox initialisation, using PayZen account informations
  * Required : ShopID + CERTIFICATE + platform URL
  */
-$toolbox = require "payzenBootstrap.php";
+$toolbox = require "../config/config.php";
 
 
 /**
@@ -13,9 +13,9 @@ $toolbox = require "payzenBootstrap.php";
  */
 
 //GET return URL
-$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'https://' ;
+$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
 $url =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-$return_url = str_replace('simple-form-with-card-preselected.php','form-return.php',$url);
+$return_url = str_replace('example/simple-form-with-card-preselected.php','return/form-return.php',$url);
 
 $args = array(
     "vads_amount" => "4500", //The amount of the transaction presented in the smallest unit of the currency (cents for Euro).

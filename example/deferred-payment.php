@@ -3,7 +3,7 @@
  * Toolbox initialisation, using PayZen account informations
  * Required : ShopID + CERTIFICATE + platform URL
  */
-$toolbox = require "payzenBootstrap.php";
+$toolbox = require "../config/config.php";
 
 /**
  * Payment arguments

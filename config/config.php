@@ -8,7 +8,7 @@
  *
  */
 
-require "../lib/payzenFormToolbox.php";
+require "../lib/class-form-toolbox.php";
 
 /**
  * Toolbox initialisation, using PayZen account informations

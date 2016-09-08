@@ -9,7 +9,7 @@
  * Redirection leads to losing data presented in POST.
  */
 
-$toolbox = require "payzenBootstrap.php";
+$toolbox = require "../config/config.php";
 
 $control = $toolbox->checkSignature($_POST);
 if($control){

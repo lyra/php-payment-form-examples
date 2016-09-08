@@ -1,5 +1,5 @@
 <?php
-$toolbox = require "payzenBootstrap.php";
+$toolbox = require "../config/config.php";
 
 /**
  * Payment arguments

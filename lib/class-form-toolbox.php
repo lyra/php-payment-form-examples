@@ -31,22 +31,22 @@ class payzenFormToolbox {
         $platform = (isset($args['platform']))? $args['platform'] : '';
 
         if (empty($shopID) || $shopID == '[***CHANGE-ME***]') {
-            echo _('please fill your site ID in').' lib/payzenBootstrap.php <br />';
+            echo _('please fill your site ID in').' config/config.php <br />';
             echo _('find some help on payzen.io');
             exit;
         }
         elseif ($ctxMode == 'TEST' && (empty($certTest) || $certTest == '[***CHANGE-ME***]')) {
-            echo _('please fill your certificate (TEST-version) in').' lib/payzenBootstrap.php <br />';
+            echo _('please fill your certificate (TEST-version) in').' config/config.php <br />';
             echo _('find some help on payzen.io');
             exit;
         }
         elseif ($ctxMode == 'PRODUCTION' && (empty($certProd) || $certProd == '[***CHANGE-ME***]')) {
-            echo _('please fill your certificate (PRODUCTION) in').'lib/payzenBootstrap.php <br />';
+            echo _('please fill your certificate (PRODUCTION) in').'config/config.php <br />';
             echo _('find some help on payzen.io');
             exit;
         }
         elseif ( empty($platform) ||  $platform == '[***CHANGE-ME***]') {
-            echo _('please fill the platform URL').'lib/payzenBootstrap.php <br />';
+            echo _('please fill the platform URL').'config/config.php <br />';
             echo _('find some help on payzen.io');
             exit;
         }

@@ -60,17 +60,24 @@
         <div class="col-lg-12">
             <h1>VADS PAYMENT PHP</h1>
             <p class="lead">A starter kit with your PayZen Payment Form</p>
-            <p>
-                <strong>Requirements :</strong> <br>
-            </p>
+
+                <h2>Requirements :</h2>
+
                 <ul>
                     <li>PHP (5.4 +)</li>
-                    <li>Your SHOP ID <em>(in lib/payzenBootstrap.php)</em></li>
-                    <li>Your Certificate <em>(in lib/payzenBootstrap.php)</em></li>
+                    <li>In <code>config/config.php :</code>
+                        <ul>
+                            <li>Your SHOP ID </li>
+                            <li>Your Certificate (TEST or PRODUCTION)</li>
+                            <li>Mode (TEST or PRODUCTION)</li>
+                            <li>Platform URL</li>
+                        </ul>
+                    </li>
+
                 </ul>
 
             <h2>Form Examples</h2>
-            <ul class="list-unstyled">
+            <ul>
                 <li><a href="example/simple-form.php">Simple Form</a></li>
                 <li><a href="example/simple-form-with-card-preselected.php">Simple form with card pre-selected and return URL</a></li>
                 <li><a href="example/installment-payment.php">Installment payment</a></li>
@@ -81,6 +88,22 @@
                 <li><a href="example/e-cheques-vacances.php">E-chèques vacances</a></li>
                 <li><a href="example/bootstrap-simple-form.php">Simple Form with Bootstrap</a></li>
             </ul>
+
+            <h2>PAYMENT ANALYSIS</h2>
+            <div id="Info">
+                <strong>Instant Payment Notification | ipn-return.php</strong><br />
+                <p>When the payment is done, the gateway sends some parameters by POST mode to the server URL which analyzes the payment results. First you have to check the signature. If it is correct then you will be able to take the payment parameters into consideration.</p>
+
+                <strong>form-return.php</strong><br />
+                <p>In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.</p>
+
+                <strong>Return URLs</strong><br />
+                <p>When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all.</p>
+
+            </div>
+
+            <h2>Find HELP</h2>
+            <p><strong>The PAYZEN support recommends to read the settings analysis documentation</strong> <a href="https://payzen.io" target="_blank">on payzen.io</a></p>
         </div>
     </div>
     <!-- /.row -->
