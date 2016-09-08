@@ -1,5 +1,19 @@
+<?php
+session_start();
+// I18N support information here
+$language = 'fr';
+putenv("LC_ALL=$language");
+setlocale(LC_ALL, $language);
+
+// Set the text domain as 'messages'
+$domain = 'messages';
+bindtextdomain($domain, "lib/i18n");
+textdomain($domain);
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $language; ?>">
 <head>
     <meta charset="UTF-8">
     <title>PayZen - VADS PAYMENT PHP</title>
@@ -59,18 +73,18 @@
     <div class="row">
         <div class="col-lg-12">
             <h1>VADS PAYMENT PHP</h1>
-            <p class="lead">A starter kit with your PayZen Payment Form</p>
+            <p class="lead"><?php echo gettext('A starter kit with your PayZen Payment Form'); ?> </p>
 
-                <h2>Requirements :</h2>
+                <h2><?php echo _('Requirements'); ?> :</h2>
 
                 <ul>
                     <li>PHP (5.4 +)</li>
-                    <li>In <code>config/config.php :</code>
+                    <li><?php echo _('In'); ?> <code>config/config.php :</code>
                         <ul>
-                            <li>Your SHOP ID </li>
-                            <li>Your Certificate (TEST or PRODUCTION)</li>
-                            <li>Mode (TEST or PRODUCTION)</li>
-                            <li>Platform URL</li>
+                            <li><?php echo gettext('Your SHOP ID'); ?> </li>
+                            <li><?php echo gettext('Your Certificate (TEST or PRODUCTION)'); ?></li>
+                            <li><?php echo gettext('Mode (TEST or PRODUCTION)'); ?></li>
+                            <li><?php echo _('Platform URL'); ?></li>
                         </ul>
                     </li>
 
