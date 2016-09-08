@@ -11,8 +11,8 @@ $toolbox = require "../config/config.php";
  * You can check defaults and formats : vads-payment-php\lib\payzenFormToolbox.php  in function "getFormFields"
  */
 $args = array(
-    "vads_amount" => "100",//1,00 euro
-    "vads_validation_mode" => "1" //manual validation only
+    "vads_amount" => "100",//1,00 euro The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
+    "vads_validation_mode" => "1" //manual validation only. Specifies the validation mode of the transaction.
 );
 
 /**

@@ -11,9 +11,9 @@ $toolbox = require "../config/config.php";
  * You can check defaults and formats : vads-payment-php\lib\payzenFormToolbox.php  in function "getFormFields"
  */
 $args = array(
-    "vads_amount" => "8050", //80,50 EURO - a minimum amount is required for ECV
-    "vads_payment_cards" => "E_CV",
-    'vads_contracts=ANCV=123459-1-1' => '' // check payzen.io about this mandatory format
+    "vads_amount" => "8050", //80,50 EURO - a minimum amount is required for ECV. The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
+    "vads_payment_cards" => "E_CV",//Contains the list of card types proposed to the buyer, separated by a ";".
+    'vads_contracts=ANCV=123459-1-1' => ''//Presents a list with a Merchant ID (MID) to use for each acceptance network.
 );
 
 /**

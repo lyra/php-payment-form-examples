@@ -8,7 +8,7 @@ $toolbox = require "../config/config.php";
  */
 $args = array(
     'vads_amount' => array(
-        'value' => '4500',
+        'value' => '4500',//The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
         'label' => 'Price',
         'type' => 'text',
         'class'  => 'vads-field',
