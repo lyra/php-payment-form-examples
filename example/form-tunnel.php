@@ -1,9 +1,18 @@
+<?php
+/**
+ * A simple example of integration
+ *
+ */
+?>
+
 <html>
     <head>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     </head>
 
 <body>
+
+<?php if(isset($_POST)): ?>
 <!-- Page Content -->
 <div class="container">
     <div class="row">
@@ -38,8 +47,11 @@ $formData = $toolbox->getFormData($_POST);
 $form = '<form action="'.$formData['form']['action'].'" method="'.$formData['form']['method'].'" accept-charset="'.$formData['form']['accept-charset'].'" id="auto-submit-form">';
 $form .= '<table class="table table-bordered">';
 foreach ($formData['fields'] as $name => $value) {
+
+    $doc_name = (strpos($name, 'vads_') !== false) ? str_replace('_','-',$name): false;
+    $doclink = ($doc_name) ? 'https://payzen.io/en-EN/form-payment/standard-payment/'.$doc_name.'.html': '#';
     $form .= '<tr>';
-    $form .= '<td><label for="'. $name. '">'.$name.'</label></td>';
+    $form .= '<td><label for="'. $name. '"><a target="_blank" href="'.$doclink.'">'.$name.'</a></label></td>';
     $form .= '<td><input type="text" readonly="readonly"  name="'.$name.'" value="'.$value.'" /></td>';
     $form .= '</tr>';
 }
@@ -56,5 +68,8 @@ echo $form;
 <?php } ?>
 
         </div></div></div>
+<?php else: ?>
+    <?php echo _('no POST data has been sent'); ?>
+<?php endif; ?>
 </body>
 </html>
