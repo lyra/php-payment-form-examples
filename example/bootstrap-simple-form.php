@@ -63,7 +63,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '</div></div>';
 }
 
-$form .= '<button type="submit" class="btn btn-default"><?php gettext("Pay"); ?></button>';
+$form .= '<button type="submit" class="btn btn-default">'. _("Pay").'</button>';
 $form .= '</form>';
 ?>
 
