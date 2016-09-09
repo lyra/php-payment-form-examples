@@ -28,6 +28,7 @@ $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SE
 $site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $uri_parts = explode('?',$site_url_full);
 $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
+$lang_doc = (!empty($lang)) ? str_replace('_','-',$lang) : 'en-EN';
 ?>
 
 <!DOCTYPE html>

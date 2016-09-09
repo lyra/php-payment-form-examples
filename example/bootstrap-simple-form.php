@@ -9,12 +9,12 @@ $toolbox = require "../config/config.php";
 $args = array(
     'vads_amount' => array(
         'value' => '4500',//The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
-        'label' => 'Price',
+        'label' => _('Price'),
         'type' => 'text',
         'class'  => 'vads-field',
         'wrapper_class' => 'vads-wrapper',
         'readonly' => true,
-        'help' => 'Display only the price to play'
+        'help' =>  _('Display only the price to pay')
     ),
     "vads_currency" => "978" // An ISO 4217 numerical code of the payment currency.
 );
@@ -63,7 +63,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '</div></div>';
 }
 
-$form .= '<button type="submit" class="btn btn-default">Pay</button>';
+$form .= '<button type="submit" class="btn btn-default"><?php gettext("Pay"); ?></button>';
 $form .= '</form>';
 ?>
 
@@ -79,7 +79,7 @@ $form .= '</form>';
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <title>Simple form</title>
+    <title><?php echo _('Payment form'); ?></title>
 
 </head>
 
@@ -88,7 +88,7 @@ $form .= '</form>';
 <div class="container">
     <div class="row">
         <div class="col-lg-12" style="max-width: 320px;">
-            <h1>Payment form</h1>
+            <h1><?php echo _('Payment form'); ?></h1>
             <?php echo $form; ?>
         </div>
     </div>

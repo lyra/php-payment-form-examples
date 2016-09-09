@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Payzen VADS\n"
-"POT-Creation-Date: 2016-09-09 15:35+0200\n"
-"PO-Revision-Date: 2016-09-09 15:35+0200\n"
+"POT-Creation-Date: 2016-09-09 15:58+0200\n"
+"PO-Revision-Date: 2016-09-09 15:58+0200\n"
 "Last-Translator: LYRA NETWORK <support@payzen.eu>\n"
 "Language-Team: Lyra Network\n"
 "Language: fr\n"
@@ -29,6 +29,18 @@ msgstr ""
 #: example/subscription.php:50
 msgid "Pay"
 msgstr "Payer"
+
+#: example/bootstrap-simple-form.php:12
+msgid "Price"
+msgstr "Prix"
+
+#: example/bootstrap-simple-form.php:17
+msgid "Display only the price to pay"
+msgstr "Afficher uniquement le prix à payer"
+
+#: example/bootstrap-simple-form.php:91
+msgid "Payment form"
+msgstr "Formulaire de paiement"
 
 #: example/form-tunnel.php:12
 msgid "BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY"
