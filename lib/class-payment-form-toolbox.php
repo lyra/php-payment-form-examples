@@ -3,11 +3,12 @@
  * Class payzenFormToolbox
  *
  */
-class payzenFormToolbox {
+class paymentFormToolbox {
 
     /**************** CLASS PROPERTIES **************/
     // Container for PayZen user's account informations
     public $account;
+    public $debug;
 
     //Container for certificate
     private $certificate;
@@ -29,6 +30,7 @@ class payzenFormToolbox {
         $certProd = (isset($args['certProd']))? $args['certProd'] : '';
         $ctxMode = (isset($args['ctxMode']))? $args['ctxMode'] : 'TEST';
         $platform = (isset($args['platform']))? $args['platform'] : '';
+        $debug = (isset($args['debug']))? $args['debug'] : false;
 
         if (empty($shopID) || $shopID == '[***CHANGE-ME***]') {
             echo _('please fill your site ID in').' config/config.php <br />';
@@ -57,6 +59,7 @@ class payzenFormToolbox {
         );
 
         $this->certificate = ($ctxMode == 'PRODUCTION') ? $certProd : $certTest ;
+        $this->debug = $debug;
     }
 
     /**

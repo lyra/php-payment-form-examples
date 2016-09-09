@@ -8,7 +8,8 @@
  *
  */
 
-require "../lib/class-form-toolbox.php";
+
+require "../lib/class-payment-form-toolbox.php";
 
 /**
  * Toolbox initialisation, using PayZen account informations
@@ -44,8 +45,9 @@ $args = array(
     'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
     'ctxMode'   => 'TEST',              // PRODUCTION || TEST
     'platform'  => '[***CHANGE-ME***]', // Platform URL
+    'debug'    => false
 );
 
-$toolbox = new payzenFormToolbox($args);
+$toolbox = new paymentFormToolbox($args);
 
 return $toolbox;

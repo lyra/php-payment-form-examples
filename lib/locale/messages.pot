@@ -1,0 +1,272 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Payzen VADS\n"
+"POT-Creation-Date: 2016-09-09 15:32+0200\n"
+"PO-Revision-Date: 2015-12-21 17:34+0100\n"
+"Last-Translator: \n"
+"Language-Team: Lyra Network\n"
+"Language: en_EN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _;__;_e;gettext\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: .git\n"
+"X-Poedit-SearchPathExcluded-1: .idea\n"
+
+#: example/authorization-without-capture.php:31 example/deferred-payment.php:31
+#: example/e-cheques-vacances.php:32 example/form-tunnel.php:47
+#: example/installment-payment.php:39 example/sepa.php:38
+#: example/simple-form-with-card-preselected.php:42 example/simple-form.php:31
+#: example/subscription.php:50
+msgid "Pay"
+msgstr ""
+
+#: example/form-tunnel.php:12
+msgid "BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY"
+msgstr ""
+
+#: example/form-tunnel.php:13
+msgid "NOTE:"
+msgstr ""
+
+#: example/form-tunnel.php:14
+msgid "In order to be redirected straight to the payment gateway, you need to change the debug value of the conf.txt file to OFF."
+msgstr ""
+
+#: example/html-form.php:69 index.php:69
+msgid "Contact us"
+msgstr ""
+
+#: example/html-form.php:86 index.php:86
+msgid "Language"
+msgstr ""
+
+#: example/html-form.php:112
+msgid "PAYZEN PAYMENT SOLUTION IMPLEMENTATION EXAMPLE"
+msgstr ""
+
+#: example/html-form.php:114
+msgid "INFORMATIONS"
+msgstr ""
+
+#: example/html-form.php:115
+msgid "The payment uses the sending of a payment form to PAYZEN payment gateway URL."
+msgstr ""
+
+#: example/html-form.php:116 example/html-form.php:119
+msgid "File"
+msgstr ""
+
+#: example/html-form.php:117
+msgid "Before the first use you have to fill the <code>shopID</code>, <code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the <code>config/config.php</code>.e. This file contains secure data.  <b>This data securing is on your responsibility.</b>"
+msgstr ""
+
+#: example/html-form.php:120
+msgid ""
+"the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p>\n"
+"                    <p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p>\n"
+"                    <p><b>Some other fields are available, PAYZEN support recommends to read the payment form documentation</b> <a href='https://payzen.io'>Read the documentation.</a>"
+msgstr ""
+
+#: example/html-form.php:134
+msgid "TRANSACTION SETTINGS"
+msgstr ""
+
+#: example/html-form.php:140
+msgid "Order amount set in the smallest currency unit. Cents for EURO. Ex: 1000 for 10 euros"
+msgstr ""
+
+#: example/html-form.php:144
+msgid "CLIENT SETTINGS"
+msgstr ""
+
+#: example/html-form.php:150
+msgid "Order number. Optional setting. Length of field: 32 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:156
+msgid "Customer number. Optional setting. Length of field: 32 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:161
+msgid "Customer name. Optional setting. Length of field: 127 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:166
+msgid "Customer address. Optional setting. Length of field: 255 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:171
+msgid "Customer Postal Code. Optional setting. Length of field: 32 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:176
+msgid "Customer City. Optional setting. Length of field: 63 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:181
+msgid "Customer Country. Customer country code according to the ISO 3166 norm. Optional setting. Length of field: 2 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:186
+msgid "Customer Phone Number. Optional setting. Length of field: 32 characters max - Alphanumeric Type"
+msgstr ""
+
+#: example/html-form.php:191
+msgid "Customer Email. Optional setting."
+msgstr ""
+
+#: example/html-form.php:195
+msgid "RETURN URL"
+msgstr ""
+
+#: example/html-form.php:201
+msgid "Default URL to where the buyer will be redirected. If this field has not been transmitted, the Back Office configuration will be taken into account."
+msgstr ""
+
+#: example/html-form.php:206
+msgid "delay in seconds before an automatic redirection to the merchant website at the end of an accepted payment."
+msgstr ""
+
+#: example/html-form.php:213
+msgid "Validate and send the settings  <br>by POST mode to"
+msgstr ""
+
+#: index.php:111
+msgid "A starter kit with your PayZen Payment Form"
+msgstr ""
+
+#: index.php:113
+msgid "Requirements"
+msgstr ""
+
+#: index.php:117
+msgid "In"
+msgstr ""
+
+#: index.php:119
+msgid "Your SHOP ID"
+msgstr ""
+
+#: index.php:120
+msgid "Your Certificate (TEST or PRODUCTION)"
+msgstr ""
+
+#: index.php:121
+msgid "Mode (TEST or PRODUCTION)"
+msgstr ""
+
+#: index.php:122
+msgid "Platform URL"
+msgstr ""
+
+#: index.php:128
+msgid "Form Examples"
+msgstr ""
+
+#: index.php:130
+msgid "Simple Form"
+msgstr ""
+
+#: index.php:131
+msgid "Simple form with card pre-selected and return URL"
+msgstr ""
+
+#: index.php:132
+msgid "Html form"
+msgstr ""
+
+#: index.php:133
+msgid "Installment payment"
+msgstr ""
+
+#: index.php:134
+msgid "Deferred payment"
+msgstr ""
+
+#: index.php:135
+msgid "Authorization without capture"
+msgstr ""
+
+#: index.php:136
+msgid "Monthly subscription"
+msgstr ""
+
+#: index.php:137
+msgid "Sepa"
+msgstr ""
+
+#: index.php:138
+msgid "E-chèques vacances"
+msgstr ""
+
+#: index.php:139
+msgid "Simple Form with Bootstrap"
+msgstr ""
+
+#: index.php:142
+msgid "PAYMENT ANALYSIS"
+msgstr ""
+
+#: index.php:144
+msgid "Instant Payment Notification | ipn-return.php"
+msgstr ""
+
+#: index.php:145
+msgid "When the payment is done, the gateway sends some parameters by POST mode to the server URL which analyzes the payment results. First you have to check the signature. If it is correct then you will be able to take the payment parameters into consideration."
+msgstr ""
+
+#: index.php:148
+msgid "In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context."
+msgstr ""
+
+#: index.php:150
+msgid "Return URLs"
+msgstr ""
+
+#: index.php:151
+msgid "When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all."
+msgstr ""
+
+#: index.php:155
+msgid "Find HELP"
+msgstr ""
+
+#: index.php:156
+msgid "The PAYZEN support recommends to read the settings analysis documentation"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:36
+msgid "please fill your site ID in"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:37 lib/class-payment-form-toolbox.php:42
+#: lib/class-payment-form-toolbox.php:47 lib/class-payment-form-toolbox.php:52
+msgid "find some help on payzen.io"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:41
+msgid "please fill your certificate (TEST-version) in"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:46
+msgid "please fill your certificate (PRODUCTION) in"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:51
+msgid "please fill the platform URL"
+msgstr ""
+
+#: lib/class-payment-form-toolbox.php:390
+msgid "### ERROR - An exception raised during IPN PayZen process:"
+msgstr ""
