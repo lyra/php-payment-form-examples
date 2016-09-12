@@ -35,11 +35,10 @@ function saveIpn($data = null){
     }
 }
 
-
+$toolbox = require "../config/config.php";
 $control = $toolbox->checkSignature($_POST);
 
 if(isset($_POST['vads_hash']) && $control){
-    $toolbox = require "../config/config.php";
     $response = $toolbox->getIpn();
     saveIpn($response);
 }

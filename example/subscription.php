@@ -47,7 +47,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '<label for="'. $name. '">'.$name.'</label>';
     $form .= '<input type="text" readonly="readonly"  name="'.$name.'" value="'.$value.'" /><br />';
 }
-$form .= '<input type="submit" name="pay-submit" value="'.gettext("Pay").'"/>';
+$form .= '<input type="submit" name="pay-submit" value="'._("Pay").'"/>';
 $form .= '</form>';
 
 echo $form;

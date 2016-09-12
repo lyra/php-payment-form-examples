@@ -1,16 +1,107 @@
 <?php
-/**
- * A simple example of integration
- *
- */
+session_start();
+// I18N support information here
+if(isset($_GET['lang'])){
+    $lang = $_GET["lang"];
+} elseif (isset($_SESSION["lang"])) {
+    $lang  = $_SESSION["lang"];
+} else {
+    $lang = 'en_EN';
+}
+
+// save language preference for future page requests
+$_SESSION["Language"]  = $lang;
+$domain = 'messages';
+$folder = "lib/locale";
+$encoding = "UTF-8";
+
+putenv("LANG=" . $lang);
+setlocale(LC_ALL, $lang);
+
+// Set the text domain as 'messages'
+bindtextdomain($domain, $folder);
+bind_textdomain_codeset($domain, $encoding);
+textdomain($domain);
+
+//vars
+$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
+$site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$uri_parts = explode('?',$site_url_full);
+$site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 ?>
 
-<html>
-    <head>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    </head>
-
+<!DOCTYPE html>
+<html lang="<?php echo $lang; ?>">
+<head>
+    <meta charset="UTF-8">
+    <title>PayZen - VADS PAYMENT PHP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+            padding-bottom: 8em;
+        }
+        .form-control{min-width: 220px;}
+    </style>
+</head>
 <body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo $site_url; ?>">PayZen</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Contact us'); ?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
+                        <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
+                        <li><a target="_blank" href="https://payzen.io/de-DE/support/">German</a></li>
+                        <li><a target="_blank" href="https://payzen.io/pt-BR/support/">Portugese</a></li>
+                        <li><a target="_blank" href="https://payzen.io/es-CL/support/">Spanish</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a target="_blank" href="https://github.com/payzen">Github</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Language'); ?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo $site_url; ?>?lang=fr_FR">French</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=en_EN">English</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#"><code>Coming soon</code></a></li>
+                        <li><a href="#">Portuguese</a></li>
+                        <li><a href="#">German</a></li>
+                        <li><a href="#">Spanish</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
 
 <?php if(isset($_POST)): ?>
 <!-- Page Content -->
@@ -18,9 +109,9 @@
     <div class="row">
         <div class="col-lg-12" style="max-width: 92%;">
             <br><br>
-            <h2><?php echo gettext('BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY'); ?></h2>
-            <p><?php echo gettext('NOTE:'); ?> <br>
-                <?php echo gettext('In order to be redirected straight to the payment gateway, you need to change the debug value of the config.php file to false.'); ?></p>
+            <h2><?php echo _('BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY'); ?></h2>
+            <p><?php echo _('NOTE:'); ?> <br>
+                <?php echo _('In order to be redirected straight to the payment gateway, you need to change the debug value of the config.php file to false.'); ?></p>
 <?php
 /**
  * Toolbox initialisation, using PayZen account informations
@@ -56,7 +147,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '</tr>';
 }
 $form .= '</table>';
-$form .= '<input type="submit" name="pay-submit" value="'.gettext("Pay").'" class="btn btn-primary btn-lg btn-block"/>';
+$form .= '<input type="submit" name="pay-submit" value="'._("Pay").'" class="btn btn-primary btn-lg btn-block"/>';
 $form .= '</form>';
 
 echo $form;

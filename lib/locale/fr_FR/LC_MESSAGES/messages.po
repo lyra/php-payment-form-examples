@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Payzen VADS\n"
-"POT-Creation-Date: 2016-09-09 15:58+0200\n"
-"PO-Revision-Date: 2016-09-09 15:58+0200\n"
+"POT-Creation-Date: 2016-09-12 11:24+0200\n"
+"PO-Revision-Date: 2016-09-12 11:25+0200\n"
 "Last-Translator: LYRA NETWORK <support@payzen.eu>\n"
 "Language-Team: Lyra Network\n"
 "Language: fr\n"
@@ -22,8 +22,9 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .git\n"
 "X-Poedit-SearchPathExcluded-1: .idea\n"
 
-#: example/authorization-without-capture.php:31 example/deferred-payment.php:31
-#: example/e-cheques-vacances.php:32 example/form-tunnel.php:47
+#: example/authorization-without-capture.php:31
+#: example/bootstrap-simple-form.php:66 example/deferred-payment.php:31
+#: example/e-cheques-vacances.php:32 example/form-tunnel.php:150
 #: example/installment-payment.php:39 example/sepa.php:38
 #: example/simple-form-with-card-preselected.php:42 example/simple-form.php:31
 #: example/subscription.php:50
@@ -38,19 +39,27 @@ msgstr "Prix"
 msgid "Display only the price to pay"
 msgstr "Afficher uniquement le prix à payer"
 
-#: example/bootstrap-simple-form.php:91
+#: example/bootstrap-simple-form.php:82 example/bootstrap-simple-form.php:91
 msgid "Payment form"
 msgstr "Formulaire de paiement"
 
-#: example/form-tunnel.php:12
+#: example/form-tunnel.php:70 example/html-form.php:71 index.php:70
+msgid "Contact us"
+msgstr "Nous contacter"
+
+#: example/form-tunnel.php:87 example/html-form.php:88 index.php:87
+msgid "Language"
+msgstr "Langue"
+
+#: example/form-tunnel.php:112
 msgid "BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY"
 msgstr "POUR INFORMATION VOICI LES CHAMPS QUI SERONT ENVOYES A LA PLATEFORME"
 
-#: example/form-tunnel.php:13
+#: example/form-tunnel.php:113
 msgid "NOTE:"
 msgstr "REMARQUE:"
 
-#: example/form-tunnel.php:14
+#: example/form-tunnel.php:114
 msgid ""
 "In order to be redirected straight to the payment gateway, you need to "
 "change the debug value of the config.php file to false."
@@ -59,34 +68,30 @@ msgstr ""
 "page, veuillez passer la valeur debug à <code>false</code> dans le fichier "
 "config.php"
 
-#: example/html-form.php:69 index.php:69
-msgid "Contact us"
-msgstr "Nous contacter"
+#: example/form-tunnel.php:163
+msgid "no POST data has been sent"
+msgstr "Aucune donnée POST envoyée"
 
-#: example/html-form.php:86 index.php:86
-msgid "Language"
-msgstr "Langue"
-
-#: example/html-form.php:112
+#: example/html-form.php:114
 msgid "PAYZEN PAYMENT SOLUTION IMPLEMENTATION EXAMPLE"
 msgstr "EXEMPLE D'IMPLEMENTATION DE LA SOLUTION DE PAIEMENT PAYZEN "
 
-#: example/html-form.php:114
+#: example/html-form.php:116
 msgid "INFORMATIONS"
 msgstr "INFORMATIONS"
 
-#: example/html-form.php:115
+#: example/html-form.php:117
 msgid ""
 "The payment uses the sending of a payment form to PAYZEN payment gateway URL."
 msgstr ""
 "Le paiement s'appuie sur l'envoi d'un formulaire de paiement en https vers "
 "l'URL de la plateforme de paiement PAYZEN."
 
-#: example/html-form.php:116 example/html-form.php:119
+#: example/html-form.php:118 example/html-form.php:121
 msgid "File"
 msgstr "Fichier"
 
-#: example/html-form.php:117
+#: example/html-form.php:119
 msgid ""
 "Before the first use you have to fill the <code>shopID</code>, "
 "<code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the "
@@ -99,7 +104,7 @@ msgstr ""
 "comporte des données sensibles. <b>La sécurisation de ces données est de "
 "votre responsabilité.</b>"
 
-#: example/html-form.php:120
+#: example/html-form.php:122
 msgid ""
 "the file <code>html-form.php</code> sends these payment fields to "
 "the<code>form-tunnel.php</code>  which fetch these fields to create the "
@@ -228,87 +233,88 @@ msgstr ""
 msgid "Validate and send the settings  <br>by POST mode to"
 msgstr "Valider et envoyer les paramètres  <br>en mode POST vers le fichier"
 
-#: index.php:111
+#: index.php:112
 msgid "A starter kit with your PayZen Payment Form"
 msgstr "Un kit de démarrage pour la paiement en ligne par formulaire"
 
-#: index.php:113
+#: index.php:114
 msgid "Requirements"
 msgstr "Configuration nécessaire"
 
-#: index.php:117
+#: index.php:118
 msgid "In"
 msgstr "Dans"
 
-#: index.php:119
+#: index.php:120
 msgid "Your SHOP ID"
 msgstr "Votre identifiant boutique"
 
-#: index.php:120
+#: index.php:121
 msgid "Your Certificate (TEST or PRODUCTION)"
 msgstr "Votre certificat (TEST ou PRODUCTION)"
 
-#: index.php:121
+#: index.php:122
 msgid "Mode (TEST or PRODUCTION)"
 msgstr "Mode (TEST or PRODUCTION)"
 
-#: index.php:122
+#: index.php:123
 msgid "Platform URL"
 msgstr "Url de la plateforme"
 
-#: index.php:128
+#: index.php:129
 msgid "Form Examples"
 msgstr "Exemples de formulaires"
 
-#: index.php:130
+#: index.php:131
+msgid "Html form with client's informations and return URL"
+msgstr ""
+"Formulaire HTML avec les informations client et l'URL de retour boutique"
+
+#: index.php:132
 msgid "Simple Form"
 msgstr "Formulaire simple"
 
-#: index.php:131
+#: index.php:133
 msgid "Simple form with card pre-selected and return URL"
 msgstr "Formulaire simple avec carte pre-selectionnée et retour à la boutique"
 
-#: index.php:132
-msgid "Html form"
-msgstr "Formulaire HTML"
-
-#: index.php:133
+#: index.php:134
 msgid "Installment payment"
 msgstr "Paiement en plusieurs fois"
 
-#: index.php:134
+#: index.php:135
 msgid "Deferred payment"
 msgstr "Paiement comptant différé"
 
-#: index.php:135
+#: index.php:136
 msgid "Authorization without capture"
 msgstr "Demande d'autorisation"
 
-#: index.php:136
+#: index.php:137
 msgid "Monthly subscription"
 msgstr "Abonnement au mois"
 
-#: index.php:137
+#: index.php:138
 msgid "Sepa"
 msgstr "Sepa"
 
-#: index.php:138
+#: index.php:139
 msgid "E-chèques vacances"
 msgstr "E-chèques vacances"
 
-#: index.php:139
+#: index.php:140
 msgid "Simple Form with Bootstrap"
 msgstr "Formulaire simple avec la librairie Bootstrap"
 
-#: index.php:142
+#: index.php:143
 msgid "PAYMENT ANALYSIS"
 msgstr "Analyse du paiement"
 
-#: index.php:144
-msgid "Instant Payment Notification | ipn-return.php"
-msgstr "Instant Payment Notification | ipn-return.php"
-
 #: index.php:145
+msgid "Instant Payment Notification"
+msgstr "URL de notification instantanée (IPN)"
+
+#: index.php:146
 msgid ""
 "When the payment is done, the gateway sends some parameters by POST mode to "
 "the server URL which analyzes the payment results. First you have to check "
@@ -322,22 +328,10 @@ msgstr ""
 "les paramètres liés au paiement proprement dit."
 
 #: index.php:148
-msgid ""
-"In this package, the <code>form-return.php</code> file controls the "
-"signature and analyzes the payment results. First the script checks the "
-"signature and then analyzes the main fields. It is up to you to adapt the "
-"code to your context."
-msgstr ""
-"Dans ce pack, c'est le fichier <code>form-return.php</code> qui controle la "
-"signature et analyse les résultats du paiement. Le code est donné à titre "
-"d'exemple. Dans un premier temps le script vérifie la signature puis analyse "
-"les principaux champs. A vous d'adapter le code à votre contexte."
-
-#: index.php:150
 msgid "Return URLs"
 msgstr "URL de retour"
 
-#: index.php:151
+#: index.php:149
 msgid ""
 "When the customer comes back to the shop through one of the return URLs, the "
 "payment parameters are sent back depending on the <code>vads_return_mode</"
@@ -350,11 +344,23 @@ msgstr ""
 "du <code>vads_return_mode</code> les paramètres sont renvoyés en mode POST / "
 "GET ou pas du tout."
 
-#: index.php:155
+#: index.php:150
+msgid ""
+"In this package, the <code>form-return.php</code> file controls the "
+"signature and analyzes the payment results. First the script checks the "
+"signature and then analyzes the main fields. It is up to you to adapt the "
+"code to your context."
+msgstr ""
+"Dans ce pack, c'est le fichier <code>form-return.php</code> qui controle la "
+"signature et analyse les résultats du paiement. Le code est donné à titre "
+"d'exemple. Dans un premier temps le script vérifie la signature puis analyse "
+"les principaux champs. A vous d'adapter le code à votre contexte."
+
+#: index.php:153
 msgid "Find HELP"
 msgstr "Trouver de l'aide"
 
-#: index.php:156
+#: index.php:154
 msgid ""
 "The PAYZEN support recommends to read the settings analysis documentation"
 msgstr "Le support de PayZen recommande fortement de lire la documentation"
@@ -384,6 +390,23 @@ msgstr "Merci de préciser l'URL de la plateforme"
 msgid "### ERROR - An exception raised during IPN PayZen process:"
 msgstr "###ERREUR - une erreur est survenue pendant le process IPN"
 
+#: return/form-return.php:19
+msgid "Payment status"
+msgstr "Statut du paiement"
+
+#: return/form-return.php:24
+msgid "INVALID SIGNATURE"
+msgstr "Signature Invalide"
+
+#~ msgid "Html form with client information and return URL"
+#~ msgstr "Formulaire HTML avec"
+
+#~ msgid "Html form"
+#~ msgstr "Formulaire HTML"
+
+#~ msgid "Instant Payment Notification | ipn-return.php"
+#~ msgstr "Instant Payment Notification | ipn-return.php"
+
 #~ msgid ""
 #~ "In order to be redirected straight to the payment gateway, you need to "
 #~ "change the debug value of the conf.txt file to OFF."
@@ -391,9 +414,6 @@ msgstr "###ERREUR - une erreur est survenue pendant le process IPN"
 #~ "Pour etre redirigé directement sur la page de paiement sans afficher "
 #~ "cette page, veuillez passer la valeur debug à OFF dans le fichier config."
 #~ "php."
-
-#~ msgid "INVALID SIGNATURE"
-#~ msgstr "Signature Invalide"
 
 #~ msgid "Status"
 #~ msgstr "Statut"

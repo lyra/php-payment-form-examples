@@ -43,6 +43,7 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
         body {
             padding-top: 70px;
             /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+            padding-bottom: 8em;
         }
         .form-control{min-width: 220px;}
     </style>
@@ -127,9 +128,9 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 
             <h2><?php echo gettext('Form Examples'); ?></h2>
             <ul>
+                <li><a href="example/html-form.php"><?php echo gettext('Html form with client\'s informations and return URL'); ?></a></li>
                 <li><a href="example/simple-form.php"><?php echo gettext('Simple Form'); ?></a></li>
                 <li><a href="example/simple-form-with-card-preselected.php"><?php echo gettext('Simple form with card pre-selected and return URL'); ?></a></li>
-                <li><a href="example/html-form.php"><?php echo gettext('Html form'); ?></a></li>
                 <li><a href="example/installment-payment.php"><?php echo gettext('Installment payment'); ?></a></li>
                 <li><a href="example/deferred-payment.php"><?php echo gettext('Deferred payment'); ?></a></li>
                 <li><a href="example/authorization-without-capture.php"><?php echo gettext('Authorization without capture'); ?></a></li>
@@ -141,15 +142,12 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 
             <h2><?php echo gettext('PAYMENT ANALYSIS'); ?></h2>
             <div id="Info">
-                <strong><?php echo gettext('Instant Payment Notification | ipn-return.php'); ?></strong><br />
+                <strong><?php echo gettext('Instant Payment Notification'); ?> <code>ipn-return.php</code></strong><br />
                 <p><?php echo gettext('When the payment is done, the gateway sends some parameters by POST mode to the server URL which analyzes the payment results. First you have to check the signature. If it is correct then you will be able to take the payment parameters into consideration.'); ?></p>
 
-                <strong>form-return.php</strong><br />
-                <p><?php echo gettext('In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.'); ?></p>
-
-                <strong><?php echo gettext('Return URLs'); ?></strong><br />
+                <strong><?php echo gettext('Return URLs'); ?></strong><code>form-return.php</code><br />
                 <p><?php echo gettext('When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all.'); ?></p>
-
+                <p><?php echo gettext('In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.'); ?></p>
             </div>
 
             <h2><?php echo gettext('Find HELP'); ?></h2>
