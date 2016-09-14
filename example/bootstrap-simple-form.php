@@ -1,5 +1,30 @@
 <?php
+session_start();
+// I18N support information here
+if(isset($_GET['lang'])){
+    $lang = $_GET["lang"];
+} elseif (isset($_SESSION["lang"])) {
+    $lang  = $_SESSION["lang"];
+} else {
+    $lang = 'en_EN';
+
+}
+
+// save language preference for future page requests
+$_SESSION["lang"]  = $lang;
+$domain = 'messages';
+$folder = "lib/locale";
+$encoding = "UTF-8";
+
+if($lang == 'fr_FR'){
+    include '../lib/locale/fr_FR/messages.php';
+} else {
+    include '../lib/locale/en_EN/messages.php';
+}
+?>
+<?php
 $toolbox = require "../config/config.php";
+
 
 /**
  * Payment arguments
@@ -9,12 +34,12 @@ $toolbox = require "../config/config.php";
 $args = array(
     'vads_amount' => array(
         'value' => '4500',//The amount of the transaction presented in the smallest unit of the currency (cents for Euro).
-        'label' => _('Price'),
+        'label' => $i18n['price'],
         'type' => 'text',
         'class'  => 'vads-field',
         'wrapper_class' => 'vads-wrapper',
         'readonly' => true,
-        'help' =>  _('Display only the price to pay')
+        'help' =>  $i18n['displayrealprice']
     ),
     "vads_currency" => "978" // An ISO 4217 numerical code of the payment currency.
 );
@@ -63,7 +88,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '</div></div>';
 }
 
-$form .= '<button type="submit" class="btn btn-default">'. _("Pay").'</button>';
+$form .= '<button type="submit" class="btn btn-default">'. $i18n['pay'].'</button>';
 $form .= '</form>';
 ?>
 
@@ -79,7 +104,7 @@ $form .= '</form>';
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <title><?php echo _('Payment form'); ?></title>
+    <title><?php echo $i18n['paymentform']; ?></title>
 
 </head>
 
@@ -88,7 +113,7 @@ $form .= '</form>';
 <div class="container">
     <div class="row">
         <div class="col-lg-12" style="max-width: 320px;">
-            <h1><?php echo _('Payment form'); ?></h1>
+            <h1><?php echo $i18n['paymentform']; ?></h1>
             <?php echo $form; ?>
         </div>
     </div>

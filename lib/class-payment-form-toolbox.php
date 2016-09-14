@@ -9,6 +9,7 @@ class paymentFormToolbox {
     // Container for PayZen user's account informations
     public $account;
     public $debug;
+    public $requiredfields;
 
     //Container for certificate
     private $certificate;
@@ -32,25 +33,27 @@ class paymentFormToolbox {
         $platform = (isset($args['platform']))? $args['platform'] : '';
         $debug = (isset($args['debug']))? $args['debug'] : false;
 
+        $this->required_fields = true;
+        $warning = '';
         if (empty($shopID) || $shopID == '[***CHANGE-ME***]') {
-            echo _('please fill your site ID in').' config/config.php <br />';
-            echo _('find some help on payzen.io');
-            exit;
+            $warning .= '<h1>SITE ID missing in config/config.php </h1>';
+            $this->required_fields = false;
         }
-        elseif ($ctxMode == 'TEST' && (empty($certTest) || $certTest == '[***CHANGE-ME***]')) {
-            echo _('please fill your certificate (TEST-version) in').' config/config.php <br />';
-            echo _('find some help on payzen.io');
-            exit;
+        if ($ctxMode == 'TEST' && (empty($certTest) || $certTest == '[***CHANGE-ME***]')) {
+            $warning .= '<h1>Certificate (TEST) missing in config/config.php </h1>';
+            $this->required_fields = false;
         }
-        elseif ($ctxMode == 'PRODUCTION' && (empty($certProd) || $certProd == '[***CHANGE-ME***]')) {
-            echo _('please fill your certificate (PRODUCTION) in').'config/config.php <br />';
-            echo _('find some help on payzen.io');
-            exit;
+        if ($ctxMode == 'PRODUCTION' && (empty($certProd) || $certProd == '[***CHANGE-ME***]')) {
+            $warning .= '<h1>Certificate (PRODUCTION) missing in config/config.php </h1>';
+            $this->required_fields = false;
         }
-        elseif ( empty($platform) ||  $platform == '[***CHANGE-ME***]') {
-            echo _('please fill the platform URL').'config/config.php <br />';
-            echo _('find some help on payzen.io');
-            exit;
+        if ( empty($platform) ||  $platform == '[***CHANGE-ME***]') {
+            $warning .=  '<h1>Platform URL missing in config/config.php </h1>';
+            $this->required_fields = false;
+        }
+
+        if($this->required_fields == false){
+            echo '<pre>'.$warning.'</pre>';
         }
         $this->account = array(
             'vadsSiteId'        => $shopID,
@@ -387,7 +390,7 @@ class paymentFormToolbox {
             try {
                 $this->getIpnRequestData($_POST);
             }catch(Exception $e) {
-                $error_msg= _('### ERROR - An exception raised during IPN PayZen process:');
+                $error_msg= '### ERROR - An exception raised during IPN PayZen process:';
                 error_log($error_msg. ' '.$e);
                 return $e;
             }

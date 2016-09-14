@@ -7,21 +7,18 @@ if(isset($_GET['lang'])){
     $lang  = $_SESSION["lang"];
 } else {
     $lang = 'en_EN';
+
 }
 
 // save language preference for future page requests
-$_SESSION["Language"]  = $lang;
-$domain = 'messages';
-$folder = "lib/locale";
+$_SESSION["lang"]  = $lang;
 $encoding = "UTF-8";
 
-putenv("LANG=" . $lang);
-setlocale(LC_ALL, $lang);
-
-// Set the text domain as 'messages'
-bindtextdomain($domain, $folder);
-bind_textdomain_codeset($domain, $encoding);
-textdomain($domain);
+if($lang == 'fr_FR'){
+    include '../lib/locale/fr_FR/messages.php';
+} else {
+    include '../lib/locale/en_EN/messages.php';
+}
 
 //vars
 $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
@@ -67,7 +64,7 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Contact us'); ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
                         <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
@@ -84,7 +81,7 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Language'); ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['lang']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo $site_url; ?>?lang=fr_FR">French</a></li>
                         <li><a href="<?php echo $site_url; ?>?lang=en_EN">English</a></li>
@@ -109,9 +106,9 @@ $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
     <div class="row">
         <div class="col-lg-12" style="max-width: 92%;">
             <br><br>
-            <h2><?php echo _('BELOW IS THE DATA WHICH WILL BE SENT TO THE GATEWAY'); ?></h2>
-            <p><?php echo _('NOTE:'); ?> <br>
-                <?php echo _('In order to be redirected straight to the payment gateway, you need to change the debug value of the config.php file to false.'); ?></p>
+            <h2><?php echo $i18n['datasent']; ?></h2>
+            <p><?php echo $i18n['note']; ?> <br>
+                <?php echo $i18n['debugdesc']; ?></p>
 <?php
 /**
  * Toolbox initialisation, using PayZen account informations
@@ -147,7 +144,7 @@ foreach ($formData['fields'] as $name => $value) {
     $form .= '</tr>';
 }
 $form .= '</table>';
-$form .= '<input type="submit" name="pay-submit" value="'._("Pay").'" class="btn btn-primary btn-lg btn-block"/>';
+$form .= '<input type="submit" name="pay-submit" value="'.'Pay'.'" class="btn btn-primary btn-lg btn-block"/>';
 $form .= '</form>';
 
 echo $form;
@@ -160,7 +157,7 @@ echo $form;
 
         </div></div></div>
 <?php else: ?>
-    <?php echo _('no POST data has been sent'); ?>
+    <?php echo $i18n['nopostdata']; ?>
 <?php endif; ?>
 </body>
 </html>

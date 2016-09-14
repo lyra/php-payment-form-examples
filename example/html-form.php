@@ -7,21 +7,18 @@ if(isset($_GET['lang'])){
     $lang  = $_SESSION["lang"];
 } else {
     $lang = 'en_EN';
+
 }
 
 // save language preference for future page requests
-$_SESSION["Language"]  = $lang;
-$domain = 'messages';
-$folder = "lib/locale";
+$_SESSION["lang"]  = $lang;
 $encoding = "UTF-8";
 
-putenv("LANG=" . $lang);
-setlocale(LC_ALL, $lang);
-
-// Set the text domain as 'messages'
-bindtextdomain($domain, $folder);
-bind_textdomain_codeset($domain, $encoding);
-textdomain($domain);
+if($lang == 'fr_FR'){
+    include '../lib/locale/fr_FR/messages.php';
+} else {
+    include '../lib/locale/en_EN/messages.php';
+}
 
 //vars
 $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
@@ -62,13 +59,13 @@ $lang_doc = (!empty($lang)) ? str_replace('_','-',$lang) : 'en-EN';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">PayZen</a>
+            <a class="navbar-brand" href="<?php echo $site_url; ?>">PayZen</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Contact us'); ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
                         <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
@@ -85,7 +82,7 @@ $lang_doc = (!empty($lang)) ? str_replace('_','-',$lang) : 'en-EN';
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Language'); ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['lang']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo $site_url; ?>?lang=fr_FR">French</a></li>
                         <li><a href="<?php echo $site_url; ?>?lang=en_EN">English</a></li>
@@ -111,17 +108,15 @@ $lang_doc = (!empty($lang)) ? str_replace('_','-',$lang) : 'en-EN';
             <br><br>
             <div class="bg-info">
                 <div style="padding: 2em;">
-                <h2><?php echo _('PAYZEN PAYMENT SOLUTION IMPLEMENTATION EXAMPLE'); ?> </h2>
+                <h2><?php echo $i18n['payzensolution']; ?> </h2>
                 <div id="Info">
-                    <p><b><?php echo _('INFORMATIONS'); ?></b></p>
-                    <p><?php echo _("The payment uses the sending of a payment form to PAYZEN payment gateway URL."); ?></p>
-                    <p><strong><?php echo _('File'); ?> config.php</strong></p>
-                    <p><?php echo _('Before the first use you have to fill the <code>shopID</code>, <code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the <code>config/config.php</code>.e. This file contains secure data.  <b>This data securing is on your responsibility.</b>'); ?></p>
+                    <p><b><?php echo $i18n['info']; ?></b></p>
+                    <p><?php echo $i18n['usesform']; ?></p>
+                    <p><strong><?php echo $i18n['file']; ?> config.php</strong></p>
+                    <p><?php echo $i18n['beforefirstuse']; ?></p>
 
-                    <p><strong><u><?php echo _('File'); ?> html-form.php</u></strong></p>
-                    <p><?php echo _("the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p>
-                    <p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p>
-                    <p><b>Some other fields are available, PAYZEN support recommends to read the payment form documentation</b> <a href='https://payzen.io'>Read the documentation.</a>"); ?></p>
+                    <p><strong><u><?php echo $i18n['file']; ?> html-form.php</u></strong></p>
+                    <p><?php echo $i18n['htmlformuse']; ?></p>
 
                 </div>
                 </div>
@@ -131,86 +126,86 @@ $lang_doc = (!empty($lang)) ? str_replace('_','-',$lang) : 'en-EN';
     <table class="table table-bordered">
         <tbody>
         <tr>
-            <td colspan="3" class="title_array"><h2><?php echo _('TRANSACTION SETTINGS'); ?></h2></td>
+            <td colspan="3" class="title_array"><h2><?php echo $i18n['transsettings']; ?></h2></td>
         </tr>
         <tr>
             <td class="field_mandatory text-danger"><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-amount.html">vads_amount</a></td>
             <td><input type="text" class="form-control" name="vads_amount" value="1000" size="20"></td>
             <td  class="text-right text-danger">
-                <?php echo _('Order amount set in the smallest currency unit. Cents for EURO. Ex: 1000 for 10 euros'); ?></td>
+                <?php echo $i18n['amountdesc']; ?></td>
         </tr>
 
         <tr>
-            <td colspan="3"><h3><?php echo _('CLIENT SETTINGS'); ?></h3></td>
+            <td colspan="3"><h3><?php echo $i18n['clientssettings']; ?></h3></td>
         </tr>
 
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-order-id.html">vads_order_id</a></td>
             <td><input type="text" class="form-control" name="vads_order_id" value="123456" size="20"></td>
-            <td><?php echo _('Order number. Optional setting. Length of field: 32 characters max - Alphanumeric Type'); ?></td>
+            <td><?php echo $i18n['orderdesc']; ?></td>
         </tr>
 
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-id.html">vads_cust_id</a></td>
             <td><input type="text" class="form-control" name="vads_cust_id" value="2380" size="20"></td>
-            <td class="text-right"><?php echo _('Customer number. Optional setting. Length of field: 32 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custid']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-name.html">vads_cust_name</a></td>
             <td><input type="text" class="form-control" name="vads_cust_name" value="Henri Durand" size="20"></td>
-            <td class="text-right"><?php echo _('Customer name. Optional setting. Length of field: 127 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custname']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-address.html">vads_cust_address</a></td>
             <td><input type="text" class="form-control" name="vads_cust_address" value="Bd Paul Picot" size="20"></td>
-            <td class="text-right"><?php echo _('Customer address. Optional setting. Length of field: 255 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custaddress']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-zip.html">vads_cust_zip</a></td>
             <td><input type="text" class="form-control" name="vads_cust_zip" value="83200" size="20"></td>
-            <td class="text-right"><?php echo _('Customer Postal Code. Optional setting. Length of field: 32 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custzip']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-city.html">vads_cust_city</a></td>
             <td><input type="text" class="form-control" name="vads_cust_city" value="TOULON" size="20"></td>
-            <td class="text-right"><?php echo _('Customer City. Optional setting. Length of field: 63 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custcity']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-country.html">vads_cust_country</a></td>
             <td><input type="text" class="form-control" name="vads_cust_country" value="FR" size="20"></td>
-            <td class="text-right"><?php echo _('Customer Country. Customer country code according to the ISO 3166 norm. Optional setting. Length of field: 2 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custcountry']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-phone.html">vads_cust_phone</a></td>
             <td><input type="text" class="form-control" name="vads_cust_phone" value="06002822672" size="20"></td>
-            <td class="text-right"><?php echo _('Customer Phone Number. Optional setting. Length of field: 32 characters max - Alphanumeric Type'); ?></td>
+            <td class="text-right"><?php echo $i18n['custphone']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-cust-email.html">vads_cust_email</a></td>
             <td><input type="text" class="form-control" name="vads_cust_email" size="20" placeholder="john@email.com"></td>
-            <td class="text-right"><?php echo _('Customer Email. Optional setting.'); ?></td>
+            <td class="text-right"><?php echo $i18n['custemail']; ?></td>
         </tr>
 
         <tr>
-            <td colspan="3"><h3><?php echo _('RETURN URL'); ?></h3></td>
+            <td colspan="3"><h3><?php echo $i18n['returnurl']; ?></h3></td>
         </tr>
 
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-url-return.html">vads_url_return</a></td>
             <td><input type="text" class="form-control" name="vads_url_return" value="http://localhost:8888/vads-payment-php/return/form-return.php" placeholder="http://localhost:8888/vads-payment-php/return/form-return.php" size="20"></td>
-            <td><?php echo _('Default URL to where the buyer will be redirected. If this field has not been transmitted, the Back Office configuration will be taken into account.'); ?></td>
+            <td><?php echo $i18n['urlreturndesc']; ?></td>
         </tr>
         <tr>
             <td><a target="_blank" href="https://payzen.io/<?php echo $lang_doc; ?>/form-payment/standard-payment/vads-redirect-success-timeout.html">vads_redirect_success_timeout</a></td>
             <td><input type="text" class="form-control" name="vads_redirect_success_timeout" value="10" placeholder="10" size="20"></td>
-            <td><?php echo _('delay in seconds before an automatic redirection to the merchant website at the end of an accepted payment.'); ?></td>
+            <td><?php echo $i18n['redirect']; ?></td>
         </tr>
 
         </tbody></table>
     <br><br>
 
     <button type="submit" class="btn btn-primary btn-lg btn-block">
-        <?php echo _('Validate and send the settings  <br>by POST mode to'); ?> form-tunnel.php
+        <?php echo $i18n['sendform']; ?> form-tunnel.php
     </button>
 </form>
 </div>

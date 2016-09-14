@@ -21,7 +21,7 @@ if($control && $toolbox->debug == true){
     $vads_capture_delay = (isset($response['vads_capture_delay'])) ? $response['vads_capture_delay'] : 'undefined';
     $vads_validation_mode = (isset($response['vads_validation_mode'])) ? $response['vads_validation_mode'] : 'undefined';
 
-    echo '<h1>'._("Payment status").' : '.$status.'</h1>';
+    echo '<h1>'.$i18n['paymentstatus'].' : '.$status.'</h1>';
     echo '<p>vads_warranty_result : '.$vads_warranty_result.'</p>';
     echo '<p>vads_threeds_status (3DS) : '.$vads_warranty_result.'</p>';
     echo '<p>vads_auth_result : '.$vads_auth_result.'</p>';
@@ -29,7 +29,7 @@ if($control && $toolbox->debug == true){
     echo '<p>vads_validation_mode: '.$vads_validation_mode.'</p>';
 
 
-    echo "<h2>"._('Data returned with documentation links :').'</h2>';
+    echo "<h2>".$i18n['datawithdoclinks'].'</h2>';
     echo '<table class="table table-bordered">';
     $form = '';
     foreach ($response as $name => $value) {
@@ -43,14 +43,14 @@ if($control && $toolbox->debug == true){
     echo $form;
     echo '</table>';
 
-    echo "<h2>"._('Raw data :').'</h2>';
+    echo "<h2>".$i18n['rawdata'].'</h2>';
     echo '<pre>';
     var_dump($response);
     echo '</pre>';
 } elseif($control && $toolbox->debug == false){
     $response = $toolbox->getIpn();
     $status = (isset($response['vads_trans_status']) && is_array($response)) ? $response['vads_trans_status'] : 'undefined';
-    echo '<h1>'._("Payment status").' : '.$status.'</h1>';
+    echo '<h1>'.$i18n['paymentstatus'].' : '.$status.'</h1>';
 }else {
-    echo _("INVALID SIGNATURE");
+    echo $i18n['invalidsign'];
 }

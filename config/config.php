@@ -45,7 +45,7 @@ $args = array(
     'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
     'ctxMode'   => 'TEST',              // PRODUCTION || TEST
     'platform'  => '[***CHANGE-ME***]', // Platform URL
-    'debug'    => false
+    'debug'    => true
 );
 
 $toolbox = new paymentFormToolbox($args);
