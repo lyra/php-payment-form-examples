@@ -22,10 +22,15 @@ if($lang == 'fr_FR'){
     include 'lib/locale/en_EN/messages.php';
 }
 //vars
-$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
-$site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-$uri_parts = explode('?',$site_url_full);
-$site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
+if(isset($_SERVER['HTTP_HOST'])){
+    $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
+    $site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    $uri_parts = explode('?',$site_url_full);
+    $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
+} else {
+    $site_url = 'http://localhost:8888';
+}
+
 ?>
 
 <!DOCTYPE html>

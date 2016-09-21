@@ -2,6 +2,7 @@ language: php
 php:
 - 5.5
 - 5.4
+- 5.3
 - hhvm
 
 env:
@@ -9,5 +10,7 @@ env:
 
 script:
 - phpunit index.php
-- phpunit admin/
-- phpunit public/
+- phpunit example/
+- phpunit lib/
+- phpunit config/
+- phpunit return/
