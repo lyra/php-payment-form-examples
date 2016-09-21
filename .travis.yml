@@ -9,7 +9,6 @@ env:
 - WP_TRAVISCI=travis:phpunit WP_VERSION=latest
 
 script:
-- phpunit index.php
 - phpunit example/
 - phpunit lib/
 - phpunit config/
