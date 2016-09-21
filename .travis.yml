@@ -1,0 +1,13 @@
+language: php
+php:
+- 5.5
+- 5.4
+- hhvm
+
+env:
+- WP_TRAVISCI=travis:phpunit WP_VERSION=latest
+
+script:
+- phpunit index.php
+- phpunit admin/
+- phpunit public/

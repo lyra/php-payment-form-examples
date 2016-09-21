@@ -137,7 +137,7 @@ $form .= '<table class="table table-bordered">';
 foreach ($formData['fields'] as $name => $value) {
 
     $doc_name = (strpos($name, 'vads_') !== false) ? str_replace('_','-',$name): false;
-    $doclink = ($doc_name) ? 'https://payzen.io/en-EN/form-payment/standard-payment/'.$doc_name.'.html': '#';
+    $doclink = ($doc_name) ? 'https://payzen.io/'.$lang.'/form-payment/standard-payment/'.$doc_name.'.html': '#';
     $form .= '<tr>';
     $form .= '<td><label for="'. $name. '"><a target="_blank" href="'.$doclink.'">'.$name.'</a></label></td>';
     $form .= '<td><input type="text" readonly="readonly"  name="'.$name.'" value="'.$value.'" /></td>';
