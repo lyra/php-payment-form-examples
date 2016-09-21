@@ -1,12 +1,14 @@
 language: php
-php:
-- 5.5
-- 5.4
-- 5.3
-- hhvm
 
-env:
-- WP_TRAVISCI=travis:phpunit WP_VERSION=latest
+git:
+  depth: 20
+php:
+  - 5.3
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
 
 script:
 - phpunit example/
