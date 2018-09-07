@@ -236,7 +236,7 @@ class paymentFormToolbox {
         foreach ($fields as $nom => $valeur) {
             if(substr($nom,0,5) == 'vads_') {
                 // Concatenation with  "+"
-                $signature_content  .= $valeur."+";
+                $signature_content  .= stripslashes($valeur)."+";
             }
         }
         // Adding the certificate at the end
