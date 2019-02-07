@@ -10,6 +10,7 @@ class paymentFormToolbox {
     public $account;
     public $debug;
     public $requiredfields;
+    public $algorithm;
 
     //Container for certificate
     private $certificate;
@@ -200,28 +201,12 @@ class paymentFormToolbox {
             $form_data_signature = $default_fields;
         }
 
-        $form_data['signature'] = $this->sign($form_data_signature);
+        $form_data['signature'] = $this->getSignature($form_data_signature);
 
         return $form_data;
     }
 
 
-
-    /**
-     * Utility function, builds and returns the signature string of the data
-     *  being transmitted to the PayZen plat-form
-     *
-     * @param $vads_form array, array of data being signed
-     *
-     * @return String, the signature
-     */
-    public function sign(Array $vads_form) {
-        ksort($vads_form);           // VADS values sorted by name, ascending order
-        return sha1(                 // SHA1 encryption of ...
-            implode('+', $vads_form)    // ... VADS array values joined with '+' ...
-            . "+$this->certificate"                  // ... concatenated with '+' and the certificate.
-        );
-    }
 
     /**
      * getSignature
@@ -241,10 +226,12 @@ class paymentFormToolbox {
         }
         // Adding the certificate at the end
         $signature_content .= $this->certificate;;
-        // Applying SHA-1 algorythm
-        $signature = sha1($signature_content );
-
-        return $signature;
+        // Applying SHA-1 algorithm if defined in shop
+	    if($this->algorithm === 'sha1'){
+		    return sha1($signature_content);
+	    }
+	    // Applying sha256 algorythm
+	    return base64_encode(hash_hmac('sha256',$signature_content, $this->certificate, true));
     }
 
     /**
@@ -276,7 +263,7 @@ class paymentFormToolbox {
     public function getIpnRequestData($fields) {
 
         $vads_data = $this->filterVadsData($fields);
-        $signature_check = $this->sign($vads_data);
+        $signature_check = $this->getSignature($vads_data);
         if (@$fields['signature'] != $signature_check) {
             $msg = 'Signature mismatch';
             $output = array(
@@ -410,7 +397,4 @@ class paymentFormToolbox {
     public function theResponseData(){
         return $_POST;
     }
-
-
 }
-
