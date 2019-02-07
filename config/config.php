@@ -45,7 +45,7 @@ $args = array(
     'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
     'ctxMode'   => 'TEST',              // PRODUCTION || TEST
     'platform'  => '[***CHANGE-ME***]', // Platform URL
-    'algorithm'  => 'sha256', // Platform URL
+    'algorithm'  => 'sha256', // the signature algorithm chosen in the shop configuration
     'debug'    => true
 );
 
