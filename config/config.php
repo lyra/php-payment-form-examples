@@ -4,7 +4,7 @@
  *
  * Bootstraping code, handles initialisation and configuration
  *
- * @version 0.6
+ * @version 0.7
  *
  */
 
@@ -45,6 +45,7 @@ $args = array(
     'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
     'ctxMode'   => 'TEST',              // PRODUCTION || TEST
     'platform'  => '[***CHANGE-ME***]', // Platform URL
+    'algorithm'  => 'sha256', // Platform URL
     'debug'    => true
 );
 
