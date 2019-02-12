@@ -33,7 +33,7 @@ class paymentFormToolbox {
         $ctxMode = (isset($args['ctxMode']))? $args['ctxMode'] : 'TEST';
         $platform = (isset($args['platform']))? $args['platform'] : '';
         $debug = (isset($args['debug']))? $args['debug'] : false;
-
+	$this->algorithm = (isset($args['algorithm']))? $args['algorithm'] : 'sha256';
         $this->required_fields = true;
         $warning = '';
         if (empty($shopID) || $shopID == '[***CHANGE-ME***]') {
