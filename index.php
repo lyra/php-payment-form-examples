@@ -141,6 +141,7 @@ if(isset($_SERVER['HTTP_HOST'])){
                 <li><a href="example/sepa.php"><?php echo $i18n['sepa']; ?> </a></li>
                 <li><a href="example/e-cheques-vacances.php"><?php echo $i18n['ecv']; ?> </a></li>
                 <li><a href="example/bootstrap-simple-form.php"><?php echo $i18n['simpleformboots']; ?> </a></li>
+                <li><a href="example/standard-payment-example.php"><?php echo 'Standard Payment' ?> </a></li>
             </ul>
 
             <h2><?php echo $i18n['paymentanalysis']; ?> </h2>

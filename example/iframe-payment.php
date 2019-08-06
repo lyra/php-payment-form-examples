@@ -19,7 +19,6 @@ $order_info= array(
     "currency" => "978", // An ISO 4217 numerical code of the payment currency.
     "order_id" => "1",
     "lang_code" => "fr",
-    //'url_return' => 'http://34a4791a.ngrok.io/monsite/test2/example/return_payment.php',
     // Customer info.
     "cust_id" => "258",
     "cust_email" => "cmshb09@gmail.com",
@@ -34,12 +33,6 @@ $order_info= array(
     "cust_phone" => "088854756"
 );
 
-$params_multi = array(
-                'first' => 50,
-                'count' => 3,
-                'period' => 30
-            );
-
-//Module configuration parameters
+//Payment processor parameters
 $paymentProcessor = new PaymentProcessor();
-$paymentProcessor->submitMultiPaymentForm($order_info, $params_multi);
+$paymentProcessor->submitStandardPaymentForm($order_info);

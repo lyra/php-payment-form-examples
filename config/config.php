@@ -8,9 +8,6 @@
  *
  */
 
-
-require "../lib/class-payment-form-toolbox.php";
-
 /**
  * Toolbox initialisation, using PayZen account informations
  *
@@ -39,16 +36,42 @@ require "../lib/class-payment-form-toolbox.php";
  * will override the IPN URL and popuplate the vads_url_check field
  */
 
-$args = array(
-    'shopID'    => '[***CHANGE-ME***]', // shopID
-    'certTest'  => '[***CHANGE-ME***]', // certificate, TEST-version
-    'certProd'  => '[***CHANGE-ME***]', // certificate, PRODUCTION-version
-    'ctxMode'   => 'TEST',              // PRODUCTION || TEST
-    'platform'  => '[***CHANGE-ME***]', // Platform URL
-    'algorithm'  => 'sha256', // the signature algorithm chosen in the shop configuration
-    'debug'    => true
-);
+/**
+ *
+ */
+class ModuleConfiguration
+{
+    private $config_params = array(
+        'site_id' => '***CHANGE-ME***',
+        'key_test' => '***CHANGE-ME***',
+        'key_prod' => '***CHANGE-ME***',
+        'ctx_mode' => '***CHANGE-ME***',
+        'platform_url' => '***CHANGE-ME***',
+        'sign_algo' => 'SHA-256', // the signature algorithm chosen in the shop configuration
+        'return_mode' => 'POST',
+        'url_return' => '***CHANGE-ME***',
+        'action_mode' => '***CHANGE-ME***', // 'INTERACTIVE'/ 'IFRAME'
+        'theme_config' => '',
+        'debug' => true
+    );
 
-$toolbox = new paymentFormToolbox($args);
+    public function getConfigParams()
+    {
+        return $this->config_params;
+    }
 
-return $toolbox;
+    public function getConfigParam($name)
+    {
+        if (array_key_exists($name, $this->config_params)) {
+            return $this->config_params[$name];
+        }
+    }
+
+    public function setConfigParam($name, $value)
+    {
+        if (!empty($name)) {
+            $this->config_params[$name] = $value;
+        }
+    }
+}
+?>
