@@ -4,10 +4,21 @@ use Lyranetwork\Lyra\Api;
 use Lyranetwork\Lyra\Request;
 use Lyranetwork\Lyra\Response;
 
-require_once 'api/Api.php';
-require_once 'api/Logger.php';
-require_once 'Request.php';
-require_once 'Response.php';
+function autoloadSdk($className) {
+    $filename = "../lyra-payment-form-sdk/" . $className . ".php";
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+function autoloadTools($className) {
+    $filename = $className . ".php";
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+spl_autoload_register("autoloadSdk");
+spl_autoload_register("autoloadTools");
+
 require_once '../config/config.php';
 
 function loadClasse($classe)
@@ -228,7 +239,7 @@ EOT;
             $from_server = $response->get('hash') !== null;
 
             if (!$response->isAuthentified()) {
-                $logger->write('Authentication failed: received invalid response with parameters: ' . print_r($param, true));
+                $this->logger->write('Authentication failed: received invalid response with parameters: ' . print_r($param, true));
                 $this->logger->write('Signature algorithm selected in module settings must be the same as one selected in gateway Back Office.');
 
                 if ($from_server) {

@@ -1,11 +1,16 @@
 <?php
     // Load gateway response.
-    require_once '../payment/entity/PaymentProcessor.php';
+    function autoloadTools($className) {
+        $filename = "../lib/tools/" . $className . ".php";
+        if (is_readable($filename)) {
+            require $filename;
+        }
+    }
+    spl_autoload_register("autoloadTools");
     //Module configuration parameters
-
-    $paymentProcessor = new PaymentProcessor();
+    $paymentProcessor = new LyraPaymentProcessor();
     $message = $paymentProcessor->checkResponse($_REQUEST);
-    
+
 ?>
 <!DOCTYPE html>
 <html>
