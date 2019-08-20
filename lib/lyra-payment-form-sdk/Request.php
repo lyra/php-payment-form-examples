@@ -7,7 +7,6 @@
  * @copyright Lyra Network
  * @license   https://opensource.org/licenses/mit-license.html The MIT License (MIT)
  */
-namespace Lyranetwork\Lyra;
 
 require_once 'Api.php';
 require_once 'Field.php';
