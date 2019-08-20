@@ -14,6 +14,11 @@ if (! class_exists('Logger', false)) {
         {
             switch ($name) {
                 case 'logfile':
+                    $log_dir = dirname($value);
+                    if (!is_dir($log_dir)) {
+                        mkdir($log_dir);
+                    }
+
                     if (!file_exists($value)) {
                         clearstatcache();
                         if (!file_exists($value)) {
@@ -23,13 +28,13 @@ if (! class_exists('Logger', false)) {
                     }
 
                     if (!is_writeable($value)) {
-                        new Exception("$value is not a valid file path");
+                        new \Exception("$value is not a valid file path");
                     }
                     $this->logfile = $value;
                     break;
 
                 default:
-                    new Exception("$name cannot be set");
+                    new \Exception("$name cannot be set");
             }
         }
 
@@ -40,7 +45,7 @@ if (! class_exists('Logger', false)) {
                     return $this->logfile;
                     break;
                 default:
-                    throw new Exception("$name does not exist");
+                    throw new \Exception("$name does not exist");
             }
         }
 

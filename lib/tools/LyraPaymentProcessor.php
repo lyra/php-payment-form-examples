@@ -1,33 +1,5 @@
 <?php
 
-use Lyranetwork\Lyra\Api;
-use Lyranetwork\Lyra\Request;
-use Lyranetwork\Lyra\Response;
-
-function autoloadSdk($className) {
-    $filename = "../lyra-payment-form-sdk/" . $className . ".php";
-    if (is_readable($filename)) {
-        require $filename;
-    }
-}
-function autoloadTools($className) {
-    $filename = $className . ".php";
-    if (is_readable($filename)) {
-        require $filename;
-    }
-}
-spl_autoload_register("autoloadSdk");
-spl_autoload_register("autoloadTools");
-
-require_once '../config/config.php';
-
-function loadClasse($classe)
-{
-    require $classe . '.php'; // On inclut la classe correspondante au paramètre passé.
-}
-
-spl_autoload_register('chargerClasse'); // On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
-
 if (! class_exists('LyraPaymentProcessor', false)) {
     class LyraPaymentProcessor
     {
@@ -58,58 +30,52 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          *    $debug => string debug mode
          * )
          */
-        public function __construct($config = array()) {
+        public function __construct($config = array(), $log_dir = './logs') {
+            $this->setLogger($log_dir);
+
+            if (isset($config) && is_array($config) && !empty($config)) {
+                # set config parameters
+                $this->setConfigParameters($config);
+            }else{
+                //Load config parameters from Config.php file
+                $configuration = new  Config();
+                $this->setConfigParameters($configuration->getConfigParams());
+            }
+        }
+
+        public function setLogger($log_dir)
+        {
             $this->logger = Logger::instance();
-            $log_dir = './logs';
             if (!is_dir($log_dir)) {
                 mkdir($log_dir);
             }
             $this->logger->__set('logfile', $log_dir . '/__vads-' . date('Y-m') . '.log');
-
-            if (isset($config) && is_array($config) && !empty($config)) {
-                # set config parameters
-                $this->setconfig_parameters($config);
-            }else{
-                //Load config parameters from config.php file
-
-                $configuration = new ModuleConfiguration();
-                $this->setconfig_parameters($configuration->getConfigParams());
-            }
         }
 
-        public function setLogger()
-        {
-            $logger = Logger::instance();
-            $log_dir = 'logs/';
-            if (!is_dir($log_dir)) {
-                fn_mkdir($log_dir);
-            }
-            $logger->__set('logfile', $log_dir . '__vads-' . date('Y-m') . '.log');
-        }
-        public function setconfig_parameters($config) {
-            $this->required_fields = (in_array( '[***CHANGE-ME***]', $config) ||
-                        (count(array_filter($config)) == count($config))
-                ) ? true : false;
+        public function setConfigParameters($config) {
+            $this->required_fields =
+                ((count(array_filter($config)) == count($config)) || (count(array_filter($config)) == count($config)-1) && !$config['debug'])
+                ? true : false;
 
-            if($this->required_fields){
-                $this->config_parameters = array();
-                $this->config_parameters['site_id'] = (isset($config['site_id']))? $config['site_id'] : '';
-                $this->config_parameters['key_test'] = (isset($config['key_test']))? $config['key_test'] : '';
-                $this->config_parameters['key_prod'] = (isset($config['key_prod']))? $config['key_prod'] : '';
-                $this->config_parameters['ctx_mode'] = (isset($config['ctx_mode']))? $config['ctx_mode'] : 'TEST';
-                $this->config_parameters['platform_url'] = (isset($config['platform_url']))? $config['platform_url'] : '';
-                $this->config_parameters['debug'] = (isset($config['debug']))? $config['debug'] : false;
-                $this->config_parameters['sign_algo'] = (isset($config['sign_algo']))? $config['sign_algo'] : Api::ALGO_SHA1;
-                $this->config_parameters['action_mode'] = (isset($config['action_mode']))? $config['action_mode'] : '';
-                $this->config_parameters['return_mode'] = (isset($config['return_mode']))? $config['return_mode'] : '';
-                $this->config_parameters['url_return'] = (isset($config['url_return']))? $config['url_return'] : '';
+                if($this->required_fields){
+                    $this->config_parameters = array();
+                    $this->config_parameters['site_id'] = (isset($config['site_id']))? $config['site_id'] : '';
+                    $this->config_parameters['key_test'] = (isset($config['key_test']))? $config['key_test'] : '';
+                    $this->config_parameters['key_prod'] = (isset($config['key_prod']))? $config['key_prod'] : '';
+                    $this->config_parameters['ctx_mode'] = (isset($config['ctx_mode']))? $config['ctx_mode'] : 'TEST';
+                    $this->config_parameters['platform_url'] = (isset($config['platform_url']))? $config['platform_url'] : '';
+                    $this->config_parameters['debug'] = (isset($config['debug']))? $config['debug'] : false;
+                    $this->config_parameters['sign_algo'] = (isset($config['sign_algo']))? $config['sign_algo'] : Api::ALGO_SHA1;
+                    $this->config_parameters['action_mode'] = (isset($config['action_mode']))? $config['action_mode'] : '';
+                    $this->config_parameters['return_mode'] = (isset($config['return_mode']))? $config['return_mode'] : '';
+                    $this->config_parameters['url_return'] = (isset($config['url_return']))? $config['url_return'] : '';
 
-                $this->required_fields = true;
-            }else{
-                $this->warning .= '<h1>One of the config parameters is missing in config/config.php </h1>';
-                $this->logger->write($this->warning);
-                echo '<pre>'.$this->warning.'</pre>';
-            }
+                    $this->required_fields = true;
+                }else{
+                    $this->warning .= '<h1>One of the config parameters is missing in config/Config.php </h1>';
+                    $this->logger->write($this->warning);
+                    echo '<pre>'.$this->warning.'</pre>';
+                }
         }
 
         public function initRequest($order_info)
@@ -139,7 +105,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
 
             // Get the shop language code.
             $lang = strtolower($order_info['lang_code']);
-            $order_info['lang_code'] = Api::isSupportedLanguage($lang) ? $lang : 'en';
+            $order_info['language'] = Api::isSupportedLanguage($lang) ? $lang : 'en';
 
             // Order parameters.
             $request->setFromArray($order_info);
@@ -162,67 +128,107 @@ if (! class_exists('LyraPaymentProcessor', false)) {
             return $request;
         }
 
-        public function submitStandardPaymentForm($order_info) {
-            $request = $this->initRequest($order_info);
+        public function prepareForm($order_info, $request)
+        {
+            //insert style
+            $formContent = "";
+            //include ($lang.'.php');
+            $lang = isset($order_info['lang_code']) ? $order_info['lang_code'] : 'en';
+            include '../lib/locale/'. $lang .'/messages.php';
 
-            // Log data that will be sent to payment gateway.
-            $this->logger->write('Data to be sent to payment gateway : ' . print_r($request->getRequestFieldsArray(true /* To hide sensitive data. */), true));
+            if ($this->config_parameters['debug']) {
+                $formContent = '<html>';
+                $formContent.= '<head>';
+                $formContent.= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 
-            // Message to be shown when forwarding to payment platform.
-            $msg = 'text_cc_processor_connection';
+                $formContent.= '<title style="align">' . $i18n['paymentform'] .'</title>';
+                $formContent.= '<link href="../assets/css/style.css" rel="stylesheet" type="text/css"/>';
+                $formContent.= '</head>';
+                $formContent.= '<body style="padding: 10%;">';
+                $formContent.= '<h1 style="text-align: center;">'. $i18n['paymentform']  .'</h1>';
+
+                $form = $this->getDisplayRequestHtml($request, $i18n['sendform']);
+                $submitScript = '';
+                // Message to be shown when forwarding to payment platform.
+                $msg = '';
+            }else{
+                $form = $request->getRequestHtmlFields();
+                $submitScript = '<script type="text/javascript">window.onload = function(){document.payment_form.submit();};</script>';
+                // Message to be shown when forwarding to payment platform.
+                $msg = $i18n['redirect_message_defaut'];
+            }
 
             //get html form
-            $form_content = <<<EOT
-        <form action="{$request->get('platform_url')}" method="POST" name="payment_form">
-            {$request->getRequestHtmlFields()}
-        </form>
+            $formContent .= '<form action="' . $request->get('platform_url') . '" method="POST" name="payment_form">';
+            $formContent .= "\n";
+            $formContent .= $form;
+            $formContent .= "\n";
+            $formContent .= '</form>';
+            $formContent .= '<div style="text-align: center;">' . $msg . '</div>';
+            $formContent .= $submitScript;
+            $formContent .= '</body>';
+            $formContent .= '</html>';
+            return $formContent;
+        }
 
-        <div style="text-align: center;">{$msg}</div>
+        public function submitStandardPaymentForm($order_info) {
+            if ($this->required_fields) {
+                $request = $this->initRequest($order_info);
 
-        <script type="text/javascript">
-            window.onload = function() {
-                document.payment_form.submit();
-            };
-        </script>
-    </body>
-</html>
-EOT;
-            Api::fn_echo($form_content);
+                // Log data that will be sent to payment gateway.
+                $this->logger->write('Data to be sent to payment gateway : ' . print_r($request->getRequestFieldsArray(true /* To hide sensitive data. */), true));
+
+                //get prepared form
+                $formContent = $this->prepareForm($order_info, $request);
+
+                Api::fn_echo($formContent);
+            }
         }
 
         public function submitMultiPaymentForm($order_info, $params_multi) {
-            // Use our custom class to generate the HTML.
-            $request = $this->initRequest($order_info);
+            if ($this->required_fields) {
+                // Use our custom class to generate the HTML.
+                $request = $this->initRequest($order_info);
 
-            // set multi payment options
-            $first = (isset($params_multi['first']) && $params_multi['first']) ?
-            (int) (string) (($params_multi['first'] / 100) * $order_info['amount']) /* amount is in cents*/ : null;
+                // set multi payment options
+                $first = (isset($params_multi['first']) && $params_multi['first']) ?
+                (int) (string) (($params_multi['first'] / 100) * $order_info['amount']) /* amount is in cents*/ : null;
 
-            $request->setMultiPayment(null /* use already set amount */, $first, $params_multi['count'], $params_multi['period']);
+                $request->setMultiPayment(null /* use already set amount */, $first, $params_multi['count'], $params_multi['period']);
 
-            // Log data that will be sent to payment gateway.
-            $this->logger->write('Data to be sent to payment gateway : ' . print_r($request->getRequestFieldsArray(true /* To hide sensitive data. */), true));
+                // Log data that will be sent to payment gateway.
+                $this->logger->write('Data to be sent to payment gateway : ' . print_r($request->getRequestFieldsArray(true /* To hide sensitive data. */), true));
 
-            // Message to be shown when forwarding to payment platform.
-            $msg = 'text_cc_processor_connection';
+                //get prepared form
+                $formContent = $this->prepareForm($order_info, $request);
 
-            //get html form
-            $form_content = <<<EOT
-        <form action="{$request->get('platform_url')}" method="POST" name="payment_form">
-            {$request->getRequestHtmlFields()}
-        </form>
+                Api::fn_echo($formContent);
+            }
+        }
 
-        <div style="text-align: center;">{$msg}</div>
+        /**
+         * Return the HTML inputs of fields to send to the payment page.
+         *
+         * @request Request
+         */
+        public function getDisplayRequestHtml($request, $submit)
+        {
+            $fields = $request->getRequestFields();
 
-        <script type="text/javascript">
-            window.onload = function() {
-                document.payment_form.submit();
-            };
-        </script>
-    </body>
-</html>
-EOT;
-            Api::fn_echo($form_content);
+            $html = '';
+            foreach ($fields as $field) {
+                if (! $field->isFilled()) {
+                    continue;
+                }
+                $value = htmlspecialchars($field->getValue(), ENT_QUOTES, 'UTF-8');
+                $html .= '<label style="width:50%" for="'. $field->getName() .'">'. $field->getName() .'</label><input style="width:100%" class="forminput" name="'. $field->getName() .'" value="'. $value .'" type="text" />';
+
+                //$html .= sprintf($format, $field->getName(), $field->getName(), $field->getName(), $value);
+                $html .= "<br>";
+            }
+
+            $html .= '<input class="forminput" type="submit" value="' . $submit . '"/>';
+            return $html;
         }
 
         public function checkResponse($param = array())
@@ -256,7 +262,7 @@ EOT;
                 }
             }
 
-            return $response->getLogMessage();
+            return $response->isAuthentified();
         }
     }
 }
