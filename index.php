@@ -6,22 +6,13 @@ if(isset($_GET['lang'])){
 } elseif (isset($_SESSION["lang"])) {
     $lang  = $_SESSION["lang"];
 } else {
-    $lang = 'en_EN';
-
+    $lang = 'en';
 }
 
 // save language preference for future page requests
 $_SESSION["lang"]  = $lang;
-$domain = 'messages';
-$folder = "lib/locale";
-$encoding = "UTF-8";
+include 'lib/locale/'. $lang .'/messages.php';
 
-if($lang == 'fr_FR'){
-    include 'lib/locale/fr_FR/messages.php';
-} else {
-    include 'lib/locale/en_EN/messages.php';
-}
-//vars
 if(isset($_SERVER['HTTP_HOST'])){
     $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
     $site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -29,6 +20,15 @@ if(isset($_SERVER['HTTP_HOST'])){
     $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 } else {
     $site_url = 'http://localhost:8888';
+}
+
+require_once 'config/Config.php';
+$configuration = new Config();
+$iframe = false;
+$target = '';
+if($configuration->getConfigParam('action_mode') == 'IFRAME'){
+    $iframe = true;
+    $target = 'target="payframe"';
 }
 
 ?>
@@ -39,17 +39,10 @@ if(isset($_SERVER['HTTP_HOST'])){
     <meta charset="UTF-8">
     <title>PayZen - VADS PAYMENT PHP</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script  src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Custom CSS -->
-    <style>
-        body {
-            padding-top: 70px;
-            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-            padding-bottom: 8em;
-        }
-        .form-control{min-width: 220px;}
-    </style>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
@@ -64,7 +57,7 @@ if(isset($_SERVER['HTTP_HOST'])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo $site_url; ?>">PayZen</a>
+            <a class="navbar-brand" href="#">PayZen</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -89,14 +82,11 @@ if(isset($_SERVER['HTTP_HOST'])){
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['lang']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo $site_url; ?>?lang=fr_FR">French</a></li>
-                        <li><a href="<?php echo $site_url; ?>?lang=en_EN">English</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=en">English</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=fr">French</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=de">German</a></li>
 
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#"><code>Coming soon</code></a></li>
-                        <li><a href="#">Portuguese</a></li>
-                        <li><a href="#">German</a></li>
-                        <li><a href="#">Spanish</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=es">Spanish</a></li>
                     </ul>
                 </li>
             </ul>
@@ -124,25 +114,164 @@ if(isset($_SERVER['HTTP_HOST'])){
                             <li><?php echo $i18n['certtestprod']; ?> </li>
                             <li><?php echo $i18n['modetestprod']; ?> </li>
                             <li><?php echo $i18n['platformurl']; ?> </li>
+                            <li><?php echo $i18n['debugdesc']; ?></li>
                         </ul>
                     </li>
 
                 </ul>
 
             <h2><?php echo $i18n['formexamples']; ?> </h2>
-            <ul>
-                <li><a href="example/html-form.php"><?php echo $i18n['htmlform']; ?> </a></li>
-                <li><a href="example/simple-form.php"><?php echo $i18n['simpleform']; ?> </a></li>
-                <li><a href="example/simple-form-with-card-preselected.php"><?php echo $i18n['simpleformextended']; ?> </a></li>
-                <li><a href="example/installment-payment.php"><?php echo $i18n['installment']; ?> </a></li>
-                <li><a href="example/deferred-payment.php"><?php echo $i18n['deferred']; ?> </a></li>
-                <li><a href="example/authorization-without-capture.php"><?php echo $i18n['authwithoutcapt']; ?> </a></li>
-                <li><a href="example/subscription.php"><?php echo $i18n['monthsub']; ?> </a></li>
-                <li><a href="example/sepa.php"><?php echo $i18n['sepa']; ?> </a></li>
-                <li><a href="example/e-cheques-vacances.php"><?php echo $i18n['ecv']; ?> </a></li>
-                <li><a href="example/bootstrap-simple-form.php"><?php echo $i18n['simpleformboots']; ?> </a></li>
-                <li><a href="example/standard-payment-example.php"><?php echo 'Standard Payment' ?> </a></li>
-            </ul>
+            <h2 style="text-align: center;"><?php $i18n['checkouttitle']; ?></h2>
+            <form class="form-horizontal" role="form" action="standard-payment.php" method="post" id="checkout_form" onsubmit="return checkmode();" <?php echo $target; ?>>
+                <button type="button" class="accordion"><?php echo $i18n['orderdetails']; ?></button>
+                <div class="panel">
+                    <div class="col-md-9">
+                        <table class="table table-striped">
+                          <tr>
+                              <td>
+                                  <ul>
+                                        <li><?php echo $i18n['item1']; ?></li>
+                                        <li><?php echo $i18n['item2']; ?></li>
+                                        <li>...</li>
+                                  </ul>
+                                </td>
+                                <td>
+                                <ul>
+                                        <li><?php echo $i18n['amount1']; ?></li>
+                                        <li><?php echo $i18n['amount2']; ?></li>
+                                        <li>...</li>
+                                </ul>
+                                </td>
+                            </tr>
+                        </table>
+                  </div>
+                  <div class="col-md-3">
+                      <div style="text-align: center;">
+                          <h3><?php echo $i18n['total']; ?></h3>
+                          <input class="forminput" style="color:green; text-align: center;" type="number" name="amount" id="amount" value="1000" required="true" min="0">
+                          <label for="amount"><?php echo $i18n['amountdesc']; ?></label>
+                          <select class="forminput" name="currency" id="currency">
+                              <option value="978" selected>EUR</option>
+                              <option value="840">USD</option>
+                          </select>
+                      </div>
+                  </div>
+                </div>
+
+                <button type="button" class="accordion"><?php echo $i18n['clientssettings']; ?></button>
+                <div class="panel">
+                    <input type="hidden" id="lang_code" name="lang_code" value="<?php echo $lang ?>">
+                    <label style="width: 10%" for="order_id">order_id</label>
+                    <input class="forminput" type="text" id="order_id" name="order_id" value="123456">
+                    <label style="width: 60%" for="order_id"><?php echo $i18n['orderdesc']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_id">cust_id</label>
+                    <input class="forminput" type="text" id="cust_id" name="cust_id" value="2380">
+                    <label style="width: 60%" for="cust_id"><?php echo $i18n['custid']; ?></label><br>
+
+
+                    <label style="width: 10%" for="cust_email">cust_email</label>
+                    <input class="forminput" type="text" id="cust_email" name="cust_email" value="henri@gmail.com">
+                    <label style="width: 60%" for="cust_email"><?php echo $i18n['custemail']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_first_name">cust_first_name</label>
+                    <input class="forminput" type="text" id="cust_first_name" name="cust_first_name" value="Henri">
+                    <label style="width: 60%" for="cust_first_name"><?php echo $i18n['custfirstname']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_last_name">cust_last_name</label>
+                    <input class="forminput" type="text" id="cust_last_name" name="cust_last_name" value="Durand">
+                    <label style="width: 60%" for="cust_last_name"><?php echo $i18n['custlastname']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_address">cust_address</label>
+                    <input class="forminput" type="text" id="cust_address" name="cust_address" value="Bd Paul Pïcot">
+                    <label style="width: 60%" for="cust_address"><?php echo $i18n['custaddress']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_city">cust_city</label>
+                    <input class="forminput" type="text" id="cust_city" name="cust_city" value="TOULON">
+                    <label style="width: 60%" for="cust_city"><?php echo $i18n['custcity']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_zip">cust_zip</label>
+                    <input class="forminput" type="text" id="cust_zip" name="cust_zip" value="83200">
+                    <label style="width: 60%" for="cust_zip"><?php echo $i18n['custzip']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_country">cust_country</label>
+                    <input class="forminput" type="text" id="cust_country" name="cust_country" value="FR">
+                    <label style="width: 60%" for="cust_country"><?php echo $i18n['custcountry']; ?></label><br>
+
+                    <label style="width: 10%" for="cust_phone">cust_phone</label>
+                    <input class="forminput" type="text" id="cust_phone" name="cust_phone" value="06002822672">
+                    <label style="width: 60%" for="cust_phone"><?php echo $i18n['custphone']; ?></label><br>
+
+                </div>
+
+                <button type="button" class="accordion"><?php echo $i18n['payment']; ?></button>
+                <div class="panel">
+                    <div>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <?php echo $i18n['stdpayment']; ?><br>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="multi2"> <?php echo $i18n['x2payment']; ?><br>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="multi4"> <?php echo $i18n['x4payment']; ?><br>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="echequesvacancespayment"> <?php echo $i18n['ecv']; ?><br>
+                      <input type="radio" id="paymentmethod" name="paymentmethod" value="cbpayment"> <?php echo $i18n['cbpayment']; ?>
+                    </div>
+                </div>
+
+                <?php if ($iframe) {?> <div id="iframeHolder"></div> <?php } ?>
+
+                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit" action=""><?php echo $i18n['sendform']; ?></button>
+
+
+                <script type="text/javascript">
+                    function checkmode() {
+                        var paymentmethod = $('input:radio[name="paymentmethod"]:checked').val();
+                        var actionfile = '';
+                        switch (paymentmethod) {
+                          case 'standard':
+                            actionfile = "example/standard-payment.php";
+                            break;
+                          case 'multi2':
+                            actionfile = "example/2installment-payment.php";
+                            break;
+                          case 'multi4':
+                            actionfile = "example/4installment-payment.php";
+                            break;
+                          case 'echequesvacancespayment':
+                            actionfile = "example/e-cheques-vacances-payment.php";
+                            break;
+                          case 'cbpayment':
+                            actionfile = "example/cb-preselected-card-payment.php";
+                            break;
+                          default:
+                            actionfile = "example/standard-payment.php";
+                        }
+                        document.getElementById("checkout_form").action = actionfile;
+                        <?php if ($iframe) { ?>
+                            //disable the submit button
+                            enableSubmitButton();
+                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /> <div style="float:right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                        <?php } ?>
+                    }
+
+                    <?php if ($iframe) { ?>
+                        function removeIframe() {
+                            $('#iframeHolder').html('');
+                            //disable the submit button
+                             enableSubmitButton();
+                         }
+
+                         function diableSubmitButton() {
+                            $('#iframeHolder').html('');
+                            //enable the submit button
+                             $("#submitButton").attr("disabled", true);
+                         }
+
+                         function enableSubmitButton() {
+                            $('#iframeHolder').html('');
+                            //enable the submit button
+                             $("#submitButton").attr("disabled", false);
+                         }
+                    <?php } ?>
+                </script>
+            </form>
 
             <h2><?php echo $i18n['paymentanalysis']; ?> </h2>
             <div id="Info">
@@ -161,7 +290,8 @@ if(isset($_SERVER['HTTP_HOST'])){
     <!-- /.row -->
 
 </div>
-<!-- /.container -->
+
+<script type="text/javascript" src="assets/js/script.js"></script>
 
 </body>
 </html>
