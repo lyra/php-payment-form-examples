@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-function autoloadTools($className) {
-    $filename = "../lib/tools/" . $className . ".php";
-    if (is_readable($filename)) {
-        require $filename;
-    }
-}
-spl_autoload_register("autoloadTools");
+require_once '../init.php'; // loads the autoloader
 
 //Order Info
 $order_info= $_REQUEST;
