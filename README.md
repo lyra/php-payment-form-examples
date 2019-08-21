@@ -7,16 +7,18 @@ The code presented here is a demonstration of the implementation of the VADS Pay
 
 
 ## Contents
-* payzenFormToolBox.php, the core file, defining an utility class encapsulating all the PayZen logics of this example
+*  `lib/locale`, contains the different translation files in French; english, German and Spanish each file per folder.
+*  `lib/lyra-payment-form-sdk`, Lyra SDK files.
+*  `lib/tools`, the core file, defining an utility class encapsulating all the PayZen logics of the examples.
 
 ## Example
-* `config/config.php`, a centralized configuration and initialisation file
-* `return/form-return.php`, the file for the return URL after payment
-* `return/ipn-return.php`, a minimal implementation of the IPN callback (notification must be turned on in the back-office with the correct URL)
+* `config/Config.php`, a centralized configuration and initialisation file.
+* `example/`, this folder contains payment methods implimentation example files.
+* `example/return-payment.php`, the file for the return URL after payment.
 
 ## The first use
 1. Place the files on the same directory, under the root of your web-server
-2. In `config/config.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
+2. In `config/Config.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
 3. Access `index.html` from your browser.
 4. Follow the PayZen indications to perform the payment
 
