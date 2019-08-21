@@ -80,13 +80,12 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['lang']; ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo strtoupper($lang); ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo $site_url; ?>?lang=en">English</a></li>
-                        <li><a href="<?php echo $site_url; ?>?lang=fr">French</a></li>
-                        <li><a href="<?php echo $site_url; ?>?lang=de">German</a></li>
-
-                        <li><a href="<?php echo $site_url; ?>?lang=es">Spanish</a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=fr"><?php echo $i18n["fr"]; ?></a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=en"><?php echo $i18n["en"]; ?></a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=de"><?php echo $i18n["de"]; ?></a></li>
+                        <li><a href="<?php echo $site_url; ?>?lang=es"><?php echo $i18n["es"]; ?></a></li>
                     </ul>
                 </li>
             </ul>
@@ -108,7 +107,7 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
 
                 <ul>
                     <li>PHP (5.4 +)</li>
-                    <li><?php echo $i18n['in']; ?> <code>config/config.php :</code>
+                    <li><?php echo $i18n['in']; ?> <code>config/Config.php :</code>
                         <ul>
                             <li><?php echo $i18n['shopid']; ?> </li>
                             <li><?php echo $i18n['certtestprod']; ?> </li>
@@ -275,10 +274,10 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
 
             <h2><?php echo $i18n['paymentanalysis']; ?> </h2>
             <div id="Info">
-                <strong><?php echo $i18n['ipn']; ?> <code>ipn-return.php</code></strong><br />
+                <strong><?php echo $i18n['ipn']; ?> </strong><br />
                 <p><?php echo $i18n['ipndesc']; ?> </p>
 
-                <strong><?php echo $i18n['returnurl']; ?> </strong><code>form-return.php</code><br />
+                <strong><?php echo $i18n['returnurl']; ?> </strong><br />
                 <p><?php echo $i18n['clientcomesback']; ?> </p>
                 <p><?php echo $i18n['formreturndesc']; ?> </p>
             </div>
