@@ -4,10 +4,10 @@ $i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
 /*
  * Languages
  */
-$i18n["lang_fr"] = "Französisch";
-$i18n["lang_de"] = "Deutsch";
-$i18n["lang_en"] = "Englisch";
-$i18n["lang_es"] = "Spanisch";
+$i18n["fr"] = "Französisch";
+$i18n["de"] = "Deutsch";
+$i18n["en"] = "Englisch";
+$i18n["es"] = "Spanisch";
 /*
  * Requirements
  */
@@ -19,7 +19,7 @@ $i18n['in'] = 'Im';
 $i18n['certtestprod'] = 'Schlüssel im Testbetrieb oder im Produktivbetrieb';
 $i18n['modetestprod'] = 'Modus (Kontextmodus dieses Moduls TEST oder PRODUKTION.)';
 $i18n['platformurl'] = 'Platform URL : Link zur Bezahlungsplattform.';
-$i18n['debugdesc'] = 'Um direkt zur Zahlungsseite umgeleitet zu werden, ohne diese Seite anzuzeigen, übergeben Sie den Wert von <code> debug </ code> von <code> config.php </ code> an <code> false </ code>.';
+$i18n['debugdesc'] = 'Um direkt zur Zahlungsseite umgeleitet zu werden, ohne diese Seite anzuzeigen, übergeben Sie den Wert von <code>debug</code> von <code>config.php</code> an <code>false</code>.';
 
 /*
  * Order and chechout data
@@ -47,8 +47,8 @@ $i18n['payzensolution'] = 'PAYZEN PAYMENT SOLUTION UMSETZUNGSBEISPIEL';
 $i18n['info'] = 'INFORMATIONEN';
 $i18n['usesform'] = 'Bei der Zahlung wird ein Zahlungsformular an die PAYZEN Payment Gateway URL gesendet.';
 $i18n['file'] = 'Datei';
-$i18n['htmlformuse'] = 'Die Datei <code> html-form.php </ code> sendet diese Zahlungsfelder an die Datei <code> form-tunnel.php </ code>, die diese Felder abruft, um die Zahlungsanforderung zu erstellen. </ p> <p> Die Felder sind mit Beispielen gefüllt. Es liegt an Ihnen, sie je nach Kontext und Konfiguration auszufüllen. </ p> <p> <b> Einige andere Felder sind verfügbar. Der PAYZEN-Support empfiehlt, die Dokumentation zum Zahlungsformular zu lesen. </ b> <a href="https://payzen.io"> Lesen Sie die Dokumentation.</a>';
-$i18n['beforefirstuse'] = 'Vor der ersten Verwendung müssen Sie die <code> shopID </ code>, <code> certTest </ code>, <code> platform </ code> und <code> ctxMode </ code> der <code> -Konfiguration eingeben /Config.php</code>.e. Diese Datei enthält sichere Daten. <b> Diese Datensicherung liegt in Ihrer Verantwortung. </ b>';
+$i18n['htmlformuse'] = 'Die Datei <code>html-form.php</code> sendet diese Zahlungsfelder an die Datei <code>form-tunnel.php</code>, die diese Felder abruft, um die Zahlungsanforderung zu erstellen. </ p> <p> Die Felder sind mit Beispielen gefüllt. Es liegt an Ihnen, sie je nach Kontext und Konfiguration auszufüllen. </ p> <p> <b> Einige andere Felder sind verfügbar. Der PAYZEN-Support empfiehlt, die Dokumentation zum Zahlungsformular zu lesen. </ b> <a href="https://payzen.io"> Lesen Sie die Dokumentation.</a>';
+$i18n['beforefirstuse'] = 'Vor der ersten Verwendung müssen Sie die <code>shopID</code>, <code>certTest</code>, <code>platform</code> und <code>ctxMode</code> der <code>-Konfiguration eingeben /Config.php</code>.e. Diese Datei enthält sichere Daten. <b> Diese Datensicherung liegt in Ihrer Verantwortung. </ b>';
 $i18n['transsettings'] = 'TRANSAKTION EINSTELLUNGEN';
 $i18n['clientssettings'] = 'Persönliche Daten des Kunden';
 $i18n['amountdesc'] = 'Bestellbetrag in der kleinsten Währungseinheit. Cent für EURO. Bsp .: 1000 für 10 Euro';
@@ -115,4 +115,3 @@ $i18n['05'] = "Zahlung abgelehnt.";
 $i18n['05'] = "Zahlung vom Kunden storniert.";
 $i18n['30'] = "Abfrageformatfehler. In Beziehung setzen mit der Valorisierung des Feldes vads_extra_result.";
 $i18n['96'] = "Technischer Fehler bei der Bezahlung.";
-

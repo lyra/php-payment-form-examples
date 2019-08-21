@@ -4,10 +4,10 @@ $i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
 /*
  * Languages
  */
-$i18n["lang_fr"] = "Francés";
-$i18n["lang_de"] = "Alemán";
-$i18n["lang_en"] = "Inglés";
-$i18n["lang_es"] = "Español";
+$i18n["fr"] = "Francés";
+$i18n["de"] = "Alemán";
+$i18n["en"] = "Inglés";
+$i18n["es"] = "Español";
 
 /*
  * Requirements

@@ -95,10 +95,11 @@ $i18n['responsessettings'] = 'Paramètres de la réponse';
 
 $i18n['paymentstatus'] = 'Statut du paiement';
 
+$i18n['auth'] = "Résultat d'authentification";
 $i18n['validsign'] = "Signature Valide";
 $i18n['invalidsigndesc'] = "Signature Invalide - ne pas prendre en compte le résultat de ce paiement";
 
-$i18n['status'] = "Statut";
+$i18n['vads_trans_status'] = 'Statut de la transaction';
 $i18n['abandonned'] = "Le paiement a été abandonné par le client. La transaction n’a pas été crée sur la plateforme de paiement et n’est donc pas visible dans le back office marchand.";
 $i18n['authorised'] = "Le paiement a été accepté et est en attente de remise en banque.";
 $i18n['refused'] = "Le paiement a été refusé.";
@@ -183,3 +184,5 @@ $i18n['vads_validation_mode'] = "Mode de Validation";
 $i18n['vads_validation_mode_1'] = "Validation Manuelle";
 $i18n['vads_validation_mode_0'] = "Validation Automatique";
 $i18n['vads_validation_mode_x'] = "Configuration par défaut du back office marchand";
+
+$i18n['allReceivedData'] = "Liste de tous des paramètres réceptionnés";
