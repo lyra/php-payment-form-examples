@@ -9,7 +9,7 @@
  */
 
 /**
- * Toolbox initialisation, using PayZen account informations
+ * Configuration initialisation, using PayZen account informations
  *
  * shop ID (site_id)
  * 8-digit shop ID provided in your Back Office (Menu: Settings > Shop > Certificates).
@@ -61,7 +61,7 @@ class Config
         'key_test' => '1111111111111111',
         'key_prod' => '2222222222222222',
         'ctx_mode' => 'TEST', // 'TEST' / 'PRODUCTION'
-        'platform_url' => '***CHANGE-ME***',
+        'platform_url' => 'https://secure.payzen.eu/vads-payment/',
         'sign_algo' => 'SHA-256', // 'SHA-256'/'SHA-1'
         'return_mode' => 'POST',// 'POST' / 'GET'
         'url_return' => '***CHANGE-ME***',
