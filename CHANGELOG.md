@@ -1,2 +1,2 @@
-1.0, 2019-08-20:
-- New php payment form examples.
+1.0.0, 2019-12-16:
+- New PHP payment form examples.
