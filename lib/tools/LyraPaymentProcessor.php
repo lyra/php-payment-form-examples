@@ -5,17 +5,9 @@ if (! class_exists('LyraPaymentProcessor', false)) {
     {
         private $config_parameters;
         private $required_fields = false;
-        private $request;
-        private $response;
 
         private $warning = '';
         private $logger;
-        private $plugin_version = '1.0.0';
-
-
-        private $std_payment_parameters = array();
-        private $multi_payment_parameters = array();
-        private $deferred_payment_parameters = array();
 
         /**************** CLASS METHODS - PUBLIC **************/
         /**
@@ -33,10 +25,10 @@ if (! class_exists('LyraPaymentProcessor', false)) {
         public function __construct($config = array(), $log_dir = './logs') {
             $this->setLogger($log_dir);
 
-            if (isset($config) && is_array($config) && !empty($config)) {
+            if (isset($config) && is_array($config) && ! empty($config)) {
                 # set config parameters
                 $this->setConfigParameters($config);
-            }else{
+            } else {
                 //Load config parameters from Config.php file
                 $configuration = new  Config();
                 $this->setConfigParameters($configuration->getConfigParams());
@@ -46,15 +38,15 @@ if (! class_exists('LyraPaymentProcessor', false)) {
         public function setLogger($log_dir)
         {
             $this->logger = Logger::instance();
-            if (!is_dir($log_dir)) {
+            if (! is_dir($log_dir)) {
                 mkdir($log_dir);
             }
-            $this->logger->__set('logfile', $log_dir . '/__vads-' . date('Y-m') . '.log');
+            $this->logger->__set('logfile', $log_dir . DIRECTORY_SEPARATOR . '__vads-' . date('Y-m') . '.log');
         }
 
         public function setConfigParameters($config) {
             $this->required_fields =
-                ((count(array_filter($config)) == count($config)) || (count(array_filter($config)) == count($config)-1) && !$config['debug'])
+                ((count(array_filter($config)) == count($config)) || (count(array_filter($config)) == count($config)-1) && ! $config['debug'])
                 ? true : false;
 
                 if($this->required_fields){
@@ -71,7 +63,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                     $this->config_parameters['url_return'] = (isset($config['url_return']))? $config['url_return'] : '';
 
                     $this->required_fields = true;
-                }else{
+                } else {
                     $this->warning .= '<h1>One of the config parameters is missing in config/Config.php </h1>';
                     $this->logger->write($this->warning);
                     echo '<pre>'.$this->warning.'</pre>';
@@ -151,7 +143,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                 $submitScript = '';
                 // Message to be shown when forwarding to payment platform.
                 $msg = '';
-            }else{
+            } else {
                 $form = $request->getRequestHtmlFields();
                 $submitScript = '<script type="text/javascript">window.onload = function(){document.payment_form.submit();};</script>';
                 // Message to be shown when forwarding to payment platform.
@@ -244,7 +236,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
 
             $from_server = $response->get('hash') !== null;
 
-            if (!$response->isAuthentified()) {
+            if (! $response->isAuthentified()) {
                 $this->logger->write('Authentication failed: received invalid response with parameters: ' . print_r($param, true));
                 $this->logger->write('Signature algorithm selected in module settings must be the same as one selected in gateway Back Office.');
 
@@ -253,7 +245,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                 } else {
                     $this->logger->write('RETURN URL PROCESS END.');
                 }
-            }else{
+            } else {
                 $this->logger->write($response->getLogMessage());
                 if ($from_server) {
                     $this->logger->write('IPN URL PROCESS END.');

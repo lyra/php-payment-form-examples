@@ -15,19 +15,19 @@ if (! class_exists('Logger', false)) {
             switch ($name) {
                 case 'logfile':
                     $log_dir = dirname($value);
-                    if (!is_dir($log_dir)) {
-                        mkdir($log_dir);
+                    if (! is_dir($log_dir) && ! mkdir($log_dir)) {
+						throw new \RuntimeException(sprintf('Directory "%s" was not created', $log_dir));
                     }
 
-                    if (!file_exists($value)) {
+                    if (! file_exists($value)) {
                         clearstatcache();
-                        if (!file_exists($value)) {
+                        if (! file_exists($value)) {
                             $h = fopen($value, 'w');
                             fclose($h);
                         }
                     }
 
-                    if (!is_writeable($value)) {
+                    if (! is_writeable($value)) {
                         new \Exception("$value is not a valid file path");
                     }
                     $this->logfile = $value;
@@ -51,7 +51,7 @@ if (! class_exists('Logger', false)) {
 
         public function write($message, $file = null, $line = null)
         {
-            if (!empty($this->logfile)) {
+            if (! empty($this->logfile)) {
                 $message = date('Y-m-d H:i:s', time()) . ': ' . $message;
                 $message .= is_null($file) ? '' : " in $file";
                 $message .= is_null($line) ? '' : " on line $line";
@@ -65,7 +65,7 @@ if (! class_exists('Logger', false)) {
 
         public static function instance()
         {
-            if (!self::$instance) {
+            if (! self::$instance) {
                 self::$instance = new Logger;
             }
 
