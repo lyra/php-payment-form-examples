@@ -11,11 +11,11 @@ if(isset($_GET['lang'])){
 
 // save language preference for future page requests
 $_SESSION["lang"]  = $lang;
-include 'lib/locale/'. $lang .'/messages.php';
+include 'lib/locale/' . $lang . '/messages.php';
 
 if(isset($_SERVER['HTTP_HOST'])){
     $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
-    $site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    $site_url_full =  $protocol.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $uri_parts = explode('?',$site_url_full);
     $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 } else {

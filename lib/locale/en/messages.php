@@ -94,7 +94,7 @@ $i18n['paymentresponseanalysis'] = 'Response Analysis';
 $i18n['responsessettings'] = 'Response Parameters';
 
 $i18n['auth'] = "Autorisation Result";
-$i18n['validsign'] = "Valide Signature.";
+$i18n['validsign'] = "Valid Signature.";
 $i18n['invalidsigndesc'] = "Signature Invalide - ne pas prendre en compte le résultat de ce Invalid Signature - do not take this payment result in account";
 
 $i18n['vads_trans_status'] = 'Transaction status';

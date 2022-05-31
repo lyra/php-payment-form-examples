@@ -7,9 +7,19 @@
         $lang = 'en';
     }
 
-    // save language preference
+    // Save language preference.
     $_SESSION["lang"]  = $lang;
     include '../lib/locale/'. $lang .'/messages.php';
+
+	if(isset($_SERVER['HTTP_HOST'])){
+    	$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
+    	$site_url_full =  $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    	$uri_parts = explode('?',$site_url_full);
+    	$site_return_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
+        $site_url = preg_replace('/example\/return-payment.php$/', '', $site_return_url);
+	} else {
+    	$site_url = 'http://localhost:8888/';
+	}
 
     // Load gateway response.
     require_once '../init.php'; // loads the autoloader
@@ -19,11 +29,11 @@
     $authStatus = ($authentified) ? $i18n['validsign'] : $i18n['invalidsigndesc'];
 
     if ($authentified) {
-        //Now the marchent is supposed to compare his order data with the response data and update his database.
+        // Now the merchant is supposed to compare his order data with the response data and update his database.
 
         $transStatus = (isset($_REQUEST['vads_trans_status'])) ? $i18n[strtolower($_REQUEST['vads_trans_status'])] : '';
 
-        $authResult = (isset($_REQUEST['vads_auth_result'])) ? $i18n[ 'vads_auth_result_' . $_REQUEST['vads_auth_result']] : '';
+        $authResult = (isset($_REQUEST['vads_auth_result']) && ! empty($_REQUEST['vads_auth_result'])) ? $i18n[ 'vads_auth_result_' . $_REQUEST['vads_auth_result']] : '';
 
         $result = (isset($_REQUEST['vads_result'])) ? $i18n[$_REQUEST['vads_result']] : '';
 
@@ -36,13 +46,13 @@
             }
         }
 
-        $warrantyResult = (isset($_REQUEST['vads_warranty_result']) && ($_REQUEST['vads_warranty_result'] != "")) ? $i18n[ 'vads_warranty_result_' . strtolower($_REQUEST['vads_warranty_result'])] : $i18n['vads_warranty_result_x'];
+        $warrantyResult = (isset($_REQUEST['vads_warranty_result']) && ! empty($_REQUEST['vads_warranty_result'])) ? $i18n[ 'vads_warranty_result_' . strtolower($_REQUEST['vads_warranty_result'])] : $i18n['vads_warranty_result_x'];
 
-        $threedsStatus = (isset($_REQUEST['vads_threeds_status'])) ? $i18n[ 'vads_threeds_status_' . strtolower($_REQUEST['vads_threeds_status'])] : $i18n['vads_threeds_status_x'];
+        $threedsStatus = (isset($_REQUEST['vads_threeds_status']) && ! empty($_REQUEST['vads_threeds_status'])) ? $i18n[ 'vads_threeds_status_' . strtolower($_REQUEST['vads_threeds_status'])] : $i18n['vads_threeds_status_x'];
 
         $captureDelay = (isset($_REQUEST['vads_capture_delay'])) ? $_REQUEST['vads_capture_delay'] . " ". $i18n['days'] . "." : '';
 
-        $validationMode = (isset($_REQUEST['vads_validation_mode'])) ? $i18n[ 'vads_validation_mode_' . strtolower($_REQUEST['vads_validation_mode'])] : $i18n['vads_validation_mode_x'];
+        $validationMode = (isset($_REQUEST['vads_validation_mode']) && ! empty($_REQUEST['vads_validation_mode'])) ? $i18n[ 'vads_validation_mode_' . strtolower($_REQUEST['vads_validation_mode'])] : $i18n['vads_validation_mode_x'];
 
     }
 ?>

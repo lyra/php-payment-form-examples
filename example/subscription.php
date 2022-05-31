@@ -1,5 +1,5 @@
 <?php
-require_once '../init.php'; // loads the autoloader
+require_once '../init.php'; // loads the autoloader.
 
 /**
  * Payment arguments
@@ -28,7 +28,7 @@ $sub_info = array(
     'sub_effect_date' => date('Ymd', strtotime('+1 month')),//The effective date indicates from which day the subscription starts. The date format is AAAAMMJJ.
     'sub_currency'     => '978',//Numerical code of the currency used for the subscription in compliance with the ISO 4217 standard.
 );
-//Order Info
+// Order Info.
 $order_info = array_merge($_REQUEST,$sub_info);
 
 $paymentProcessor = new LyraPaymentProcessor();
