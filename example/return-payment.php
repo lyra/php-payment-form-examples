@@ -17,7 +17,7 @@ if (isset($_REQUEST['vads_language'])
 // Save language preference.
 $_SESSION["lang"] = $lang;
 include implode(DIRECTORY_SEPARATOR,
-                array ('..', 'lib', 'locale', $lang, 'messages.php')
+                ['..', 'lib', 'locale', $lang, 'messages.php']
 );
 
 if (isset($_SERVER['HTTP_HOST'])) {
@@ -43,7 +43,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 
 // Load gateway response.
-require_once '../init.php'; // loads the autoloader.
+require_once implode(DIRECTORY_SEPARATOR, ['..', 'init.php']); // loads the autoloader.
 $paymentProcessor = new LyraPaymentProcessor();
 $authentified = $paymentProcessor->checkResponse($_REQUEST);
 

@@ -207,7 +207,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
             //include ($lang.'.php');
             $lang = isset($order_info['lang_code']) ? $order_info['lang_code'] : 'en';
             include implode(DIRECTORY_SEPARATOR,
-                            array ('..', 'lib', 'locale', $lang, 'messages.php')
+                            ['..', 'lib', 'locale', $lang, 'messages.php']
             );
 
             if ($this->config_parameters['debug']) {

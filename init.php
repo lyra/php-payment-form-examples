@@ -9,13 +9,13 @@ class Autoloader
     static public function toolLoader ($className)
     {
         $filename = implode(DIRECTORY_SEPARATOR,
-                            array (
+                            [
                                 realpath(__DIR__), 'lib', 'tools', str_replace("\\",
                                                                                '/',
                                                                                $className
                                   ) .
                                   '.php'
-                            )
+                            ]
         );
         if (file_exists($filename)) {
             include($filename);
@@ -33,13 +33,13 @@ class Autoloader
     static public function sdkLoader ($className)
     {
         $filename = implode(DIRECTORY_SEPARATOR,
-                            array (
+                            [
                                 realpath(__DIR__), 'lib', 'lyra-payment-form-sdk', str_replace("\\",
                                                                                                '/',
                                                                                                $className
                                   ) .
                                   '.php'
-                            )
+                            ]
         );
         if (file_exists($filename)) {
             include($filename);
@@ -57,13 +57,13 @@ class Autoloader
     static public function configLoader ($className)
     {
         $filename = implode(DIRECTORY_SEPARATOR,
-                            array (
+                            [
                                 realpath(__DIR__), 'config', str_replace("\\",
                                                                          '/',
                                                                          $className
                                   ) .
                                   '.php'
-                            )
+                            ]
         );
         if (file_exists($filename)) {
             include($filename);

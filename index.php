@@ -12,7 +12,7 @@ if (isset($_GET['lang'])) {
 // Save language preference for future page requests.
 $_SESSION["lang"] = $lang;
 include implode(DIRECTORY_SEPARATOR,
-                array ('lib', 'locale', $lang, 'messages.php')
+                ['lib', 'locale', $lang, 'messages.php']
 );
 
 if (isset($_SERVER['HTTP_HOST'])) {
