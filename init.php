@@ -1,8 +1,22 @@
 <?php
 
-class Autoloader {
-    static public function toolLoader($className) {
-        $filename = implode(DIRECTORY_SEPARATOR, array(realpath(__DIR__), 'lib', 'tools', str_replace("\\", '/', $className) . '.php'));
+class Autoloader
+{
+    /**
+     * @param $className
+     * @return bool
+     */
+    static public function toolLoader ($className)
+    {
+        $filename = implode(DIRECTORY_SEPARATOR,
+                            array (
+                                realpath(__DIR__), 'lib', 'tools', str_replace("\\",
+                                                                               '/',
+                                                                               $className
+                                  ) .
+                                  '.php'
+                            )
+        );
         if (file_exists($filename)) {
             include($filename);
             if (class_exists($className)) {
@@ -12,8 +26,21 @@ class Autoloader {
         return FALSE;
     }
 
-    static public function sdkLoader($className) {
-		$filename = implode(DIRECTORY_SEPARATOR, array(realpath(__DIR__), 'lib', 'lyra-payment-form-sdk', str_replace("\\", '/', $className) . '.php'));
+    /**
+     * @param $className
+     * @return bool
+     */
+    static public function sdkLoader ($className)
+    {
+        $filename = implode(DIRECTORY_SEPARATOR,
+                            array (
+                                realpath(__DIR__), 'lib', 'lyra-payment-form-sdk', str_replace("\\",
+                                                                                               '/',
+                                                                                               $className
+                                  ) .
+                                  '.php'
+                            )
+        );
         if (file_exists($filename)) {
             include($filename);
             if (class_exists($className)) {
@@ -23,8 +50,21 @@ class Autoloader {
         return FALSE;
     }
 
-    static public function configLoader($className) {
-		$filename = implode(DIRECTORY_SEPARATOR, array(realpath(__DIR__), 'config', str_replace("\\", '/', $className) . '.php'));
+    /**
+     * @param $className
+     * @return bool
+     */
+    static public function configLoader ($className)
+    {
+        $filename = implode(DIRECTORY_SEPARATOR,
+                            array (
+                                realpath(__DIR__), 'config', str_replace("\\",
+                                                                         '/',
+                                                                         $className
+                                  ) .
+                                  '.php'
+                            )
+        );
         if (file_exists($filename)) {
             include($filename);
             if (class_exists($className)) {

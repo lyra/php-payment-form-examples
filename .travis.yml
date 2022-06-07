@@ -9,7 +9,7 @@ php:
   - 7.1
 
 script:
-- phpunit example/
-- phpunit lib/
-- phpunit config/
-- phpunit return/
+  - phpunit example/
+  - phpunit lib/
+  - phpunit config/
+  - phpunit return/

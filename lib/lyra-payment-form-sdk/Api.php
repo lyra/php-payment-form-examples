@@ -1,22 +1,26 @@
 <?php
-if (! class_exists('Api', false)) {
+if (! class_exists('Api',
+                   false
+)) {
 
     /**
-     * Utility class for managing parameters checking, inetrnationalization, signature building and more.
+     * Utility class for managing parameters checking, internationalization, signature building and more.
      */
     class Api
     {
         const ALGO_SHA1 = 'SHA-1';
         const ALGO_SHA256 = 'SHA-256';
 
-        public static $SUPPORTED_ALGOS = array(self::ALGO_SHA1, self::ALGO_SHA256);
+        public static $SUPPORTED_ALGOS = array (self::ALGO_SHA1, self::ALGO_SHA256);
 
         /**
          * The list of encodings supported by the API.
          *
-         * @var array[string]
+         * @return string[]
+         *   index: string Language code ISO 639-1
+         *   value: string Language name in english
          */
-        public static $SUPPORTED_ENCODINGS = array(
+        public static $SUPPORTED_ENCODINGS = array (
             'UTF-8',
             'ASCII',
             'Windows-1252',
@@ -31,9 +35,9 @@ if (! class_exists('Api', false)) {
          *
          * @return array[string][string]
          */
-        public static function getSupportedLanguages()
+        public static function getSupportedLanguages ()
         {
-            return array(
+            return array (
                 'de' => 'German',
                 'en' => 'English',
                 'zh' => 'Chinese',
@@ -56,10 +60,14 @@ if (! class_exists('Api', false)) {
          * @param string $lang
          * @return boolean
          */
-        public static function isSupportedLanguage($lang)
+        public static function isSupportedLanguage ($lang)
         {
-            foreach (array_keys(self::getSupportedLanguages()) as $code) {
-                if ($code == strtolower($lang)) {
+            foreach (array_keys(self::getSupportedLanguages())
+                     as
+                     $code)
+            {
+                if ($code ==
+                    strtolower($lang)) {
                     return true;
                 }
             }
@@ -75,15 +83,22 @@ if (! class_exists('Api', false)) {
          * @param int $timestamp
          * @return string the generated trans_id
          */
-        public function generateTransId($timestamp = null)
+        public function generateTransId ($timestamp = null)
         {
             if (! $timestamp) {
                 $timestamp = time();
             }
 
-            $parts = explode(' ', microtime());
-            $id = ($timestamp + $parts[0] - strtotime('today 00:00')) * 10;
-            $id = sprintf('%06d', $id);
+            $parts = explode(' ',
+                             microtime()
+            );
+            $id = ($timestamp +
+                    $parts[0] -
+                    strtotime('today 00:00')) *
+                10;
+            $id = sprintf('%06d',
+                          $id
+            );
 
             return $id;
         }
@@ -97,14 +112,27 @@ if (! class_exists('Api', false)) {
          * @param boolean $hashed set to false to get the unhashed signature
          * @return string
          */
-        public function sign($parameters, $key, $algo = 'ALGO_SHA256', $hashed = true)
+        public function sign ($parameters,
+                              $key,
+                              $algo = 'ALGO_SHA256',
+                              $hashed = true)
         {
             ksort($parameters);
 
             $sign = '';
-            foreach ($parameters as $name => $value) {
-                if (substr($name, 0, 5) == 'vads_') {
-                    $sign .= $value . '+';
+            foreach ($parameters
+                     as
+                     $name
+            =>
+                     $value)
+            {
+                if (substr($name,
+                           0,
+                           5
+                    ) ==
+                    'vads_') {
+                    $sign .= $value .
+                        '+';
                 }
             };
 
@@ -118,7 +146,12 @@ if (! class_exists('Api', false)) {
                 case 'SHA-1':
                     return sha1($sign);
                 case 'SHA-256':
-                    return base64_encode(hash_hmac('sha256', $sign, $key, true));
+                    return base64_encode(hash_hmac('sha256',
+                                                   $sign,
+                                                   $key,
+                                                   true
+                                         )
+                    );
                 default:
                     throw new \Exception("Unsupported algorithm passed : {$algo}.");
             }
@@ -131,11 +164,16 @@ if (! class_exists('Api', false)) {
          * @param array $potentially_quoted_data
          * @return mixed
          */
-        public static function uncharm($potentially_quoted_data)
+        public static function uncharm ($potentially_quoted_data)
         {
             if (get_magic_quotes_gpc()) {
-                $sane = array();
-                foreach ($potentially_quoted_data as $k => $v) {
+                $sane = array ();
+                foreach ($potentially_quoted_data
+                         as
+                         $k
+                =>
+                         $v)
+                {
                     $sane_key = stripslashes($k);
                     $sane_value = is_array($v) ? self::uncharm($v) : stripslashes($v);
                     $sane[$sane_key] = $sane_value;
@@ -147,7 +185,7 @@ if (! class_exists('Api', false)) {
             return $sane;
         }
 
-        public function fn_echo($param)
+        public function fn_echo ($param)
         {
             echo $param;
         }

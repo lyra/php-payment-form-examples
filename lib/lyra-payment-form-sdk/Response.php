@@ -1,5 +1,7 @@
 <?php
-if (! class_exists('Response', false)) {
+if (! class_exists('Response',
+                   false
+)) {
 
     /**
      * Class representing the result of a transaction (sent by the IPN URL or by the client return).
@@ -17,7 +19,7 @@ if (! class_exists('Response', false)) {
          *
          * @var array[string][string]
          */
-        private $rawResponse = array();
+        private $rawResponse = array ();
 
         /**
          * Certificate used to check the signature.
@@ -80,31 +82,55 @@ if (! class_exists('Response', false)) {
          * @param string $key_prod
          * @param string $algo
          */
-        public function __construct($params, $ctx_mode, $key_test, $key_prod, $algo = Api::ALGO_SHA1)
+        public function __construct ($params,
+                                     $ctx_mode,
+                                     $key_test,
+                                     $key_prod,
+                                     $algo = Api::ALGO_SHA1)
         {
             $this->rawResponse = Api::uncharm($params);
-            $this->certificate = trim(($ctx_mode == 'PRODUCTION') ? $key_prod : $key_test);
+            $this->certificate = trim(($ctx_mode ==
+                'PRODUCTION') ? $key_prod : $key_test
+            );
 
-            if (in_array($algo, Api::$SUPPORTED_ALGOS)) {
+            if (in_array($algo,
+                         Api::$SUPPORTED_ALGOS
+            )) {
                 $this->algo = $algo;
             }
 
             // Payment results.
-            $this->result = self::findInArray('vads_result', $this->rawResponse, null);
-            $this->extraResult = self::findInArray('vads_extra_result', $this->rawResponse, null);
-            $this->authResult = self::findInArray('vads_auth_result', $this->rawResponse, null);
-            $this->warrantyResult = self::findInArray('vads_warranty_result', $this->rawResponse, null);
+            $this->result = self::findInarray('vads_result',
+                                              $this->rawResponse,
+                                              null
+            );
+            $this->extraResult = self::findInarray('vads_extra_result',
+                                                   $this->rawResponse,
+                                                   null
+            );
+            $this->authResult = self::findInarray('vads_auth_result',
+                                                  $this->rawResponse,
+                                                  null
+            );
+            $this->warrantyResult = self::findInarray('vads_warranty_result',
+                                                      $this->rawResponse,
+                                                      null
+            );
 
-            $this->transStatus = self::findInArray('vads_trans_status', $this->rawResponse, null);
+            $this->transStatus = self::findInarray('vads_trans_status',
+                                                   $this->rawResponse,
+                                                   null
+            );
         }
 
         /**
          * Check response signature.
          * @return bool
          */
-        public function isAuthentified()
+        public function isAuthentified ()
         {
-            return $this->getComputedSignature() == $this->getSignature();
+            return $this->getComputedSignature() ==
+                $this->getSignature();
         }
 
         /**
@@ -112,18 +138,22 @@ if (! class_exists('Response', false)) {
          * @param bool $hashed
          * @return string
          */
-        public function getComputedSignature($hashed = true)
+        public function getComputedSignature ($hashed = true)
         {
-            return Api::sign($this->rawResponse, $this->certificate, $this->algo, $hashed);
+            return Api::sign($this->rawResponse,
+                             $this->certificate,
+                             $this->algo,
+                             $hashed
+            );
         }
 
         /**
          * Check if the payment was successful (waiting confirmation or captured).
          * @return bool
          */
-        public function isAcceptedPayment()
+        public function isAcceptedPayment ()
         {
-            $confirmedStatuses = array(
+            $confirmedStatuses = array (
                 'AUTHORISED',
                 'AUTHORISED_TO_VALIDATE',
                 'CAPTURED',
@@ -131,7 +161,10 @@ if (! class_exists('Response', false)) {
                 'ACCEPTED'
             );
 
-            return in_array($this->transStatus, $confirmedStatuses) || $this->isPendingPayment();
+            return in_array($this->transStatus,
+                            $confirmedStatuses
+                ) ||
+                $this->isPendingPayment();
         }
 
         /**
@@ -139,9 +172,9 @@ if (! class_exists('Response', false)) {
          * transfered and is not yet guaranteed).
          * @return bool
          */
-        public function isPendingPayment()
+        public function isPendingPayment ()
         {
-            $pendingStatuses = array(
+            $pendingStatuses = array (
                 'INITIAL',
                 'WAITING_AUTHORISATION',
                 'WAITING_AUTHORISATION_TO_VALIDATE',
@@ -149,44 +182,57 @@ if (! class_exists('Response', false)) {
                 'WAITING_FOR_PAYMENT'
             );
 
-            return in_array($this->transStatus, $pendingStatuses);
+            return in_array($this->transStatus,
+                            $pendingStatuses
+            );
         }
 
         /**
          * Check if the payment process was interrupted by the client.
          * @return bool
          */
-        public function isCancelledPayment()
+        public function isCancelledPayment ()
         {
-            $cancelledStatuses = array('NOT_CREATED', 'ABANDONED');
-            return in_array($this->transStatus, $cancelledStatuses);
+            $cancelledStatuses = array ('NOT_CREATED', 'ABANDONED');
+            return in_array($this->transStatus,
+                            $cancelledStatuses
+            );
         }
 
         /**
          * Check if the payment is to validate manually in the gateway Back Office.
          * @return bool
          */
-        public function isToValidatePayment()
+        public function isToValidatePayment ()
         {
-            $toValidateStatuses = array('WAITING_AUTHORISATION_TO_VALIDATE', 'AUTHORISED_TO_VALIDATE');
-            return in_array($this->transStatus, $toValidateStatuses);
+            $toValidateStatuses = array ('WAITING_AUTHORISATION_TO_VALIDATE', 'AUTHORISED_TO_VALIDATE');
+            return in_array($this->transStatus,
+                            $toValidateStatuses
+            );
         }
 
         /**
          * Check if the payment is suspected to be fraudulent.
          * @return bool
          */
-        public function isSuspectedFraud()
+        public function isSuspectedFraud ()
         {
             // At least one control failed...
             $riskControl = $this->getRiskControl();
-            if (in_array('WARNING', $riskControl) || in_array('ERROR', $riskControl)) {
+            if (in_array('WARNING',
+                         $riskControl
+                ) ||
+                in_array('ERROR',
+                         $riskControl
+                )) {
                 return true;
             }
 
             // Or there was an alert from risk assessment module.
             $riskAssessment = $this->getRiskAssessment();
-            if (in_array('INFORM', $riskAssessment)) {
+            if (in_array('INFORM',
+                         $riskAssessment
+            )) {
                 return true;
             }
 
@@ -197,18 +243,24 @@ if (! class_exists('Response', false)) {
          * Return the risk control result.
          * @return array[string][string]
          */
-        public function getRiskControl()
+        public function getRiskControl ()
         {
             $riskControl = $this->get('risk_control');
-            if (!isset($riskControl) || !trim($riskControl)) {
-                return array();
+            if (! isset($riskControl) ||
+                ! trim($riskControl)) {
+                return array ();
             }
 
             // Get a URL-like string.
-            $riskControl = str_replace(';', '&', $riskControl);
+            $riskControl = str_replace(';',
+                                       '&',
+                                       $riskControl
+            );
 
-            $result = array();
-            parse_str($riskControl, $result);
+            $result = array ();
+            parse_str($riskControl,
+                      $result
+            );
 
             return $result;
         }
@@ -217,14 +269,17 @@ if (! class_exists('Response', false)) {
          * Return the risk assessment result.
          * @return array[string]
          */
-        public function getRiskAssessment()
+        public function getRiskAssessment ()
         {
             $riskAssessment = $this->get('risk_assessment_result');
-            if (!isset($riskAssessment) || !trim($riskAssessment)) {
-                return array();
+            if (! isset($riskAssessment) ||
+                ! trim($riskAssessment)) {
+                return array ();
             }
 
-            return explode(';', $riskAssessment);
+            return explode(';',
+                           $riskAssessment
+            );
         }
 
         /**
@@ -232,10 +287,16 @@ if (! class_exists('Response', false)) {
          * @param string $name
          * @return string
          */
-        public function get($name)
+        public function get ($name)
         {
             // Manage shortcut notations by adding 'vads_'.
-            $name = (substr($name, 0, 5) != 'vads_') ? 'vads_' . $name : $name;
+            $name = (substr($name,
+                            0,
+                            5
+                ) !=
+                'vads_') ?
+                'vads_' .
+                $name : $name;
 
             return @$this->rawResponse[$name];
         }
@@ -245,7 +306,7 @@ if (! class_exists('Response', false)) {
          * @param string $key
          * @return string
          */
-        public function getExtInfo($key)
+        public function getExtInfo ($key)
         {
             return $this->get("ext_info_$key");
         }
@@ -254,7 +315,7 @@ if (! class_exists('Response', false)) {
          * Return the expected signature received from gateway.
          * @return string
          */
-        public function getSignature()
+        public function getSignature ()
         {
             return @$this->rawResponse['signature'];
         }
@@ -263,7 +324,7 @@ if (! class_exists('Response', false)) {
          * Return the payment response result.
          * @return string
          */
-        public function getResult()
+        public function getResult ()
         {
             return $this->result;
         }
@@ -272,7 +333,7 @@ if (! class_exists('Response', false)) {
          * Return the payment response extra result.
          * @return string
          */
-        public function getExtraResult()
+        public function getExtraResult ()
         {
             return $this->extraResult;
         }
@@ -281,7 +342,7 @@ if (! class_exists('Response', false)) {
          * Return the payment response authentication result.
          * @return string
          */
-        public function getAuthResult()
+        public function getAuthResult ()
         {
             return $this->authResult;
         }
@@ -290,7 +351,7 @@ if (! class_exists('Response', false)) {
          * Return the payment response warranty result.
          * @return string
          */
-        public function getWarrantyResult()
+        public function getWarrantyResult ()
         {
             return $this->warrantyResult;
         }
@@ -299,9 +360,9 @@ if (! class_exists('Response', false)) {
          * Return all the payment response results as array.
          * @return array[string][string]
          */
-        public function getAllResults()
+        public function getAllResults ()
         {
-            return array(
+            return array (
                 'result' => $this->result,
                 'extra_result' => $this->extraResult,
                 'auth_result' => $this->authResult,
@@ -313,7 +374,7 @@ if (! class_exists('Response', false)) {
          * Return the payment transaction status.
          * @return string
          */
-        public function getTransStatus()
+        public function getTransStatus ()
         {
             return $this->transStatus;
         }
@@ -323,14 +384,22 @@ if (! class_exists('Response', false)) {
          * @param $type string
          * @return string
          */
-        public function getMessage($type = self::TYPE_RESULT)
+        public function getMessage ($type = self::TYPE_RESULT)
         {
             $text = '';
 
-            $text .= self::translate($this->get($type), $type, $this->get('language'), true);
+            $text .= self::translate($this->get($type),
+                                     $type,
+                                     $this->get('language'),
+                                     true
+            );
 
-            if ($type === self::TYPE_RESULT && $this->get($type) === '30' /* form error */) {
-                $text .= ' ' . self::extraMessage($this->extraResult);
+            if ($type ===
+                self::TYPE_RESULT &&
+                $this->get($type) ===
+                '30' /* form error */) {
+                $text .= ' ' .
+                    self::extraMessage($this->extraResult);
             }
 
             return $text;
@@ -341,11 +410,13 @@ if (! class_exists('Response', false)) {
          * @param $type string
          * @return string
          */
-        public function getCompleteMessage($sep = ' ')
+        public function getCompleteMessage ($sep = ' ')
         {
             $text = $this->getMessage(self::TYPE_RESULT);
-            $text .= $sep . $this->getMessage(self::TYPE_AUTH_RESULT);
-            $text .= $sep . $this->getMessage(self::TYPE_WARRANTY_RESULT);
+            $text .= $sep .
+                $this->getMessage(self::TYPE_AUTH_RESULT);
+            $text .= $sep .
+                $this->getMessage(self::TYPE_WARRANTY_RESULT);
 
             return $text;
         }
@@ -354,24 +425,41 @@ if (! class_exists('Response', false)) {
          * Return a short description of the payment result, useful for logging.
          * @return string
          */
-        public function getLogMessage()
+        public function getLogMessage ()
         {
             $text = '';
 
-            $text .= self::translate($this->result, self::TYPE_RESULT, 'en', true);
-            if ($this->result === '30' /* form error */) {
-                $text .= ' ' . self::extraMessage($this->extraResult);
+            $text .= self::translate($this->result,
+                                     self::TYPE_RESULT,
+                                     'en',
+                                     true
+            );
+            if ($this->result ===
+                '30' /* form error */) {
+                $text .= ' ' .
+                    self::extraMessage($this->extraResult);
             }
 
-            $text .= ' ' . self::translate($this->authResult, self::TYPE_AUTH_RESULT, 'en', true);
-            $text .= ' ' . self::translate($this->warrantyResult, self::TYPE_WARRANTY_RESULT, 'en', true);
+            $text .= ' ' .
+                self::translate($this->authResult,
+                                self::TYPE_AUTH_RESULT,
+                                'en',
+                                true
+                );
+            $text .= ' ' .
+                self::translate($this->warrantyResult,
+                                self::TYPE_WARRANTY_RESULT,
+                                'en',
+                                true
+                );
 
             return $text;
         }
 
-        public function getOutputForPlatform()
+        public function getOutputForPlatform ()
         {
-            return call_user_func_array(array($this, 'getOutputForGateway'), func_get_args());
+            return call_user_func_array(array ($this, 'getOutputForGateway'),
+                                        func_get_args());
         }
 
         /**
@@ -382,39 +470,55 @@ if (! class_exists('Response', false)) {
          * @param string $original_encoding some extra information to output to the payment gateway
          * @return string
          */
-        public function getOutputForGateway($case = '', $extra_message = '', $original_encoding = 'UTF-8')
+        public function getOutputForGateway ($case = '',
+                                             $extra_message = '',
+                                             $original_encoding = 'UTF-8')
         {
             // Predefined response messages according to case.
-            $cases = array(
-                'payment_ok' => array(true, 'Accepted payment, order has been updated.'),
-                'payment_ko' => array(true, 'Payment failure, order has been cancelled.'),
-                'payment_ko_bis' => array(true, 'Payment failure.'),
-                'payment_ok_already_done' => array(true, 'Accepted payment, already registered.'),
-                'payment_ko_already_done' => array(true, 'Payment failure, already registered.'),
-                'order_not_found' => array(false, 'Order not found.'),
-                'payment_ko_on_order_ok' => array(false, 'Order status does not match the payment result.'),
-                'auth_fail' => array(false, 'An error occurred while computing the signature.'),
-                'empty_cart' => array(false, 'Empty cart detected before order processing.'),
-                'unknown_status' => array(false, 'Unknown order status.'),
-                'amount_error' => array(false, 'Total paid is different from order amount.'),
-                'ok' => array(true, ''),
-                'ko' => array(false, '')
+            $cases = array (
+                'payment_ok' => array (true, 'Accepted payment, order has been updated.'),
+                'payment_ko' => array (true, 'Payment failure, order has been cancelled.'),
+                'payment_ko_bis' => array (true, 'Payment failure.'),
+                'payment_ok_already_done' => array (true, 'Accepted payment, already registered.'),
+                'payment_ko_already_done' => array (true, 'Payment failure, already registered.'),
+                'order_not_found' => array (false, 'Order not found.'),
+                'payment_ko_on_order_ok' => array (false, 'Order status does not match the payment result.'),
+                'auth_fail' => array (false, 'An error occurred while computing the signature.'),
+                'empty_cart' => array (false, 'Empty cart detected before order processing.'),
+                'unknown_status' => array (false, 'Unknown order status.'),
+                'amount_error' => array (false, 'Total paid is different from order amount.'),
+                'ok' => array (true, ''),
+                'ko' => array (false, '')
             );
 
-            $success = key_exists($case, $cases) ? $cases[$case][0] : false;
-            $message = key_exists($case, $cases) ? $cases[$case][1] : '';
+            $success = key_exists($case,
+                                  $cases
+            ) ? $cases[$case][0] : false;
+            $message = key_exists($case,
+                                  $cases
+            ) ? $cases[$case][1] : '';
 
             if (! empty($extra_message)) {
-                $message .= ' ' . $extra_message;
+                $message .= ' ' .
+                    $extra_message;
             }
 
-            $message = str_replace("\n", ' ', $message);
+            $message = str_replace("\n",
+                                   ' ',
+                                   $message
+            );
 
             // Set original CMS encoding to convert if necessary response to send to gateway.
-            $encoding = in_array(strtoupper($original_encoding), Api::$SUPPORTED_ENCODINGS) ?
-            strtoupper($original_encoding) : 'UTF-8';
-            if ($encoding !== 'UTF-8') {
-                $message = iconv($encoding, 'UTF-8', $message);
+            $encoding = in_array(strtoupper($original_encoding),
+                                 Api::$SUPPORTED_ENCODINGS
+            ) ?
+                strtoupper($original_encoding) : 'UTF-8';
+            if ($encoding !==
+                'UTF-8') {
+                $message = iconv($encoding,
+                                 'UTF-8',
+                                 $message
+                );
             }
 
             $content = $success ? 'OK-' : 'KO-';
@@ -422,7 +526,10 @@ if (! class_exists('Response', false)) {
 
             $response = '';
             $response .= '<span style="display:none">';
-            $response .= htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+            $response .= htmlspecialchars($content,
+                                          ENT_COMPAT,
+                                          'UTF-8'
+            );
             $response .= '</span>';
             return $response;
         }
@@ -435,44 +542,69 @@ if (! class_exists('Response', false)) {
          * @param boolean $appendCode
          * @return string
          */
-        public static function translate($result, $type = self::TYPE_RESULT, $lang = 'en', $appendCode = false)
+        public static function translate ($result,
+                                          $type = self::TYPE_RESULT,
+                                          $lang = 'en',
+                                          $appendCode = false)
         {
             // If language is not supported, use the domain default language.
-            if (!key_exists($lang, self::$RESPONSE_TRANS)) {
+            if (! key_exists($lang,
+                             self::$RESPONSE_TRANS
+            )) {
                 $lang = 'en';
             }
 
             $translations = self::$RESPONSE_TRANS[$lang];
 
             $default = isset($translations[$type]['UNKNOWN']) ? $translations[$type]['UNKNOWN'] :
-            $translations['UNKNOWN'];
-            $text = self::findInArray($result ? $result : 'empty', $translations[$type], $default);
+                $translations['UNKNOWN'];
+            $text = self::findInarray($result ? $result : 'empty',
+                                      $translations[$type],
+                                      $default
+            );
 
-            if ($text && $appendCode) {
-                $text = self::appendResultCode($text, $result);
+            if ($text &&
+                $appendCode) {
+                $text = self::appendResultCode($text,
+                                               $result
+                );
             }
 
             return $text;
         }
 
-        public static function appendResultCode($message, $result_code)
+        public static function appendResultCode ($message,
+                                                 $result_code)
         {
             if ($result_code) {
-                $message .= ' (' . $result_code . ')';
+                $message .= ' (' .
+                    $result_code .
+                    ')';
             }
 
-            return $message . '.';
+            return $message .
+                '.';
         }
 
-        public static function extraMessage($extra_result)
+        public static function extraMessage ($extra_result)
         {
-            $error = self::findInArray($extra_result, self::$FORM_ERRORS, 'OTHER');
-            return self::appendResultCode($error, $extra_result);
+            $error = self::findInarray($extra_result,
+                                       self::$FORM_ERRORS,
+                                       'OTHER'
+            );
+            return self::appendResultCode($error,
+                                          $extra_result
+            );
         }
 
-        public static function findInArray($key, $array, $default)
+        public static function findInarray ($key,
+                                            $array,
+                                            $default)
         {
-            if (is_array($array) && key_exists($key, $array)) {
+            if (is_array($array) &&
+                key_exists($key,
+                           $array
+                )) {
                 return $array[$key];
             }
 
@@ -485,11 +617,11 @@ if (! class_exists('Response', false)) {
          * @var array
          * @access private
          */
-        public static $RESPONSE_TRANS = array(
-            'fr' => array(
+        public static $RESPONSE_TRANS = array (
+            'fr' => array (
                 'UNKNOWN' => 'Inconnu',
 
-                'result' => array(
+                'result' => array (
                     'empty' => '',
                     '00' => 'Action réalisée avec succès',
                     '02' => 'Le marchand doit contacter la banque du porteur',
@@ -498,12 +630,12 @@ if (! class_exists('Response', false)) {
                     '30' => 'Erreur de format de la requête',
                     '96' => 'Erreur technique'
                 ),
-                'auth_result' => array(
+                'auth_result' => array (
                     'empty' => '',
                     '00' => 'Transaction approuvée ou traitée avec succès',
                     'UNKNOWN' => 'Voir le détail de la transaction pour plus d\'information'
                 ),
-                'warranty_result' => array(
+                'warranty_result' => array (
                     'empty' => 'Garantie de paiement non applicable',
                     'YES' => 'Le paiement est garanti',
                     'NO' => 'Le paiement n\'est pas garanti',
@@ -522,7 +654,7 @@ if (! class_exists('Response', false)) {
                     'NON_WARRANTY_PAYMENT' => 'Contrôle le transfert de responsabilité',
                     'SUSPECT_IP_COUNTRY' => 'Contrôle Pays de l\'IP'
                 ),
-                'risk_assessment' => array(
+                'risk_assessment' => array (
                     'ENABLE_3DS' => '3D Secure activé',
                     'DISABLE_3DS' => '3D Secure désactivé',
                     'MANUAL_VALIDATION' => 'La transaction est créée en validation manuelle',
@@ -532,10 +664,10 @@ if (! class_exists('Response', false)) {
                 )
             ),
 
-            'en' => array(
+            'en' => array (
                 'UNKNOWN' => 'Unknown',
 
-                'result' => array(
+                'result' => array (
                     'empty' => '',
                     '00' => 'Action successfully completed',
                     '02' => 'The merchant must contact the cardholder\'s bank',
@@ -544,12 +676,12 @@ if (! class_exists('Response', false)) {
                     '30' => 'Request format error',
                     '96' => 'Technical issue'
                 ),
-                'auth_result' => array(
+                'auth_result' => array (
                     'empty' => '',
                     '00' => 'Approved or successfully processed transaction',
                     'UNKNOWN' => 'See the transaction details for more information'
                 ),
-                'warranty_result' => array(
+                'warranty_result' => array (
                     'empty' => 'Payment guarantee not applicable',
                     'YES' => 'The payment is guaranteed',
                     'NO' => 'The payment is not guaranteed',
@@ -568,7 +700,7 @@ if (! class_exists('Response', false)) {
                     'NON_WARRANTY_PAYMENT' => 'Transfer of responsibility control',
                     'SUSPECT_IP_COUNTRY' => 'IP country control'
                 ),
-                'risk_assessment' => array(
+                'risk_assessment' => array (
                     'ENABLE_3DS' => '3D Secure enabled',
                     'DISABLE_3DS' => '3D Secure disabled',
                     'MANUAL_VALIDATION' => 'The transaction has been created via manual validation',
@@ -578,10 +710,10 @@ if (! class_exists('Response', false)) {
                 )
             ),
 
-            'es' => array(
+            'es' => array (
                 'UNKNOWN' => 'Desconocido',
 
-                'result' => array(
+                'result' => array (
                     'empty' => '',
                     '00' => 'Accion procesada con exito',
                     '02' => 'El mercante debe contactar el banco del portador',
@@ -590,12 +722,12 @@ if (! class_exists('Response', false)) {
                     '30' => 'Error de formato de solicitutd',
                     '96' => 'Problema technico'
                 ),
-                'auth_result' => array(
+                'auth_result' => array (
                     'empty' => '',
                     '00' => 'Transacción aceptada o procesada con exito',
                     'UNKNOWN' => 'Vea los detalles de la transacción para más información'
                 ),
-                'warranty_result' => array(
+                'warranty_result' => array (
                     'empty' => 'Garantia de pago no aplicable',
                     'YES' => 'El pago es garantizado',
                     'NO' => 'El pago no es garantizado',
@@ -614,7 +746,7 @@ if (! class_exists('Response', false)) {
                     'NON_WARRANTY_PAYMENT' => 'Control de transferencia de responsabilidad',
                     'SUSPECT_IP_COUNTRY' => 'Control del pais de la IP'
                 ),
-                'risk_assessment' => array(
+                'risk_assessment' => array (
                     'ENABLE_3DS' => '3D Secure activado',
                     'DISABLE_3DS' => '3D Secure desactivado',
                     'MANUAL_VALIDATION' => 'La transaccion ha sido creada con validacion manual',
@@ -660,7 +792,7 @@ if (! class_exists('Response', false)) {
                     'NON_WARRANTY_PAYMENT' => 'Transfer of responsibility control',
                     'SUSPECT_IP_COUNTRY' => 'IP country control'
                 ),
-                'risk_assessment' => array(
+                'risk_assessment' => array (
                     'ENABLE_3DS' => '3D Secure enabled',
                     'DISABLE_3DS' => '3D Secure disabled',
                     'MANUAL_VALIDATION' => 'The transaction has been created via manual validation',
@@ -706,7 +838,7 @@ if (! class_exists('Response', false)) {
                     'NON_WARRANTY_PAYMENT' => 'Transfer of responsibility control',
                     'SUSPECT_IP_COUNTRY' => 'IP country control'
                 ),
-                'risk_assessment' => array(
+                'risk_assessment' => array (
                     'ENABLE_3DS' => '3D Secure enabled',
                     'DISABLE_3DS' => '3D Secure disabled',
                     'MANUAL_VALIDATION' => 'The transaction has been created via manual validation',
@@ -717,7 +849,7 @@ if (! class_exists('Response', false)) {
             )
         );
 
-        public static $FORM_ERRORS = array(
+        public static $FORM_ERRORS = array (
             '00' => 'SIGNATURE',
             '01' => 'VERSION',
             '02' => 'SITE_ID',

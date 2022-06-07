@@ -1,22 +1,32 @@
 <?php
 session_start();
-// I18N support information here
-if(isset($_GET['lang'])){
+// I18N support information here.
+if (isset($_GET['lang'])) {
     $lang = $_GET["lang"];
 } elseif (isset($_SESSION["lang"])) {
-    $lang  = $_SESSION["lang"];
+    $lang = $_SESSION["lang"];
 } else {
     $lang = 'en';
 }
 
-// save language preference for future page requests
-$_SESSION["lang"]  = $lang;
-include 'lib/locale/' . $lang . '/messages.php';
+// Save language preference for future page requests.
+$_SESSION["lang"] = $lang;
+include implode(DIRECTORY_SEPARATOR,
+                array ('lib', 'locale', $lang, 'messages.php')
+);
 
-if(isset($_SERVER['HTTP_HOST'])){
-    $protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://' ;
-    $site_url_full =  $protocol.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $uri_parts = explode('?',$site_url_full);
+if (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = ((! empty($_SERVER['HTTPS']) &&
+            $_SERVER['HTTPS'] !==
+            'off') ||
+        $_SERVER['SERVER_PORT'] ==
+        443) ? 'https://' : 'http://';
+    $site_url_full = $protocol .
+        $_SERVER['HTTP_HOST'] .
+        $_SERVER['REQUEST_URI'];
+    $uri_parts = explode('?',
+                         $site_url_full
+    );
     $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 } else {
     $site_url = 'http://localhost:8888';
@@ -26,7 +36,8 @@ require_once 'config/Config.php';
 $configuration = new Config();
 $iframe = false;
 $target = '';
-if($configuration->getConfigParam('action_mode') == 'IFRAME'){
+if ($configuration->getConfigParam('action_mode') ==
+    'IFRAME') {
     $iframe = true;
     $target = 'target="payframe"';
 }
@@ -38,8 +49,8 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
 <head>
     <meta charset="UTF-8">
     <title>PayZen - VADS PAYMENT PHP</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script  src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -51,7 +62,8 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -63,7 +75,8 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
                         <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
@@ -80,7 +93,8 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo strtoupper($lang); ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><?php echo strtoupper($lang); ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo $site_url; ?>?lang=fr"><?php echo $i18n["fr"]; ?></a></li>
                         <li><a href="<?php echo $site_url; ?>?lang=en"><?php echo $i18n["en"]; ?></a></li>
@@ -103,58 +117,60 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
             <h1>VADS PAYMENT PHP</h1>
             <p class="lead"><?php echo $i18n['starterkit'] ?> </p>
 
-                <h2><?php echo $i18n['requirements']; ?> :</h2>
+            <h2><?php echo $i18n['requirements']; ?> :</h2>
 
-                <ul>
-                    <li>PHP (5.4 +)</li>
-                    <li><?php echo $i18n['in']; ?> <code>config/Config.php :</code>
-                        <ul>
-                            <li><?php echo $i18n['shopid']; ?> </li>
-                            <li><?php echo $i18n['certtestprod']; ?> </li>
-                            <li><?php echo $i18n['modetestprod']; ?> </li>
-                            <li><?php echo $i18n['platformurl']; ?> </li>
-                            <li><?php echo $i18n['debugdesc']; ?></li>
-                        </ul>
-                    </li>
+            <ul>
+                <li>PHP (5.4 +)</li>
+                <li><?php echo $i18n['in']; ?> <code>config/Config.php :</code>
+                    <ul>
+                        <li><?php echo $i18n['shopid']; ?> </li>
+                        <li><?php echo $i18n['certtestprod']; ?> </li>
+                        <li><?php echo $i18n['modetestprod']; ?> </li>
+                        <li><?php echo $i18n['platformurl']; ?> </li>
+                        <li><?php echo $i18n['debugdesc']; ?></li>
+                    </ul>
+                </li>
 
-                </ul>
+            </ul>
 
             <h2><?php echo $i18n['formexamples']; ?> </h2>
             <h2 style="text-align: center;"><?php $i18n['checkouttitle']; ?></h2>
-            <form class="form-horizontal" role="form" action="standard-payment.php" method="post" id="checkout_form" onsubmit="return checkmode();" <?php echo $target; ?>>
+            <form class="form-horizontal" role="form" action="standard-payment.php" method="post" id="checkout_form"
+                  onsubmit="return checkmode();" <?php echo $target; ?>>
                 <button type="button" class="accordion"><?php echo $i18n['orderdetails']; ?></button>
                 <div class="panel">
                     <div class="col-md-9">
                         <table class="table table-striped">
-                          <tr>
-                              <td>
-                                  <ul>
+                            <tr>
+                                <td>
+                                    <ul>
                                         <li><?php echo $i18n['item1']; ?></li>
                                         <li><?php echo $i18n['item2']; ?></li>
                                         <li>...</li>
-                                  </ul>
+                                    </ul>
                                 </td>
                                 <td>
-                                <ul>
+                                    <ul>
                                         <li><?php echo $i18n['amount1']; ?></li>
                                         <li><?php echo $i18n['amount2']; ?></li>
                                         <li>...</li>
-                                </ul>
+                                    </ul>
                                 </td>
                             </tr>
                         </table>
-                  </div>
-                  <div class="col-md-3">
-                      <div style="text-align: center;">
-                          <h3><?php echo $i18n['total']; ?></h3>
-                          <input class="forminput" style="color:green; text-align: center;" type="number" name="amount" id="amount" value="1000" required="true" min="0">
-                          <label for="amount"><?php echo $i18n['amountdesc']; ?></label>
-                          <select class="forminput" name="currency" id="currency">
-                              <option value="978" selected>EUR</option>
-                              <option value="840">USD</option>
-                          </select>
-                      </div>
-                  </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div style="text-align: center;">
+                            <h3><?php echo $i18n['total']; ?></h3>
+                            <input class="forminput" style="color:green; text-align: center;" type="number"
+                                   name="amount" id="amount" value="1000" required="true" min="0">
+                            <label for="amount"><?php echo $i18n['amountdesc']; ?></label>
+                            <select class="forminput" name="currency" id="currency">
+                                <option value="978" selected>EUR</option>
+                                <option value="840">USD</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="button" class="accordion"><?php echo $i18n['clientssettings']; ?></button>
@@ -206,17 +222,24 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
                 <button type="button" class="accordion"><?php echo $i18n['payment']; ?></button>
                 <div class="panel">
                     <div>
-                      <input type="radio" id="paymentmethod" name="paymentmethod" value="standard" checked> <?php echo $i18n['stdpayment']; ?><br>
-                      <input type="radio" id="paymentmethod" name="paymentmethod" value="multi2"> <?php echo $i18n['x2payment']; ?><br>
-                      <input type="radio" id="paymentmethod" name="paymentmethod" value="multi4"> <?php echo $i18n['x4payment']; ?><br>
-                      <input type="radio" id="paymentmethod" name="paymentmethod" value="echequesvacancespayment"> <?php echo $i18n['ecv']; ?><br>
-                      <input type="radio" id="paymentmethod" name="paymentmethod" value="cbpayment"> <?php echo $i18n['cbpayment']; ?>
+                        <input type="radio" id="paymentmethod" name="paymentmethod" value="standard"
+                               checked> <?php echo $i18n['stdpayment']; ?><br>
+                        <input type="radio" id="paymentmethod" name="paymentmethod"
+                               value="multi2"> <?php echo $i18n['x2payment']; ?><br>
+                        <input type="radio" id="paymentmethod" name="paymentmethod"
+                               value="multi4"> <?php echo $i18n['x4payment']; ?><br>
+                        <input type="radio" id="paymentmethod" name="paymentmethod"
+                               value="echequesvacancespayment"> <?php echo $i18n['ecv']; ?><br>
+                        <input type="radio" id="paymentmethod" name="paymentmethod"
+                               value="cbpayment"> <?php echo $i18n['cbpayment']; ?>
                     </div>
                 </div>
 
-                <?php if ($iframe) {?> <div id="iframeHolder"></div> <?php } ?>
+                <?php if ($iframe) { ?>
+                    <div id="iframeHolder"></div> <?php } ?>
 
-                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit" action=""><?php echo $i18n['sendform']; ?></button>
+                <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit"
+                        action=""><?php echo $i18n['sendform']; ?></button>
 
 
                 <script type="text/javascript">
@@ -224,66 +247,67 @@ if($configuration->getConfigParam('action_mode') == 'IFRAME'){
                         var paymentmethod = $('input:radio[name="paymentmethod"]:checked').val();
                         var actionfile = '';
                         switch (paymentmethod) {
-                          case 'standard':
-                            actionfile = "example/standard-payment.php";
-                            break;
-                          case 'multi2':
-                            actionfile = "example/2installment-payment.php";
-                            break;
-                          case 'multi4':
-                            actionfile = "example/4installment-payment.php";
-                            break;
-                          case 'echequesvacancespayment':
-                            actionfile = "example/e-cheques-vacances-payment.php";
-                            break;
-                          case 'cbpayment':
-                            actionfile = "example/cb-preselected-card-payment.php";
-                            break;
-                          default:
-                            actionfile = "example/standard-payment.php";
+                            case 'standard':
+                                actionfile = "example/standard-payment.php";
+                                break;
+                            case 'multi2':
+                                actionfile = "example/2installment-payment.php";
+                                break;
+                            case 'multi4':
+                                actionfile = "example/4installment-payment.php";
+                                break;
+                            case 'echequesvacancespayment':
+                                actionfile = "example/e-cheques-vacances-payment.php";
+                                break;
+                            case 'cbpayment':
+                                actionfile = "example/cb-preselected-card-payment.php";
+                                break;
+                            default:
+                                actionfile = "example/standard-payment.php";
                         }
                         document.getElementById("checkout_form").action = actionfile;
                         <?php if ($iframe) { ?>
-                            //disable the submit button
-                            enableSubmitButton();
-                            $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /> <div style="float:right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
+                        //disable the submit button
+                        enableSubmitButton();
+                        $('#iframeHolder').html('<iframe name="payframe" src="' + actionfile + '" width="50%" height="550" scrolling="yes" /> <div style="float:right;"><button class="close" type="button" onclick="removeIframe();">X</button></div>');
                         <?php } ?>
                     }
 
                     <?php if ($iframe) { ?>
-                        function removeIframe() {
-                            $('#iframeHolder').html('');
-                            //disable the submit button
-                             enableSubmitButton();
-                         }
+                    function removeIframe() {
+                        $('#iframeHolder').html('');
+                        //disable the submit button
+                        enableSubmitButton();
+                    }
 
-                         function diableSubmitButton() {
-                            $('#iframeHolder').html('');
-                            //enable the submit button
-                             $("#submitButton").attr("disabled", true);
-                         }
+                    function diableSubmitButton() {
+                        $('#iframeHolder').html('');
+                        //enable the submit button
+                        $("#submitButton").attr("disabled", true);
+                    }
 
-                         function enableSubmitButton() {
-                            $('#iframeHolder').html('');
-                            //enable the submit button
-                             $("#submitButton").attr("disabled", false);
-                         }
+                    function enableSubmitButton() {
+                        $('#iframeHolder').html('');
+                        //enable the submit button
+                        $("#submitButton").attr("disabled", false);
+                    }
                     <?php } ?>
                 </script>
             </form>
 
             <h2><?php echo $i18n['paymentanalysis']; ?> </h2>
             <div id="Info">
-                <strong><?php echo $i18n['ipn']; ?> </strong><br />
+                <strong><?php echo $i18n['ipn']; ?> </strong><br/>
                 <p><?php echo $i18n['ipndesc']; ?> </p>
 
-                <strong><?php echo $i18n['returnurl']; ?> </strong><br />
+                <strong><?php echo $i18n['returnurl']; ?> </strong><br/>
                 <p><?php echo $i18n['clientcomesback']; ?> </p>
                 <p><?php echo $i18n['formreturndesc']; ?> </p>
             </div>
 
             <h2><?php echo $i18n['findhelp']; ?> </h2>
-            <p><strong><?php echo $i18n['supportrecommends']; ?> </strong> <a href="https://payzen.io" target="_blank"> payzen.io</a></p>
+            <p><strong><?php echo $i18n['supportrecommends']; ?> </strong> <a href="https://payzen.io" target="_blank">
+                    payzen.io</a></p>
         </div>
     </div>
     <!-- /.row -->

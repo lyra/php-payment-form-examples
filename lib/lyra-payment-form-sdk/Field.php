@@ -1,5 +1,7 @@
 <?php
-if (! class_exists('Field', false)) {
+if (! class_exists('Field',
+                   false
+)) {
 
     /**
      * Class representing a form field to send to the payment gateway.
@@ -61,7 +63,11 @@ if (! class_exists('Field', false)) {
          * @param boolean $required
          * @param int length
          */
-        public function __construct($name, $label, $regex, $required = false, $length = 255)
+        public function __construct ($name,
+                                     $label,
+                                     $regex,
+                                     $required = false,
+                                     $length = 255)
         {
             $this->name = $name;
             $this->label = $label;
@@ -75,13 +81,19 @@ if (! class_exists('Field', false)) {
          *
          * @return boolean
          */
-        public function isValid()
+        public function isValid ()
         {
-            if ($this->value === null && $this->required) {
+            if ($this->value ===
+                null &&
+                $this->required) {
                 return false;
             }
 
-            if ($this->value !== null && !preg_match($this->regex, $this->value)) {
+            if ($this->value !==
+                null &&
+                ! preg_match($this->regex,
+                             $this->value
+                )) {
                 return false;
             }
 
@@ -94,9 +106,10 @@ if (! class_exists('Field', false)) {
          * @param mixed $value
          * @return boolean
          */
-        public function setValue($value)
+        public function setValue ($value)
         {
-            $value = ($value === null) ? null : (string) $value;
+            $value = ($value ===
+                null) ? null : (string)$value;
             // We save value even if invalid but we return "false" as warning.
             $this->value = $value;
 
@@ -108,7 +121,7 @@ if (! class_exists('Field', false)) {
          *
          * @return string
          */
-        public function getValue()
+        public function getValue ()
         {
             return $this->value;
         }
@@ -118,7 +131,7 @@ if (! class_exists('Field', false)) {
          *
          * @return boolean
          */
-        public function isRequired()
+        public function isRequired ()
         {
             return $this->required;
         }
@@ -128,7 +141,7 @@ if (! class_exists('Field', false)) {
          *
          * @return string
          */
-        public function getName()
+        public function getName ()
         {
             return $this->name;
         }
@@ -138,7 +151,7 @@ if (! class_exists('Field', false)) {
          *
          * @return string
          */
-        public function getLabel()
+        public function getLabel ()
         {
             return $this->label;
         }
@@ -148,7 +161,7 @@ if (! class_exists('Field', false)) {
          *
          * @return int
          */
-        public function getLength()
+        public function getLength ()
         {
             return $this->length;
         }
@@ -158,7 +171,7 @@ if (! class_exists('Field', false)) {
          *
          * @return boolean
          */
-        public function isFilled()
+        public function isFilled ()
         {
             return ! is_null($this->value);
         }

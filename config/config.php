@@ -1,12 +1,4 @@
 <?php
-/*
- * PayZen VADS payment example
- *
- * Bootstraping code, handles initialisation and configuration
- *
- * @version 0.7
- *
- */
 
 /**
  * Configuration initialisation, using PayZen account informations
@@ -27,7 +19,6 @@
  * Brazil: https://secure.payzen.com.br/vads-payment/
  * Germany: https://de.payzen.eu/vads-payment/
  * Chili: https://secure.payzen.cl/vads-payment/
- * India: https://secure.payzen.co.in/vads-payment/
  *
  * Ask support at payzen.io for your platform URL if you don't know it
  *
@@ -53,10 +44,12 @@
  * FALSE: Automatic redirection to the payment page.
  *
  */
-
 class Config
 {
-    private $config_params = array(
+    /**
+     * @var array string[]
+     */
+    private $config_params = array (
         'site_id' => '12345678',
         'key_test' => '1111111111111111',
         'key_prod' => '2222222222222222',
@@ -69,27 +62,51 @@ class Config
         'debug' => true // TRUE / FALSE
     );
 
-    public function getAbsPath() {
-        return realpath('./../') . PHP_EOL;
+    /**
+     * @return string
+     */
+    public function getAbsPath ()
+    {
+        return realpath(implode(DIRECTORY_SEPARATOR,
+                                ['.', '..']
+                        )
+            ) .
+            DIRECTORY_SEPARATOR;
     }
 
-    public function getConfigParams()
+    /**
+     * @return array
+     */
+    public function getConfigParams ()
     {
         return $this->config_params;
     }
 
-    public function getConfigParam($name)
+    /**
+     * @param $name
+     * @return mixed|void
+     */
+    public function getConfigParam ($name)
     {
-        if (array_key_exists($name, $this->config_params)) {
+        if (array_key_exists($name,
+                             $this->config_params
+        )) {
             return $this->config_params[$name];
         }
     }
 
-    public function setConfigParam($name, $value)
+    /**
+     * @param $name
+     * @param $value
+     * @return void
+     */
+    public function setConfigParam ($name,
+                                    $value)
     {
-        if (!empty($name)) {
+        if (! empty($name)) {
             $this->config_params[$name] = $value;
         }
     }
 }
+
 ?>

@@ -1,5 +1,5 @@
 <?php
-$i18n = array();
+$i18n = array ();
 $i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
 /*
  * Languages
@@ -19,7 +19,8 @@ $i18n['in'] = 'In';
 $i18n['certtestprod'] = 'Your Certificate (TEST or PRODUCTION)';
 $i18n['modetestprod'] = 'Mode (TEST or PRODUCTION)';
 $i18n['platformurl'] = 'Platform URL';
-$i18n['debugdesc'] = 'In order to be redirected straight to the payment gateway, you need to change the debug value of the Config.php file to false.';
+$i18n['debugdesc'] =
+    'In order to be redirected straight to the payment gateway, you need to change the debug value of the Config.php file to false.';
 
 /*
  * Order and chechout data
@@ -47,23 +48,29 @@ $i18n['payzensolution'] = 'PAYZEN PAYMENT SOLUTION IMPLEMENTATION EXAMPLE';
 $i18n['info'] = 'INFORMATIONS';
 $i18n['usesform'] = 'The payment uses the sending of a payment form to PAYZEN payment gateway URL.';
 $i18n['file'] = 'File';
-$i18n['htmlformuse'] = 'the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p><p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p><p><b>Some other fields are available, PAYZEN support recommends to read the payment form documentation</b> <a href="https://payzen.io">Read the documentation.</a>';
-$i18n['beforefirstuse'] = 'Before the first use you have to fill the <code>shopID</code>, <code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the <code>config/Config.php</code>.e. This file contains secure data.  <b>This data securing is on your responsibility.</b>';
+$i18n['htmlformuse'] =
+    'the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p><p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p><p><b>Some other fields are available, PAYZEN support recommends to read the payment form documentation</b> <a href="https://payzen.io">Read the documentation.</a>';
+$i18n['beforefirstuse'] =
+    'Before the first use you have to fill the <code>shopID</code>, <code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the <code>config/Config.php</code>.e. This file contains secure data.  <b>This data securing is on your responsibility.</b>';
 $i18n['transsettings'] = 'TRANSACTION SETTINGS';
 $i18n['clientssettings'] = 'Client personal details';
 $i18n['amountdesc'] = 'Order amount set in the smallest currency unit. Cents for EURO. Ex: 1000 for 10 euros';
 $i18n['orderdesc'] = 'Order number. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
 $i18n['custid'] = 'Customer number. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
-$i18n['custfirstname'] = 'Customer first name. Optional setting. Length of field: 127 characters max - Alphanumeric Type';
+$i18n['custfirstname'] =
+    'Customer first name. Optional setting. Length of field: 127 characters max - Alphanumeric Type';
 $i18n['custlastname'] = 'Customer last name. Optional setting. Length of field: 127 characters max - Alphanumeric Type';
 $i18n['custaddress'] = 'Customer address. Optional setting. Length of field: 255 characters max - Alphanumeric Type';
 $i18n['custzip'] = 'Customer Postal Code. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
 $i18n['custcity'] = 'Customer City. Optional setting. Length of field: 63 characters max - Alphanumeric Type';
-$i18n['custcountry'] = 'Customer Country. Customer country code according to the ISO 3166 norm. Optional setting. Length of field: 2 characters max - Alphanumeric Type';
+$i18n['custcountry'] =
+    'Customer Country. Customer country code according to the ISO 3166 norm. Optional setting. Length of field: 2 characters max - Alphanumeric Type';
 $i18n['custphone'] = 'Customer Phone Number. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
 $i18n['custemail'] = 'Customer Email. Optional setting.';
-$i18n['urlreturndesc'] = 'Default URL to where the buyer will be redirected. If this field has not been transmitted, the Back Office configuration will be taken into account.';
-$i18n['redirect'] = 'delay in seconds before an automatic redirection to the merchant website at the end of an accepted payment.';
+$i18n['urlreturndesc'] =
+    'Default URL to where the buyer will be redirected. If this field has not been transmitted, the Back Office configuration will be taken into account.';
+$i18n['redirect'] =
+    'delay in seconds before an automatic redirection to the merchant website at the end of an accepted payment.';
 $i18n['sendform'] = 'Validate and send the settings by POST mode to the payment gateway';
 
 /*
@@ -71,10 +78,13 @@ $i18n['sendform'] = 'Validate and send the settings by POST mode to the payment 
  */
 $i18n['paymentanalysis'] = 'Payment Analysis';
 $i18n['ipn'] = 'Instant Payment Notification';
-$i18n['ipndesc'] = 'When the payment is done, the gateway sends some parameters by POST mode to the server URL which analyzes the payment results. First you have to check the signature. If it is correct then you will be able to take the payment parameters into consideration.';
+$i18n['ipndesc'] =
+    'When the payment is done, the gateway sends some parameters by POST mode to the server URL which analyzes the payment results. First you have to check the signature. If it is correct then you will be able to take the payment parameters into consideration.';
 $i18n['returnurl'] = 'Return URLs';
-$i18n['clientcomesback'] = 'When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all.';
-$i18n['formreturndesc'] = 'In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.';
+$i18n['clientcomesback'] =
+    'When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all.';
+$i18n['formreturndesc'] =
+    'In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.';
 $i18n['findhelp'] = 'Find HELP';
 $i18n['supportrecommends'] = 'The PAYZEN support recommends to read the settings analysis documentation on';
 
@@ -95,24 +105,31 @@ $i18n['responsessettings'] = 'Response Parameters';
 
 $i18n['auth'] = "Autorisation Result";
 $i18n['validsign'] = "Valid Signature.";
-$i18n['invalidsigndesc'] = "Signature Invalide - ne pas prendre en compte le résultat de ce Invalid Signature - do not take this payment result in account";
+$i18n['invalidsigndesc'] =
+    "Signature Invalide - ne pas prendre en compte le résultat de ce Invalid Signature - do not take this payment result in account";
 
 $i18n['vads_trans_status'] = 'Transaction status';
-$i18n['abandonned'] = "The payment was abandonned by the customer. The transaction was not created on the gateway and therefore is not visible on the merchant back office.";
+$i18n['abandoned'] =
+    "The payment was abandoned by the customer. The transaction was not created on the gateway and therefore is not visible on the merchant back office.";
 $i18n['authorised'] = "The payment is accepted and is waiting to be cashed.";
 $i18n['refused'] = "The payment was refused.";
-$i18n['tovalidate'] = "The transaction is accepted but it is waiting to be manually validated. It is on the merchant responsability to validate the transaction in order that it can be cashed from the back office or by web service request. The transaction can be validated as long as the capture delay is not expired. If the delay expires the payment status change to Expired. This status is definitive.";
-$i18n['toauthorise'] = "The transaction is waiting for an authorisation. During the payment, just an imprint was made because the capture delay is higher than 7 days. By default the auhorisation demand for the global amount will be made 2 days before the bank deposit date.";
-$i18n['expired'] = "The transaction expired. This status is definitive, the transaction will not be able to be cashed. A transaction expires when it was created in manual validation or when the capture delay is passed.";
-$i18n['cancelled'] = "The payment was cancelled through the merchant back offfice or by a web service request. This status is definitive, the transaction will never be cashed.";
-$i18n['tovalidate'] = "The transaction is waiting for an authorisation and a manual validation. During the payment, just an imprint was made because the capture delay is higher than 7 days and the validation type is « manual validation ». This payment will be able to be cashed only after that the merchant validates it from the back office or by web service request.";
+$i18n['tovalidate'] =
+    "The transaction is accepted but it is waiting to be manually validated. It is on the merchant responsability to validate the transaction in order that it can be cashed from the back office or by web service request. The transaction can be validated as long as the capture delay is not expired. If the delay expires the payment status change to Expired. This status is definitive.";
+$i18n['toauthorise'] =
+    "The transaction is waiting for an authorisation. During the payment, just an imprint was made because the capture delay is higher than 7 days. By default the auhorisation demand for the global amount will be made 2 days before the bank deposit date.";
+$i18n['expired'] =
+    "The transaction expired. This status is definitive, the transaction will not be able to be cashed. A transaction expires when it was created in manual validation or when the capture delay is passed.";
+$i18n['cancelled'] =
+    "The payment was cancelled through the merchant back offfice or by a web service request. This status is definitive, the transaction will never be cashed.";
+$i18n['tovalidate'] =
+    "The transaction is waiting for an authorisation and a manual validation. During the payment, just an imprint was made because the capture delay is higher than 7 days and the validation type is « manual validation ». This payment will be able to be cashed only after that the merchant validates it from the back office or by web service request.";
 $i18n['captured'] = "The payment was cashed. This status is definitive.";
 
 $i18n['result'] = "Payment Response";
 $i18n['00'] = "Payment successfully completed.";
 $i18n['02'] = "The merchant must contact the holder’s bank.";
 $i18n['05'] = "Payment denied.";
-$i18n['05'] = "Cancellation by customer.";
+$i18n['17'] = "Cancellation by customer.";
 $i18n['30'] = "Request format error. To be linked with the value of the vads_extra_result field.";
 $i18n['96'] = "Technical error occurred during payment.";
 
@@ -127,8 +144,8 @@ $i18n['multi'] = "Installment payment";
 
 $i18n['vads_sequence_number'] = "Transaction sequence number.";
 
-$i18n['vads_auth_result']= "Code of the authorization request returned by the issuing bank";
-$i18n['vads_auth_result_00']= "Transaction approved or successfully treated.";
+$i18n['vads_auth_result'] = "Code of the authorization request returned by the issuing bank";
+$i18n['vads_auth_result_00'] = "Transaction approved or successfully treated.";
 $i18n['vads_auth_result_02'] = "Contact the card issuer.";
 $i18n['vads_auth_result_03'] = "Invalid acceptor.";
 $i18n['vads_auth_result_04'] = "Keep the card.";
