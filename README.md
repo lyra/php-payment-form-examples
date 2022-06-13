@@ -1,33 +1,33 @@
-# PayZen VADS payment exemple - PHP
-
-[![Build Status](https://travis-ci.org/lyra/vads-payment-php.svg?branch=master)](https://travis-ci.org/lyra/vads-payment-php)
+# Lyra PHP payment form example
 
 ## Introduction
-The code presented here is a demonstration of the implementation of the VADS PayZen payment system, aimed to ease its use and learning.
 
+The code presented here is an example of the implementation of the Lyra payment gateway form integration in PHP. It aims to ease its use and learning.
 
 ## Contents
-* payzenFormToolBox.php, the core file, defining an utility class encapsulating all the PayZen logics of this example
 
-## Example
-* `config/config.php`, a centralized configuration and initialisation file
-* `return/form-return.php`, the file for the return URL after payment
-* `return/ipn-return.php`, a minimal implementation of the IPN callback (notification must be turned on in the back-office with the correct URL)
+This project main contents are:
+* `lib/locale`: contains the different translation files for French, English, German and Spanish languages.
+* `lib/lyra-payment-form-sdk`: core files that contains the Lyra payment SDK logic.
+* `lib/tools`: the core file, defining an utilitary class encapsulating all the Lyra logics of the examples.
+* `config/Config.php`: a centralized configuration and initialization file.
+* `example/`: contains the logic implementation of the different payment examples.
+* `example/return-payment.php`: the file for the return URL at the end of the payment.
+* Some other resources for styling pages.
 
 ## The first use
-1. Place the files on the same directory, under the root of your web-server
-2. In `config/config.php`, replace the occurences of `[***CHANGE-ME***]` by the actual values of your PayZen account
-3. Access `index.html` from your browser.
-4. Follow the PayZen indications to perform the payment
 
+1. Copy the content of this project to your PHP web server.
+2. In `config/Config.php`, replace the occurrence of the token `[***CHANGE-ME***]` by the actual return url and configure all settings with the actual values from your gateway Back Office.
+3. Access the `index.php` page from your browser.
+4. Follow the indications to perform a payment
 
 ## The next steps
 
-You will also find here the instructions on how to plug the toolbox logging process to your own logging mechanism, how to override the IPN and RETURN URL defined for your PayZen account, and finally, you can change the `TEST` parameter to `PRODUCTION` to switch to _real_ payment mode, with *all* the caution this decision expects.
-
-
+You will also find here the instructions on how to plug the toolbox logging process to your own logging mechanism, how
+to override the IPN and RETURN URL defined for your gateway Back Office. And finally, you can change the `TEST` parameter
+to `PRODUCTION` to switch to real payment mode, with *all* the caution this decision expects.
 
 ## Note
+
 * The documentation used to write this code was [Guide d'implementation formulaire de paiement, v3.4](https://payzen.io)
-
-
