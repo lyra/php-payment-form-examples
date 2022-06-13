@@ -1,6 +1,15 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 $i18n = array ();
-$i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
+$i18n['starterkit'] = 'A starter kit for Lyra Payment Form';
 /*
  * Languages
  */
@@ -13,14 +22,14 @@ $i18n["es"] = "Spanish";
  */
 $i18n['lang'] = 'Language';
 $i18n['contactus'] = 'Contact us';
-$i18n['shopid'] = 'Your SHOP ID';
+$i18n['shopid'] = 'Your shop id';
 $i18n['requirements'] = 'Requirements';
 $i18n['in'] = 'In';
-$i18n['certtestprod'] = 'Your Certificate (TEST or PRODUCTION)';
+$i18n['certtestprod'] = 'Your key (TEST or PRODUCTION)';
 $i18n['modetestprod'] = 'Mode (TEST or PRODUCTION)';
 $i18n['platformurl'] = 'Platform URL';
 $i18n['debugdesc'] =
-    'In order to be redirected straight to the payment gateway, you need to change the debug value of the Config.php file to false.';
+    'In order to be redirected straight to the payment gateway, you need to change the <code>debug</code> value of the <code>Config.php</code> file to <code>false</code>.';
 
 /*
  * Order and chechout data
@@ -44,12 +53,12 @@ $i18n['redirect_message_defaut'] = 'Redirection to shop in a few seconds...';
 /**
  * Example Form fields description
  */
-$i18n['payzensolution'] = 'PAYZEN PAYMENT SOLUTION IMPLEMENTATION EXAMPLE';
+$i18n['lyrasolution'] = 'LYRA PAYMENT SOLUTION IMPLEMENTATION EXAMPLE';
 $i18n['info'] = 'INFORMATIONS';
-$i18n['usesform'] = 'The payment uses the sending of a payment form to PAYZEN payment gateway URL.';
+$i18n['usesform'] = 'The payment uses the sending of a payment form to Lyra payment gateway URL.';
 $i18n['file'] = 'File';
 $i18n['htmlformuse'] =
-    'the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p><p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p><p><b>Some other fields are available, PAYZEN support recommends to read the payment form documentation</b> <a href="https://payzen.io">Read the documentation.</a>';
+    'the file <code>html-form.php</code> sends these payment fields to the<code>form-tunnel.php</code>  which fetch these fields to create the payment request.</p><p>These fields are filled with examples, it is up to you to fill them depending on your context and configuration.</p><p><b>Some other fields are available, Lyra support recommends to read the payment form documentation</b> <a href="https://payzen.io">Read the documentation.</a>';
 $i18n['beforefirstuse'] =
     'Before the first use you have to fill the <code>shopID</code>, <code>certTest</code>, <code>platform</code> and <code>ctxMode</code> of the <code>config/Config.php</code>.e. This file contains secure data.  <b>This data securing is on your responsibility.</b>';
 $i18n['transsettings'] = 'TRANSACTION SETTINGS';
@@ -61,7 +70,7 @@ $i18n['custfirstname'] =
     'Customer first name. Optional setting. Length of field: 127 characters max - Alphanumeric Type';
 $i18n['custlastname'] = 'Customer last name. Optional setting. Length of field: 127 characters max - Alphanumeric Type';
 $i18n['custaddress'] = 'Customer address. Optional setting. Length of field: 255 characters max - Alphanumeric Type';
-$i18n['custzip'] = 'Customer Postal Code. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
+$i18n['custzip'] = 'Customer Zip Code. Optional setting. Length of field: 32 characters max - Alphanumeric Type';
 $i18n['custcity'] = 'Customer City. Optional setting. Length of field: 63 characters max - Alphanumeric Type';
 $i18n['custcountry'] =
     'Customer Country. Customer country code according to the ISO 3166 norm. Optional setting. Length of field: 2 characters max - Alphanumeric Type';
@@ -84,9 +93,9 @@ $i18n['returnurl'] = 'Return URLs';
 $i18n['clientcomesback'] =
     'When the customer comes back to the shop through one of the return URLs, the payment parameters are sent back depending on the <code>vads_return_mode</code>. Depending on the <code>vads_return_mode</code> setting, the parameters are sent by POST mode, GET mode or not at all.';
 $i18n['formreturndesc'] =
-    'In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.';
-$i18n['findhelp'] = 'Find HELP';
-$i18n['supportrecommends'] = 'The PAYZEN support recommends to read the settings analysis documentation on';
+    'In this package, the <code>form-return.php</code> file controls the signature and analyzes the payment results. First, the script checks the signature and then analyzes the main fields. It is up to you to adapt the code to your context.';
+$i18n['findhelp'] = 'Find Help';
+$i18n['supportrecommends'] = 'Lyra support recommends to read the settings analysis documentation on';
 
 /**
  * Debug mode

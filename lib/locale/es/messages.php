@@ -1,6 +1,15 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 $i18n = array ();
-$i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
+$i18n['starterkit'] = 'Un kit de inicio para el formulario de pago de Lyra';
 /*
  * Languages
  */
@@ -17,11 +26,11 @@ $i18n['contactus'] = 'Contáctenos';
 $i18n['shopid'] = 'Identificador de tienda';
 $i18n['requirements'] = 'Requisitos';
 $i18n['in'] = 'En';
-$i18n['certtestprod'] = 'Su certificado (TEST o PRODUCTION)';
+$i18n['certtestprod'] = 'Su clave (TEST o PRODUCTION)';
 $i18n['modetestprod'] = 'Modo de funcionamiento (TEST o PRODUCTION)';
 $i18n['platformurl'] = 'URL plataforma de pago';
 $i18n['debugdesc'] =
-    'para ser redirigido directamente a la pasarela de pago, debe cambiar el valor de depuración del archivo Config.php a false.';
+    'Para ser redirigido directamente a la pasarela de pago, debe cambiar el valor de <code>debug</code> del archivo <code>Config.php</code> a <code>false</code>.';
 /*
  * Order and chechout data
  */
@@ -44,13 +53,13 @@ $i18n['redirect_message_defaut'] = 'Redirección a la tienda en unos momentos ..
 /**
  * Example Form fields description
  */
-$i18n['payzensolution'] = 'EJEMPLO DE IMPLEMENTACIÓN SOLUCIÓN DE PAGO PAYZEN';
+$i18n['lyrasolution'] = 'EJEMPLO DE IMPLEMENTACIÓN SOLUCIÓN DE PAGO LYRA';
 $i18n['info'] = 'INFORMACIÓN';
 $i18n['usesform'] =
-    'El pago se basa en el envío de un formulario de pago en HTTPS a la URL de la plataforma de pago PAYZEN.';
+    'El pago se basa en el envío de un formulario de pago en HTTPS a la URL de la plataforma de pago Lyra.';
 $i18n['file'] = 'El archivo ';
 $i18n['htmlformuse'] =
-    '<p>El fichero <code>html-form.php</code> envía todos los campos vinculados al pago al fichero <code>form-tunnel.php</code> , que recupera todos estos campos para generar la solicitud de pago.</p><p>Los campos se completan a modo de ejemplo, depende de usted mejorarlos de acuerdo con su contexto.</p><p><b>Otros campos están disponibles, el soporte de PAYZEN lo invita a leer la documentación relacionada con el formulario de pago.</b> <a href="https://payzen.io">Consulta la documentación</a></p>';
+    '<p>El fichero <code>html-form.php</code> envía todos los campos vinculados al pago al fichero <code>form-tunnel.php</code> , que recupera todos estos campos para generar la solicitud de pago.</p><p>Los campos se completan a modo de ejemplo, depende de usted mejorarlos de acuerdo con su contexto.</p><p><b>Otros campos están disponibles, el soporte de Lyra lo invita a leer la documentación relacionada con el formulario de pago.</b> <a href="https://payzen.io">Consulta la documentación</a></p>';
 $i18n['beforefirstuse'] =
     'Antes del primer uso debe obligatoriamente rellenar los campos <code>shopID</code>, <code>certTest</code>, <code>platform</code> et <code>ctxMode</code> del fichero<code>config/Config.php</code>. Este archivo contiene datos confidenciales. <b>Proteger estos datos es su responsabilidad.</b>';
 $i18n['transsettings'] = 'PARÁMETROS DE TRANSACCIÓN';
@@ -95,7 +104,7 @@ $i18n['clientcomesback'] =
 $i18n['formreturndesc'] =
     'En este paquete, el archivo <code> form-return.php </code> controla la firma y analiza los resultados del pago. Primero, el script verifica la firma y luego analiza los campos principales. Depende de usted adaptar el código a su contexto.';
 $i18n['findhelp'] = 'Encontrar ayuda';
-$i18n['supportrecommends'] = 'El soporte de PAYZEN recomienda leer la documentación del análisis de configuración en';
+$i18n['supportrecommends'] = 'El soporte de Lyra recomienda leer la documentación del análisis de configuración en';
 
 /**
  * Debug mode

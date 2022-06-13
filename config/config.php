@@ -1,13 +1,21 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
 
 /**
- * Configuration initialisation, using PayZen account informations
+ * Configuration initialisation, using Lyra account informations.
  *
  * shop ID (site_id)
- * 8-digit shop ID provided in your Back Office (Menu: Settings > Shop > Certificates).
+ * 8-digit shop ID provided in your Back Office (Menu: Settings > Shop > Keys).
  *
- * Certificate (key_test || key_prod)
- * provided in your Back Office (Menu: Settings > Shop > Certificates).
+ * Test key or Production key (key_test || key_prod)
+ * provided in your Back Office (Menu: Settings > Shop > Keys).
  *
  * Mode (ctx_mode)
  * Allows to indicate the operating mode of the module (TEST or PRODUCTION)
@@ -20,10 +28,10 @@
  * Germany: https://de.payzen.eu/vads-payment/
  * Chili: https://secure.payzen.cl/vads-payment/
  *
- * Ask support at payzen.io for your platform URL if you don't know it
+ * Ask support at https://www.lyra.com/support/ for your platform URL if you don't know it.
  *
  * Signature algorithm (sign_algo)
- * The signature algorithm chosen in the shop configuration : 'SHA-256'/'SHA-1'
+ * The signature algorithm chosen in the shop configuration: 'SHA-256'/'SHA-1'
  *
  * Return Mode (return_mode)
  * This setting defines the return mode by which the settings will be sent back to the shop
@@ -31,7 +39,7 @@
  * send back any data to the shop when the customer returns to the shop.
  *
  * URL Return (url_return)
- * Shop return URL. When the customer clicks on "return to the shop" this URL permits to treat
+ * Shop return URL. When the customer clicks on "return to the shop" this URL allows to treat
  * the data in order to display the payment details. It is strongly recommended NOT to treat
  * the data in the database (order update, order record) after the payment analysis.
  * The server URL must allow you to update the database.
@@ -42,7 +50,6 @@
  * Debug Mode (debug)
  * TRUE: Allows to display the fields which will be sent to the shop.
  * FALSE: Automatic redirection to the payment page.
- *
  */
 class Config
 {
@@ -65,19 +72,15 @@ class Config
     /**
      * @return string
      */
-    public function getAbsPath ()
+    public function getAbsPath()
     {
-        return realpath(implode(DIRECTORY_SEPARATOR,
-                                ['.', '..']
-                        )
-            ) .
-            DIRECTORY_SEPARATOR;
+        return realpath(implode(DIRECTORY_SEPARATOR, ['.', '..'])) . DIRECTORY_SEPARATOR;
     }
 
     /**
      * @return array
      */
-    public function getConfigParams ()
+    public function getConfigParams()
     {
         return $this->config_params;
     }
@@ -86,11 +89,9 @@ class Config
      * @param $name
      * @return mixed|void
      */
-    public function getConfigParam ($name)
+    public function getConfigParam($name)
     {
-        if (array_key_exists($name,
-                             $this->config_params
-        )) {
+        if (array_key_exists($name, $this->config_params)) {
             return $this->config_params[$name];
         }
     }
@@ -100,13 +101,10 @@ class Config
      * @param $value
      * @return void
      */
-    public function setConfigParam ($name,
-                                    $value)
+    public function setConfigParam($name, $value)
     {
         if (! empty($name)) {
             $this->config_params[$name] = $value;
         }
     }
 }
-
-?>

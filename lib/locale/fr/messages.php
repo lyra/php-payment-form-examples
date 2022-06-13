@@ -1,6 +1,15 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 $i18n = array ();
-$i18n['starterkit'] = 'Un kit de démarrage pour la paiement en ligne par formulaire';
+$i18n['starterkit'] = 'Un kit de démarrage pour le paiement par formulaire';
 /*
  * Languages
  */
@@ -16,11 +25,11 @@ $i18n['contactus'] = 'Nous contacter';
 $i18n['shopid'] = 'Votre identifiant boutique';
 $i18n['requirements'] = 'Configuration nécessaire';
 $i18n['in'] = 'Dans';
-$i18n['certtestprod'] = 'Votre certificat (TEST ou PRODUCTION)';
+$i18n['certtestprod'] = 'Votre clé (TEST ou PRODUCTION)';
 $i18n['modetestprod'] = 'Mode (TEST or PRODUCTION)';
 $i18n['platformurl'] = 'Url de la plateforme';
 $i18n['debugdesc'] =
-    'Pour être redirigé directement sur la page de paiement sans afficher cette page, veuillez passer la valeur debug à <code>false</code> dans le fichier <code>Config.php</code>';
+    'Pour être redirigé directement sur la page de paiement sans afficher cette page, veuillez passer la valeur <code>debug</code> à <code>false</code> dans le fichier <code>Config.php</code>';
 
 /*
  * Order and chechout data
@@ -44,13 +53,13 @@ $i18n['redirect_message_defaut'] = 'Redirection vers la boutique dans quelques i
 /**
  * Example Form fields description
  */
-$i18n['payzensolution'] = 'EXEMPLE D\'IMPLEMENTATION DE LA SOLUTION DE PAIEMENT PAYZEN';
+$i18n['lyrasolution'] = 'EXEMPLE D\'IMPLEMENTATION DE LA SOLUTION DE PAIEMENT LYRA';
 $i18n['info'] = 'INFORMATIONS';
 $i18n['usesform'] =
-    'Le paiement s\'appuie sur l\'envoi d\'un formulaire de paiement en https vers l\'URL de la plateforme de paiement PAYZEN.';
+    'Le paiement s\'appuie sur l\'envoi d\'un formulaire de paiement en https vers l\'URL de la plateforme de paiement Lyra.';
 $i18n['file'] = 'Fichier ';
 $i18n['htmlformuse'] =
-    '<p>Le fichier <code>html-form.php</code> envoie l\'ensemble des champs liés au paiement vers le fichier <code>form-tunnel.php</code> qui récupère l\'ensemble des ces champs pour construire la requête de paiement.</p><p>Les champs sont renseignés à titre d\'exemple, à votre charge de les valoriser en fonction de votre contexte.</p><p><b>D\'autres champs sont disponibles, le support PAYZEN vous invite à lire la documentation liée au formulaire de paiement</b> <a href="https://payzen.io">Consulter la documentation.</a></p>';
+    '<p>Le fichier <code>html-form.php</code> envoie l\'ensemble des champs liés au paiement vers le fichier <code>form-tunnel.php</code> qui récupère l\'ensemble des ces champs pour construire la requête de paiement.</p><p>Les champs sont renseignés à titre d\'exemple, à votre charge de les valoriser en fonction de votre contexte.</p><p><b>D\'autres champs sont disponibles, le support Lyra vous invite à lire la documentation liée au formulaire de paiement</b> <a href="https://payzen.io">Consulter la documentation.</a></p>';
 $i18n['beforefirstuse'] =
     'Avant la première utilisation vous devez impérativement renseigner les champs <code>shopID</code>, <code>certTest</code>, <code>platform</code> et <code>ctxMode</code> du fichier <code>config/Config.php</code>. Ce fichier comporte des données sensibles. <b>La sécurisation de ces données est de votre responsabilité.</b>';
 $i18n['transsettings'] = 'PARAMETRES DE LA TRANSACTION';
@@ -94,7 +103,7 @@ $i18n['clientcomesback'] =
 $i18n['formreturndesc'] =
     'Dans ce pack, c\'est le fichier form-return.php qui controle la signature et analyse les résultats du paiement. Le code est donné à titre d\'exemple. Dans un premier temps le script vérifie la signature puis analyse les principaux champs. A vous d\'adapter le code à votre contexte.';
 $i18n['findhelp'] = 'Trouver de l\'aide';
-$i18n['supportrecommends'] = 'Le support de PayZen recommande fortement de lire la documentation';
+$i18n['supportrecommends'] = 'Le support de Lyra recommande fortement de lire la documentation';
 
 /**
  * Debug mode

@@ -1,5 +1,15 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 session_start();
+
 // I18N support information here.
 if (isset($_GET['lang'])) {
     $lang = $_GET["lang"];
@@ -11,22 +21,14 @@ if (isset($_GET['lang'])) {
 
 // Save language preference for future page requests.
 $_SESSION["lang"] = $lang;
-include implode(DIRECTORY_SEPARATOR,
-                ['lib', 'locale', $lang, 'messages.php']
-);
+include implode(DIRECTORY_SEPARATOR, ['lib', 'locale', $lang, 'messages.php']);
 
 if (isset($_SERVER['HTTP_HOST'])) {
-    $protocol = ((! empty($_SERVER['HTTPS']) &&
-            $_SERVER['HTTPS'] !==
-            'off') ||
-        $_SERVER['SERVER_PORT'] ==
-        443) ? 'https://' : 'http://';
-    $site_url_full = $protocol .
-        $_SERVER['HTTP_HOST'] .
-        $_SERVER['REQUEST_URI'];
-    $uri_parts = explode('?',
-                         $site_url_full
-    );
+    $protocol = (! empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ||
+        $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+
+    $site_url_full = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $uri_parts = explode('?', $site_url_full);
     $site_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
 } else {
     $site_url = 'http://localhost:8888';
@@ -36,8 +38,7 @@ require_once 'config/Config.php';
 $configuration = new Config();
 $iframe = false;
 $target = '';
-if ($configuration->getConfigParam('action_mode') ==
-    'IFRAME') {
+if ($configuration->getConfigParam('action_mode') == 'IFRAME') {
     $iframe = true;
     $target = 'target="payframe"';
 }
@@ -48,7 +49,7 @@ if ($configuration->getConfigParam('action_mode') ==
 <html lang="<?php echo $lang; ?>">
 <head>
     <meta charset="UTF-8">
-    <title>PayZen - VADS PAYMENT PHP</title>
+    <title>PHP PAYMENT FORM EXEMPLE</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -56,11 +57,9 @@ if ($configuration->getConfigParam('action_mode') ==
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -69,7 +68,7 @@ if ($configuration->getConfigParam('action_mode') ==
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">PayZen</a>
+            <a class="navbar-brand" href="#">Lyra</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -78,17 +77,15 @@ if ($configuration->getConfigParam('action_mode') ==
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
-                        <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
-                        <li><a target="_blank" href="https://payzen.io/de-DE/support/">German</a></li>
-                        <li><a target="_blank" href="https://payzen.io/pt-BR/support/">Portugese</a></li>
-                        <li><a target="_blank" href="https://payzen.io/es-CL/support/">Spanish</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/support/">English</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/fr/support/">French</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/de/support/">German</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/br/suporte/">Portugese</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/es/contacto/">Spanish</a></li>
                     </ul>
-
                 </li>
-
                 <li>
-                    <a target="_blank" href="https://github.com/payzen">Github</a>
+                    <a target="_blank" href="https://github.com/lyra">Github</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -111,14 +108,11 @@ if ($configuration->getConfigParam('action_mode') ==
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
         <div class="col-lg-12">
-            <h1>VADS PAYMENT PHP</h1>
+            <h1>LYRA PHP PAYMENT FORM</h1>
             <p class="lead"><?php echo $i18n['starterkit'] ?> </p>
-
-            <h2><?php echo $i18n['requirements']; ?> :</h2>
-
+            <h2><?php echo $i18n['requirements']; ?>:</h2>
             <ul>
                 <li>PHP (5.4 +)</li>
                 <li><?php echo $i18n['in']; ?> <code>config/Config.php :</code>
@@ -130,7 +124,6 @@ if ($configuration->getConfigParam('action_mode') ==
                         <li><?php echo $i18n['debugdesc']; ?></li>
                     </ul>
                 </li>
-
             </ul>
 
             <h2><?php echo $i18n['formexamples']; ?> </h2>
@@ -162,7 +155,7 @@ if ($configuration->getConfigParam('action_mode') ==
                     <div class="col-md-3">
                         <div style="text-align: center;">
                             <h3><?php echo $i18n['total']; ?></h3>
-                            <input class="forminput" style="color:green; text-align: center;" type="number"
+                            <input class="forminput" style="color: #293c7a; text-align: center;" type="number"
                                    name="amount" id="amount" value="1000" required="true" min="0">
                             <label for="amount"><?php echo $i18n['amountdesc']; ?></label>
                             <select class="forminput" name="currency" id="currency">
@@ -216,7 +209,6 @@ if ($configuration->getConfigParam('action_mode') ==
                     <label style="width: 10%" for="cust_phone">cust_phone</label>
                     <input class="forminput" type="text" id="cust_phone" name="cust_phone" value="06002822672">
                     <label style="width: 60%" for="cust_phone"><?php echo $i18n['custphone']; ?></label><br>
-
                 </div>
 
                 <button type="button" class="accordion"><?php echo $i18n['payment']; ?></button>
@@ -235,12 +227,10 @@ if ($configuration->getConfigParam('action_mode') ==
                     </div>
                 </div>
 
-                <?php if ($iframe) { ?>
-                    <div id="iframeHolder"></div> <?php } ?>
+                <?php if ($iframe) { ?> <div id="iframeHolder"></div> <?php } ?>
 
                 <button class="forminput" id="submitButton" type="submit" form="checkout_form" value="Submit"
                         action=""><?php echo $i18n['sendform']; ?></button>
-
 
                 <script type="text/javascript">
                     function checkmode() {
@@ -260,7 +250,7 @@ if ($configuration->getConfigParam('action_mode') ==
                                 actionfile = "example/e-cheques-vacances-payment.php";
                                 break;
                             case 'cbpayment':
-                                actionfile = "example/cb-preselected-card-payment.php";
+                                actionfile = "example/preselected-card-payment.php";
                                 break;
                             default:
                                 actionfile = "example/standard-payment.php";
@@ -311,10 +301,8 @@ if ($configuration->getConfigParam('action_mode') ==
         </div>
     </div>
     <!-- /.row -->
-
 </div>
 
 <script type="text/javascript" src="assets/js/script.js"></script>
-
 </body>
 </html>

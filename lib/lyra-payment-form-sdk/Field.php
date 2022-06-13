@@ -1,16 +1,21 @@
 <?php
-if (! class_exists('Field',
-                   false
-)) {
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
 
+if (! class_exists('Field', false)) {
     /**
      * Class representing a form field to send to the payment gateway.
      */
     class Field
     {
-
         /**
-         * field name.
+         * Field name.
          * Matches the HTML input attribute.
          *
          * @var string
@@ -18,14 +23,14 @@ if (! class_exists('Field',
         private $name;
 
         /**
-         * field label in English, may be used by translation systems.
+         * Field label in English, may be used by translation systems.
          *
          * @var string
          */
         private $label;
 
         /**
-         * field length.
+         * Field length.
          * Matches the HTML input size attribute.
          *
          * @var int
@@ -47,7 +52,7 @@ if (! class_exists('Field',
         private $required;
 
         /**
-         * field value.
+         * Field value.
          * Null or string.
          *
          * @var string
@@ -63,11 +68,7 @@ if (! class_exists('Field',
          * @param boolean $required
          * @param int length
          */
-        public function __construct ($name,
-                                     $label,
-                                     $regex,
-                                     $required = false,
-                                     $length = 255)
+        public function __construct($name, $label, $regex, $required = false, $length = 255)
         {
             $this->name = $name;
             $this->label = $label;
@@ -81,19 +82,13 @@ if (! class_exists('Field',
          *
          * @return boolean
          */
-        public function isValid ()
+        public function isValid()
         {
-            if ($this->value ===
-                null &&
-                $this->required) {
+            if ($this->value === null && $this->required) {
                 return false;
             }
 
-            if ($this->value !==
-                null &&
-                ! preg_match($this->regex,
-                             $this->value
-                )) {
+            if ($this->value !== null && ! preg_match($this->regex, $this->value)) {
                 return false;
             }
 
@@ -106,10 +101,10 @@ if (! class_exists('Field',
          * @param mixed $value
          * @return boolean
          */
-        public function setValue ($value)
+        public function setValue($value)
         {
-            $value = ($value ===
-                null) ? null : (string)$value;
+            $value = ($value === null) ? null : (string) $value;
+
             // We save value even if invalid but we return "false" as warning.
             $this->value = $value;
 
@@ -121,7 +116,7 @@ if (! class_exists('Field',
          *
          * @return string
          */
-        public function getValue ()
+        public function getValue()
         {
             return $this->value;
         }
@@ -131,7 +126,7 @@ if (! class_exists('Field',
          *
          * @return boolean
          */
-        public function isRequired ()
+        public function isRequired()
         {
             return $this->required;
         }
@@ -141,7 +136,7 @@ if (! class_exists('Field',
          *
          * @return string
          */
-        public function getName ()
+        public function getName()
         {
             return $this->name;
         }
@@ -151,7 +146,7 @@ if (! class_exists('Field',
          *
          * @return string
          */
-        public function getLabel ()
+        public function getLabel()
         {
             return $this->label;
         }
@@ -161,7 +156,7 @@ if (! class_exists('Field',
          *
          * @return int
          */
-        public function getLength ()
+        public function getLength()
         {
             return $this->length;
         }
@@ -171,7 +166,7 @@ if (! class_exists('Field',
          *
          * @return boolean
          */
-        public function isFilled ()
+        public function isFilled()
         {
             return ! is_null($this->value);
         }

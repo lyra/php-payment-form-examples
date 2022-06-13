@@ -1,8 +1,14 @@
 <?php
-if (! class_exists('Api',
-                   false
-)) {
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
 
+if (! class_exists('Api', false)) {
     /**
      * Utility class for managing parameters checking, internationalization, signature building and more.
      */
@@ -35,7 +41,7 @@ if (! class_exists('Api',
          *
          * @return array[string][string]
          */
-        public static function getSupportedLanguages ()
+        public static function getSupportedLanguages()
         {
             return array (
                 'de' => 'German',
@@ -60,14 +66,10 @@ if (! class_exists('Api',
          * @param string $lang
          * @return boolean
          */
-        public static function isSupportedLanguage ($lang)
+        public static function isSupportedLanguage($lang)
         {
-            foreach (array_keys(self::getSupportedLanguages())
-                     as
-                     $code)
-            {
-                if ($code ==
-                    strtolower($lang)) {
+            foreach (array_keys(self::getSupportedLanguages()) as $code) {
+                if ($code == strtolower($lang)) {
                     return true;
                 }
             }
@@ -83,22 +85,15 @@ if (! class_exists('Api',
          * @param int $timestamp
          * @return string the generated trans_id
          */
-        public function generateTransId ($timestamp = null)
+        public function generateTransId($timestamp = null)
         {
             if (! $timestamp) {
                 $timestamp = time();
             }
 
-            $parts = explode(' ',
-                             microtime()
-            );
-            $id = ($timestamp +
-                    $parts[0] -
-                    strtotime('today 00:00')) *
-                10;
-            $id = sprintf('%06d',
-                          $id
-            );
+            $parts = explode(' ', microtime());
+            $id = ($timestamp + $parts[0] - strtotime('today 00:00')) * 10;
+            $id = sprintf('%06d', $id);
 
             return $id;
         }
@@ -112,27 +107,14 @@ if (! class_exists('Api',
          * @param boolean $hashed set to false to get the unhashed signature
          * @return string
          */
-        public function sign ($parameters,
-                              $key,
-                              $algo = 'ALGO_SHA256',
-                              $hashed = true)
+        public function sign($parameters, $key, $algo = 'ALGO_SHA256', $hashed = true)
         {
             ksort($parameters);
 
             $sign = '';
-            foreach ($parameters
-                     as
-                     $name
-            =>
-                     $value)
-            {
-                if (substr($name,
-                           0,
-                           5
-                    ) ==
-                    'vads_') {
-                    $sign .= $value .
-                        '+';
+            foreach ($parameters as $name => $value) {
+                if (substr($name, 0, 5) == 'vads_') {
+                    $sign .= $value . '+';
                 }
             };
 
@@ -146,12 +128,7 @@ if (! class_exists('Api',
                 case 'SHA-1':
                     return sha1($sign);
                 case 'SHA-256':
-                    return base64_encode(hash_hmac('sha256',
-                                                   $sign,
-                                                   $key,
-                                                   true
-                                         )
-                    );
+                    return base64_encode(hash_hmac('sha256', $sign, $key, true));
                 default:
                     throw new \Exception("Unsupported algorithm passed : {$algo}.");
             }
@@ -164,16 +141,11 @@ if (! class_exists('Api',
          * @param array $potentially_quoted_data
          * @return mixed
          */
-        public static function uncharm ($potentially_quoted_data)
+        public static function uncharm($potentially_quoted_data)
         {
             if (get_magic_quotes_gpc()) {
                 $sane = array ();
-                foreach ($potentially_quoted_data
-                         as
-                         $k
-                =>
-                         $v)
-                {
+                foreach ($potentially_quoted_data as $k => $v) {
                     $sane_key = stripslashes($k);
                     $sane_value = is_array($v) ? self::uncharm($v) : stripslashes($v);
                     $sane[$sane_key] = $sane_value;
@@ -185,7 +157,7 @@ if (! class_exists('Api',
             return $sane;
         }
 
-        public function fn_echo ($param)
+        public function fn_echo($param)
         {
             echo $param;
         }

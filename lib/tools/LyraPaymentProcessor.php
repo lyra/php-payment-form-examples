@@ -1,8 +1,16 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
 
 if (! class_exists('LyraPaymentProcessor', false)) {
     /**
-     * PayZen VADS payment example.
+     * Lyra payment example.
      */
     class LyraPaymentProcessor
     {
@@ -10,6 +18,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @var array
          */
         private $config_parameters;
+
         /**
          * @var bool
          */
@@ -19,36 +28,34 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @var string
          */
         private $warning = '';
+
         /**
          * @var Logger
          */
         private $logger;
 
         /**
-         * Constructor, stores the PayZen user's account informations
+         * Constructor, stores Lyra user's account informations
          * @param $config array (
-         *    $site_id => string, the account site id as provided by Payzen
-         *    $key_test => string, key, test-version
-         *    $key_prod => string, key, production-version
-         *    $ctx_mode => string ("TEST" or "PRODUCTION"), the PayZen mode to operate
-         *    $platform_url => string URL
-         *    $sign_algo => string signature algorithm
+         *    $site_id => string, the identifier provided by Lyra
+         *    $key_test => string, key in test mode
+         *    $key_prod => string, key in production mode
+         *    $ctx_mode => string ("TEST" or "PRODUCTION"), the context mode to operate
+         *    $platform_url => string, link to the payment page.
+         *    $sign_algo => string (SHA-256 or SHA1), algorithm used to compute the payment form signature
          *    $debug => string debug mode
          * )
          */
-        public function __construct ($config = array (),
-                                     $log_dir = './logs')
+        public function __construct($config = array (), $log_dir = './logs')
         {
             $this->setLogger($log_dir);
 
-            if (isset($config) &&
-                is_array($config) &&
-                ! empty($config)) {
-                # set config parameters
+            if (isset($config) && is_array($config) && ! empty($config)) {
+                // Set config parameters.
                 $this->setConfigParameters($config);
             } else {
-                //Load config parameters from Config.php file
-                $configuration = new  Config();
+                // Load config parameters from Config.php file.
+                $configuration = new Config();
                 $this->setConfigParameters($configuration->getConfigParams());
             }
         }
@@ -57,34 +64,24 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $log_dir
          * @return void
          */
-        public function setLogger ($log_dir)
+        public function setLogger($log_dir)
         {
             $this->logger = Logger::instance();
             if (! is_dir($log_dir)) {
                 mkdir($log_dir);
             }
-            $this->logger->__set('logfile',
-                                 $log_dir .
-                                 DIRECTORY_SEPARATOR .
-                                 '__vads-' .
-                                 date('Y-m') .
-                                 '.log'
-            );
+
+            $this->logger->__set('logfile', $log_dir . DIRECTORY_SEPARATOR . 'lyra-' . date('Y-m') . '.log');
         }
 
         /**
          * @param $config
          * @return void
          */
-        public function setConfigParameters ($config)
+        public function setConfigParameters($config)
         {
-            $this->required_fields =
-                (count(array_filter($config)) ==
-                    count($config)) ||
-                (count(array_filter($config)) ==
-                    count($config) -
-                    1) &&
-                ! $config['debug'];
+            $this->required_fields = (count(array_filter($config)) == count($config)) ||
+                (count(array_filter($config)) == count($config) - 1) && ! $config['debug'];
 
             if ($this->required_fields) {
                 $this->config_parameters = array ();
@@ -105,9 +102,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
             } else {
                 $this->warning .= '<h1>One of the config parameters is missing in config/Config.php </h1>';
                 $this->logger->write($this->warning);
-                echo '<pre>' .
-                    $this->warning .
-                    '</pre>';
+                echo '<pre>' . $this->warning . '</pre>';
             }
         }
 
@@ -115,17 +110,14 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $order_info
          * @return Request
          */
-        public function initRequest ($order_info)
+        public function initRequest($order_info)
         {
             // Use our custom class to generate the HTML.
             $request = new Request();
 
             $params = $this->config_parameters;
 
-            $this->logger->write('Generating payment form for order #' .
-                                 $order_info['order_id'] .
-                                 '.'
-            );
+            $this->logger->write('Generating payment form for order #' . $order_info['order_id'] . '.');
 
             // Admin configuration parameters.
             $config_params = array (
@@ -135,22 +127,13 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                 'redirect_error_message', 'action_mode', 'return_mode', 'url_return', 'sign_algo'
             );
 
-            foreach ($config_params
-                     as
-                     $name)
-            {
-                $value = key_exists($name,
-                                    $params
-                ) ? $params[$name] : '';
+            foreach ($config_params as $name) {
+                $value = key_exists($name, $params) ? $params[$name] : '';
                 if (is_array($value)) {
-                    $value = implode(';',
-                                     $value
-                    );
+                    $value = implode(';', $value);
                 }
 
-                $request->set($name,
-                              $value
-                );
+                $request->set($name, $value);
             }
 
             // Get the shop language code.
@@ -160,35 +143,19 @@ if (! class_exists('LyraPaymentProcessor', false)) {
             // Order parameters.
             $request->setFromarray($order_info);
 
-            //iframe mode
-            if ($request->get('action_mode') ===
-                'IFRAME') {
-                // hide logos below payment fields
-                $request->set('theme_config',
-                              '3DS_LOGOS=false;'
-                );
+            // iFrame mode.
+            if ($request->get('action_mode') === 'IFRAME') {
+                // Hide logos below payment fields.
+                $request->set('theme_config', '3DS_LOGOS=false;');
 
-                // enable automatic redirection
-                $request->set('redirect_enabled',
-                              '1'
-                );
-                $request->set('redirect_success_timeout',
-                              '0'
-                );
-                $request->set('redirect_error_timeout',
-                              '0'
-                );
+                // Enable automatic redirection.
+                $request->set('redirect_enabled', '1');
+                $request->set('redirect_success_timeout', '0');
+                $request->set('redirect_error_timeout', '0');
 
                 $return_url = $request->get('url_return');
-                $sep = strpos($return_url,
-                              '?'
-                ) ===
-                false ? '?' : '&';
-                $request->set('url_return',
-                              $return_url .
-                              $sep .
-                              'content_only=1'
-                );
+                $sep = strpos($return_url, '?') === false ? '?' : '&';
+                $request->set('url_return', $return_url . $sep . 'content_only=1');
             }
 
             return $request;
@@ -199,35 +166,26 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $request
          * @return string
          */
-        public function prepareForm ($order_info,
-                                     $request)
+        public function prepareForm($order_info, $request)
         {
-            //insert style
+            // Insert style.
             $formContent = "";
-            //include ($lang.'.php');
+
             $lang = isset($order_info['lang_code']) ? $order_info['lang_code'] : 'en';
-            include implode(DIRECTORY_SEPARATOR,
-                            ['..', 'lib', 'locale', $lang, 'messages.php']
-            );
+            include implode(DIRECTORY_SEPARATOR, ['..', 'lib', 'locale', $lang, 'messages.php']);
 
             if ($this->config_parameters['debug']) {
                 $formContent = '<html>';
                 $formContent .= '<head>';
                 $formContent .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 
-                $formContent .= '<title style="align">' .
-                    $i18n['paymentform'] .
-                    '</title>';
+                $formContent .= '<title style="align">' . $i18n['paymentform'] . '</title>';
                 $formContent .= '<link href="../assets/css/style.css" rel="stylesheet" type="text/css"/>';
                 $formContent .= '</head>';
                 $formContent .= '<body style="padding: 10%;">';
-                $formContent .= '<h1 style="text-align: center;">' .
-                    $i18n['paymentform'] .
-                    '</h1>';
+                $formContent .= '<h1 style="text-align: center;">' . $i18n['paymentform'] .'</h1>';
 
-                $form = $this->getDisplayRequestHtml($request,
-                                                     $i18n['sendform']
-                );
+                $form = $this->getDisplayRequestHtml($request, $i18n['sendform']);
                 $submitScript = '';
                 // Message to be shown when forwarding to payment platform.
                 $msg = '';
@@ -239,20 +197,17 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                 $msg = $i18n['redirect_message_defaut'];
             }
 
-            //get html form
-            $formContent .= '<form action="' .
-                $request->get('platform_url') .
-                '" method="POST" name="payment_form">';
+            // Get html form.
+            $formContent .= '<form action="' . $request->get('platform_url') . '" method="POST" name="payment_form">';
             $formContent .= "\n";
             $formContent .= $form;
             $formContent .= "\n";
             $formContent .= '</form>';
-            $formContent .= '<div style="text-align: center;">' .
-                $msg .
-                '</div>';
+            $formContent .= '<div style="text-align: center;">' . $msg . '</div>';
             $formContent .= $submitScript;
             $formContent .= '</body>';
             $formContent .= '</html>';
+
             return $formContent;
         }
 
@@ -260,24 +215,17 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $order_info
          * @return void
          */
-        public function submitStandardPaymentForm ($order_info)
+        public function submitStandardPaymentForm($order_info)
         {
             if ($this->required_fields) {
                 $request = $this->initRequest($order_info);
 
                 // Log data that will be sent to payment gateway.
-                $this->logger->write('Data to be sent to payment gateway : ' .
-                                     print_r
-                                     ($request->getRequestFieldsarray(true /* To hide sensitive data. */),
-                                      true
-                                     )
-                );
+                $this->logger->write('Data to be sent to payment gateway : ' . 
+                    print_r($request->getRequestFieldsarray(true /* To hide sensitive data. */), true));
 
-                //get prepared form
-                $formContent = $this->prepareForm($order_info,
-                                                  $request
-                );
-
+                // Get prepared form.
+                $formContent = $this->prepareForm($order_info, $request);
                 Api::fn_echo($formContent);
             }
         }
@@ -287,41 +235,25 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $params_multi
          * @return void
          */
-        public function submitMultiPaymentForm ($order_info,
-                                                $params_multi)
+        public function submitMultiPaymentForm($order_info, $params_multi)
         {
             if ($this->required_fields) {
                 // Use our custom class to generate the HTML.
                 $request = $this->initRequest($order_info);
 
-                // set multi payment options
-                $first = (isset($params_multi['first']) &&
-                    $params_multi['first']) ?
-                    (int)(string)(($params_multi['first'] /
-                            100) *
-                        $order_info['amount']) /* amount is in cents*/ :
-                    null;
+                // Set multi payment options.
+                $first = (isset($params_multi['first']) && $params_multi['first']) ?
+                    (int) (string) (($params_multi['first'] / 100) * $order_info['amount']) /* Amount is in cents. */
+                    : null;
 
-                $request->setMultiPayment(null
-                    /* use already set amount */,
-                                          $first,
-                                          $params_multi['count'],
-                                          $params_multi['period']
-                );
+                $request->setMultiPayment(null, $first, $params_multi['count'], $params_multi['period']);
 
                 // Log data that will be sent to payment gateway.
-                $this->logger->write('Data to be sent to payment gateway : ' .
-                                     print_r
-                                     ($request->getRequestFieldsarray(true /* To hide sensitive data. */),
-                                      true
-                                     )
-                );
+                $this->logger->write('Data to be sent to payment gateway : '
+                    . print_r($request->getRequestFieldsarray(true /* To hide sensitive data. */), true));
 
-                //get prepared form
-                $formContent = $this->prepareForm($order_info,
-                                                  $request
-                );
-
+                // Get prepared form.
+                $formContent = $this->prepareForm($order_info, $request);
                 Api::fn_echo($formContent);
             }
         }
@@ -331,40 +263,25 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          *
          * @request Request
          */
-        public function getDisplayRequestHtml ($request,
-                                               $submit)
+        public function getDisplayRequestHtml($request, $submit)
         {
             $fields = $request->getRequestFields();
 
             $html = '';
-            foreach ($fields
-                     as
-                     $field)
-            {
+            foreach ($fields as $field) {
                 if (! $field->isFilled()) {
                     continue;
                 }
-                $value = htmlspecialchars($field->getValue(),
-                                          ENT_QUOTES,
-                                          'UTF-8'
-                );
-                $html .= '<label style="width:50%" for="' .
-                    $field->getName() .
-                    '">' .
-                    $field->getName() .
-                    '</label><input style="width:100%" class="forminput" name="' .
-                    $field->getName() .
-                    '" value="' .
-                    $value .
-                    '" type="text" />';
 
-                //$html .= sprintf($format, $field->getName(), $field->getName(), $field->getName(), $value);
+                $value = htmlspecialchars($field->getValue(), ENT_QUOTES, 'UTF-8');
+                $html .= '<label style="width:50%" for="' . $field->getName() . '">'
+                    . $field->getName() . '</label><input style="width:100%" class="forminput" name="'
+                    . $field->getName() . '" value="' . $value . '" type="text"/>';
                 $html .= "<br>";
             }
 
-            $html .= '<input class="forminput" type="submit" value="' .
-                $submit .
-                '"/>';
+            $html .= '<input class="forminput" type="submit" value="' . $submit . '"/>';
+
             return $html;
         }
 
@@ -372,7 +289,7 @@ if (! class_exists('LyraPaymentProcessor', false)) {
          * @param $param
          * @return bool
          */
-        public function checkResponse ($param = array ())
+        public function checkResponse($param = array ())
         {
             // Load gateway response.
             $response = new Response(
@@ -383,17 +300,11 @@ if (! class_exists('LyraPaymentProcessor', false)) {
                 $this->config_parameters['sign_algo']
             );
 
-            $from_server = $response->get('hash') !==
-                null;
+            $from_server = $response->get('hash') !== null;
 
             if (! $response->isAuthentified()) {
-                $this->logger->write('Authentication failed: received invalid response with parameters: ' .
-                                     print_r($param,
-                                             true
-                                     )
-                );
-                $this->logger->write('Signature algorithm selected in module settings must be the same as one selected in gateway Back Office.'
-                );
+                $this->logger->write('Authentication failed: received invalid response with parameters: ' . print_r($param, true));
+                $this->logger->write('Signature algorithm selected in module settings must be the same as one selected in gateway Back Office.');
 
                 if ($from_server) {
                     $this->logger->write('IPN URL PROCESS END.');

@@ -1,8 +1,14 @@
 <?php
-if (! class_exists('Response',
-                   false
-)) {
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
 
+if (! class_exists('Response', false)) {
     /**
      * Class representing the result of a transaction (sent by the IPN URL or by the client return).
      */
@@ -82,11 +88,7 @@ if (! class_exists('Response',
          * @param string $key_prod
          * @param string $algo
          */
-        public function __construct ($params,
-                                     $ctx_mode,
-                                     $key_test,
-                                     $key_prod,
-                                     $algo = Api::ALGO_SHA1)
+        public function __construct($params, $ctx_mode, $key_test, $key_prod, $algo = Api::ALGO_SHA1)
         {
             $this->rawResponse = Api::uncharm($params);
             $this->certificate = trim(($ctx_mode ==
@@ -100,37 +102,21 @@ if (! class_exists('Response',
             }
 
             // Payment results.
-            $this->result = self::findInarray('vads_result',
-                                              $this->rawResponse,
-                                              null
-            );
-            $this->extraResult = self::findInarray('vads_extra_result',
-                                                   $this->rawResponse,
-                                                   null
-            );
-            $this->authResult = self::findInarray('vads_auth_result',
-                                                  $this->rawResponse,
-                                                  null
-            );
-            $this->warrantyResult = self::findInarray('vads_warranty_result',
-                                                      $this->rawResponse,
-                                                      null
-            );
+            $this->result = self::findInarray('vads_result', $this->rawResponse, null);
+            $this->extraResult = self::findInarray('vads_extra_result', $this->rawResponse, null);
+            $this->authResult = self::findInarray('vads_auth_result', $this->rawResponse, null);
+            $this->warrantyResult = self::findInarray('vads_warranty_result', $this->rawResponse, null);
 
-            $this->transStatus = self::findInarray('vads_trans_status',
-                                                   $this->rawResponse,
-                                                   null
-            );
+            $this->transStatus = self::findInarray('vads_trans_status', $this->rawResponse, null);
         }
 
         /**
          * Check response signature.
          * @return bool
          */
-        public function isAuthentified ()
+        public function isAuthentified()
         {
-            return $this->getComputedSignature() ==
-                $this->getSignature();
+            return $this->getComputedSignature() == $this->getSignature();
         }
 
         /**
@@ -138,20 +124,16 @@ if (! class_exists('Response',
          * @param bool $hashed
          * @return string
          */
-        public function getComputedSignature ($hashed = true)
+        public function getComputedSignature($hashed = true)
         {
-            return Api::sign($this->rawResponse,
-                             $this->certificate,
-                             $this->algo,
-                             $hashed
-            );
+            return Api::sign($this->rawResponse, $this->certificate, $this->algo, $hashed);
         }
 
         /**
          * Check if the payment was successful (waiting confirmation or captured).
          * @return bool
          */
-        public function isAcceptedPayment ()
+        public function isAcceptedPayment()
         {
             $confirmedStatuses = array (
                 'AUTHORISED',
@@ -161,10 +143,7 @@ if (! class_exists('Response',
                 'ACCEPTED'
             );
 
-            return in_array($this->transStatus,
-                            $confirmedStatuses
-                ) ||
-                $this->isPendingPayment();
+            return in_array($this->transStatus, $confirmedStatuses) || $this->isPendingPayment();
         }
 
         /**
@@ -172,7 +151,7 @@ if (! class_exists('Response',
          * transfered and is not yet guaranteed).
          * @return bool
          */
-        public function isPendingPayment ()
+        public function isPendingPayment()
         {
             $pendingStatuses = array (
                 'INITIAL',
@@ -182,57 +161,46 @@ if (! class_exists('Response',
                 'WAITING_FOR_PAYMENT'
             );
 
-            return in_array($this->transStatus,
-                            $pendingStatuses
-            );
+            return in_array($this->transStatus, $pendingStatuses);
         }
 
         /**
          * Check if the payment process was interrupted by the client.
          * @return bool
          */
-        public function isCancelledPayment ()
+        public function isCancelledPayment()
         {
             $cancelledStatuses = array ('NOT_CREATED', 'ABANDONED');
-            return in_array($this->transStatus,
-                            $cancelledStatuses
-            );
+
+            return in_array($this->transStatus, $cancelledStatuses);
         }
 
         /**
          * Check if the payment is to validate manually in the gateway Back Office.
          * @return bool
          */
-        public function isToValidatePayment ()
+        public function isToValidatePayment()
         {
             $toValidateStatuses = array ('WAITING_AUTHORISATION_TO_VALIDATE', 'AUTHORISED_TO_VALIDATE');
-            return in_array($this->transStatus,
-                            $toValidateStatuses
-            );
+
+            return in_array($this->transStatus, $toValidateStatuses);
         }
 
         /**
          * Check if the payment is suspected to be fraudulent.
          * @return bool
          */
-        public function isSuspectedFraud ()
+        public function isSuspectedFraud()
         {
             // At least one control failed...
             $riskControl = $this->getRiskControl();
-            if (in_array('WARNING',
-                         $riskControl
-                ) ||
-                in_array('ERROR',
-                         $riskControl
-                )) {
+            if (in_array('WARNING', $riskControl) || in_array('ERROR', $riskControl)) {
                 return true;
             }
 
             // Or there was an alert from risk assessment module.
             $riskAssessment = $this->getRiskAssessment();
-            if (in_array('INFORM',
-                         $riskAssessment
-            )) {
+            if (in_array('INFORM', $riskAssessment)) {
                 return true;
             }
 
@@ -243,24 +211,18 @@ if (! class_exists('Response',
          * Return the risk control result.
          * @return array[string][string]
          */
-        public function getRiskControl ()
+        public function getRiskControl()
         {
             $riskControl = $this->get('risk_control');
-            if (! isset($riskControl) ||
-                ! trim($riskControl)) {
+            if (! isset($riskControl) || ! trim($riskControl)) {
                 return array ();
             }
 
             // Get a URL-like string.
-            $riskControl = str_replace(';',
-                                       '&',
-                                       $riskControl
-            );
+            $riskControl = str_replace(';', '&', $riskControl);
 
             $result = array ();
-            parse_str($riskControl,
-                      $result
-            );
+            parse_str($riskControl, $result);
 
             return $result;
         }
@@ -269,17 +231,14 @@ if (! class_exists('Response',
          * Return the risk assessment result.
          * @return array[string]
          */
-        public function getRiskAssessment ()
+        public function getRiskAssessment()
         {
             $riskAssessment = $this->get('risk_assessment_result');
-            if (! isset($riskAssessment) ||
-                ! trim($riskAssessment)) {
+            if (! isset($riskAssessment) || ! trim($riskAssessment)) {
                 return array ();
             }
 
-            return explode(';',
-                           $riskAssessment
-            );
+            return explode(';', $riskAssessment);
         }
 
         /**
@@ -290,13 +249,7 @@ if (! class_exists('Response',
         public function get ($name)
         {
             // Manage shortcut notations by adding 'vads_'.
-            $name = (substr($name,
-                            0,
-                            5
-                ) !=
-                'vads_') ?
-                'vads_' .
-                $name : $name;
+            $name = (substr($name, 0, 5) != 'vads_') ? 'vads_' . $name : $name;
 
             return @$this->rawResponse[$name];
         }
@@ -306,7 +259,7 @@ if (! class_exists('Response',
          * @param string $key
          * @return string
          */
-        public function getExtInfo ($key)
+        public function getExtInfo($key)
         {
             return $this->get("ext_info_$key");
         }
@@ -315,7 +268,7 @@ if (! class_exists('Response',
          * Return the expected signature received from gateway.
          * @return string
          */
-        public function getSignature ()
+        public function getSignature()
         {
             return @$this->rawResponse['signature'];
         }
@@ -324,7 +277,7 @@ if (! class_exists('Response',
          * Return the payment response result.
          * @return string
          */
-        public function getResult ()
+        public function getResult()
         {
             return $this->result;
         }
@@ -333,7 +286,7 @@ if (! class_exists('Response',
          * Return the payment response extra result.
          * @return string
          */
-        public function getExtraResult ()
+        public function getExtraResult()
         {
             return $this->extraResult;
         }
@@ -342,7 +295,7 @@ if (! class_exists('Response',
          * Return the payment response authentication result.
          * @return string
          */
-        public function getAuthResult ()
+        public function getAuthResult()
         {
             return $this->authResult;
         }
@@ -351,7 +304,7 @@ if (! class_exists('Response',
          * Return the payment response warranty result.
          * @return string
          */
-        public function getWarrantyResult ()
+        public function getWarrantyResult()
         {
             return $this->warrantyResult;
         }
@@ -360,7 +313,7 @@ if (! class_exists('Response',
          * Return all the payment response results as array.
          * @return array[string][string]
          */
-        public function getAllResults ()
+        public function getAllResults()
         {
             return array (
                 'result' => $this->result,
@@ -374,7 +327,7 @@ if (! class_exists('Response',
          * Return the payment transaction status.
          * @return string
          */
-        public function getTransStatus ()
+        public function getTransStatus()
         {
             return $this->transStatus;
         }
@@ -384,22 +337,14 @@ if (! class_exists('Response',
          * @param $type string
          * @return string
          */
-        public function getMessage ($type = self::TYPE_RESULT)
+        public function getMessage($type = self::TYPE_RESULT)
         {
             $text = '';
 
-            $text .= self::translate($this->get($type),
-                                     $type,
-                                     $this->get('language'),
-                                     true
-            );
+            $text .= self::translate($this->get($type), $type, $this->get('language'), true);
 
-            if ($type ===
-                self::TYPE_RESULT &&
-                $this->get($type) ===
-                '30' /* form error */) {
-                $text .= ' ' .
-                    self::extraMessage($this->extraResult);
+            if ($type === self::TYPE_RESULT && $this->get($type) === '30' /* form error */) {
+                $text .= ' ' . self::extraMessage($this->extraResult);
             }
 
             return $text;
@@ -410,13 +355,11 @@ if (! class_exists('Response',
          * @param $type string
          * @return string
          */
-        public function getCompleteMessage ($sep = ' ')
+        public function getCompleteMessage($sep = ' ')
         {
             $text = $this->getMessage(self::TYPE_RESULT);
-            $text .= $sep .
-                $this->getMessage(self::TYPE_AUTH_RESULT);
-            $text .= $sep .
-                $this->getMessage(self::TYPE_WARRANTY_RESULT);
+            $text .= $sep . $this->getMessage(self::TYPE_AUTH_RESULT);
+            $text .= $sep . $this->getMessage(self::TYPE_WARRANTY_RESULT);
 
             return $text;
         }
@@ -425,41 +368,24 @@ if (! class_exists('Response',
          * Return a short description of the payment result, useful for logging.
          * @return string
          */
-        public function getLogMessage ()
+        public function getLogMessage()
         {
             $text = '';
 
-            $text .= self::translate($this->result,
-                                     self::TYPE_RESULT,
-                                     'en',
-                                     true
-            );
-            if ($this->result ===
-                '30' /* form error */) {
-                $text .= ' ' .
-                    self::extraMessage($this->extraResult);
+            $text .= self::translate($this->result, self::TYPE_RESULT, 'en', true);
+            if ($this->result === '30' /* form error */) {
+                $text .= ' ' . self::extraMessage($this->extraResult);
             }
 
-            $text .= ' ' .
-                self::translate($this->authResult,
-                                self::TYPE_AUTH_RESULT,
-                                'en',
-                                true
-                );
-            $text .= ' ' .
-                self::translate($this->warrantyResult,
-                                self::TYPE_WARRANTY_RESULT,
-                                'en',
-                                true
-                );
+            $text .= ' ' . self::translate($this->authResult, self::TYPE_AUTH_RESULT, 'en', true);
+            $text .= ' ' . self::translate($this->warrantyResult, self::TYPE_WARRANTY_RESULT, 'en', true);
 
             return $text;
         }
 
-        public function getOutputForPlatform ()
+        public function getOutputForPlatform()
         {
-            return call_user_func_array(array ($this, 'getOutputForGateway'),
-                                        func_get_args());
+            return call_user_func_array(array ($this, 'getOutputForGateway'), func_get_args());
         }
 
         /**
@@ -470,9 +396,7 @@ if (! class_exists('Response',
          * @param string $original_encoding some extra information to output to the payment gateway
          * @return string
          */
-        public function getOutputForGateway ($case = '',
-                                             $extra_message = '',
-                                             $original_encoding = 'UTF-8')
+        public function getOutputForGateway($case = '', $extra_message = '', $original_encoding = 'UTF-8')
         {
             // Predefined response messages according to case.
             $cases = array (
@@ -491,34 +415,20 @@ if (! class_exists('Response',
                 'ko' => array (false, '')
             );
 
-            $success = key_exists($case,
-                                  $cases
-            ) ? $cases[$case][0] : false;
-            $message = key_exists($case,
-                                  $cases
-            ) ? $cases[$case][1] : '';
+            $success = key_exists($case, $cases) ? $cases[$case][0] : false;
+            $message = key_exists($case, $cases) ? $cases[$case][1] : '';
 
             if (! empty($extra_message)) {
-                $message .= ' ' .
-                    $extra_message;
+                $message .= ' ' . $extra_message;
             }
 
-            $message = str_replace("\n",
-                                   ' ',
-                                   $message
-            );
+            $message = str_replace("\n", ' ', $message);
 
             // Set original CMS encoding to convert if necessary response to send to gateway.
-            $encoding = in_array(strtoupper($original_encoding),
-                                 Api::$SUPPORTED_ENCODINGS
-            ) ?
-                strtoupper($original_encoding) : 'UTF-8';
-            if ($encoding !==
-                'UTF-8') {
-                $message = iconv($encoding,
-                                 'UTF-8',
-                                 $message
-                );
+            $encoding = in_array(strtoupper($original_encoding), Api::$SUPPORTED_ENCODINGS) 
+                ? strtoupper($original_encoding) : 'UTF-8';
+            if ($encoding !== 'UTF-8') {
+                $message = iconv($encoding, 'UTF-8', $message);
             }
 
             $content = $success ? 'OK-' : 'KO-';
@@ -526,11 +436,9 @@ if (! class_exists('Response',
 
             $response = '';
             $response .= '<span style="display:none">';
-            $response .= htmlspecialchars($content,
-                                          ENT_COMPAT,
-                                          'UTF-8'
-            );
+            $response .= htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
             $response .= '</span>';
+
             return $response;
         }
 
@@ -542,69 +450,45 @@ if (! class_exists('Response',
          * @param boolean $appendCode
          * @return string
          */
-        public static function translate ($result,
-                                          $type = self::TYPE_RESULT,
-                                          $lang = 'en',
-                                          $appendCode = false)
+        public static function translate($result, $type = self::TYPE_RESULT, $lang = 'en', $appendCode = false)
         {
             // If language is not supported, use the domain default language.
-            if (! key_exists($lang,
-                             self::$RESPONSE_TRANS
-            )) {
+            if (! key_exists($lang, self::$RESPONSE_TRANS)) {
                 $lang = 'en';
             }
 
             $translations = self::$RESPONSE_TRANS[$lang];
 
-            $default = isset($translations[$type]['UNKNOWN']) ? $translations[$type]['UNKNOWN'] :
-                $translations['UNKNOWN'];
-            $text = self::findInarray($result ? $result : 'empty',
-                                      $translations[$type],
-                                      $default
-            );
+            $default = isset($translations[$type]['UNKNOWN']) ? $translations[$type]['UNKNOWN']
+                : $translations['UNKNOWN'];
+            $text = self::findInarray($result ? $result : 'empty', $translations[$type], $default);
 
-            if ($text &&
-                $appendCode) {
-                $text = self::appendResultCode($text,
-                                               $result
-                );
+            if ($text && $appendCode) {
+                $text = self::appendResultCode($text,  $result);
             }
 
             return $text;
         }
 
-        public static function appendResultCode ($message,
-                                                 $result_code)
+        public static function appendResultCode($message, $result_code)
         {
             if ($result_code) {
-                $message .= ' (' .
-                    $result_code .
-                    ')';
+                $message .= ' (' . $result_code . ')';
             }
 
-            return $message .
-                '.';
+            return $message . '.';
         }
 
-        public static function extraMessage ($extra_result)
+        public static function extraMessage($extra_result)
         {
-            $error = self::findInarray($extra_result,
-                                       self::$FORM_ERRORS,
-                                       'OTHER'
-            );
-            return self::appendResultCode($error,
-                                          $extra_result
-            );
+            $error = self::findInarray($extra_result, self::$FORM_ERRORS, 'OTHER');
+
+            return self::appendResultCode($error, $extra_result);
         }
 
-        public static function findInarray ($key,
-                                            $array,
-                                            $default)
+        public static function findInarray($key, $array, $default)
         {
-            if (is_array($array) &&
-                key_exists($key,
-                           $array
-                )) {
+            if (is_array($array) && key_exists($key, $array)) {
                 return $array[$key];
             }
 

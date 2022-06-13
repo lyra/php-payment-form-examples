@@ -7,6 +7,15 @@ body {
     padding-bottom: 8em;
 }
 
+.navbar, .navbar-inverse {
+    background-color: #293c7a;
+    border-color : #293c7a;
+}
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
 .form-control {
     min-width: 220px;
 }
@@ -62,7 +71,7 @@ body {
 
 .forminput[type=submit] {
     width: 100%;
-    background-color: #4CAF50;
+    background-color: #293c7a;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -72,7 +81,7 @@ body {
 }
 
 .forminput[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #293c7a;
 }
 
 .checkoutdiv {

@@ -1,6 +1,15 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 $i18n = array ();
-$i18n['starterkit'] = 'A starter kit with your PayZen Payment Form';
+$i18n['starterkit'] = 'Ein Starter-Kit für das Lyra-Zahlungsformular';
 /*
  * Languages
  */
@@ -44,12 +53,12 @@ $i18n['redirect_message_defaut'] = 'Weiterleitung zum Shop in Kürze...';
 /**
  * Example Form fields description
  */
-$i18n['payzensolution'] = 'PAYZEN PAYMENT SOLUTION UMSETZUNGSBEISPIEL';
+$i18n['lyrasolution'] = 'LYRA PAYMENT SOLUTION UMSETZUNGSBEISPIEL';
 $i18n['info'] = 'INFORMATIONEN';
-$i18n['usesform'] = 'Bei der Zahlung wird ein Zahlungsformular an die PAYZEN Payment Gateway URL gesendet.';
+$i18n['usesform'] = 'Bei der Zahlung wird ein Zahlungsformular an die Lyra Payment Gateway URL gesendet.';
 $i18n['file'] = 'Datei';
 $i18n['htmlformuse'] =
-    'Die Datei <code>html-form.php</code> sendet diese Zahlungsfelder an die Datei <code>form-tunnel.php</code>, die diese Felder abruft, um die Zahlungsanforderung zu erstellen. </ p> <p> Die Felder sind mit Beispielen gefüllt. Es liegt an Ihnen, sie je nach Kontext und Konfiguration auszufüllen. </ p> <p> <b> Einige andere Felder sind verfügbar. Der PAYZEN-Support empfiehlt, die Dokumentation zum Zahlungsformular zu lesen. </ b> <a href="https://payzen.io"> Lesen Sie die Dokumentation.</a>';
+    'Die Datei <code>html-form.php</code> sendet diese Zahlungsfelder an die Datei <code>form-tunnel.php</code>, die diese Felder abruft, um die Zahlungsanforderung zu erstellen. </ p> <p> Die Felder sind mit Beispielen gefüllt. Es liegt an Ihnen, sie je nach Kontext und Konfiguration auszufüllen. </ p> <p> <b> Einige andere Felder sind verfügbar. Der Lyra-Support empfiehlt, die Dokumentation zum Zahlungsformular zu lesen. </ b> <a href="https://payzen.io"> Lesen Sie die Dokumentation.</a>';
 $i18n['beforefirstuse'] =
     'Vor der ersten Verwendung müssen Sie die <code>shopID</code>, <code>certTest</code>, <code>platform</code> und <code>ctxMode</code> der <code>-Konfiguration eingeben /Config.php</code>.e. Diese Datei enthält sichere Daten. <b> Diese Datensicherung liegt in Ihrer Verantwortung. </ b>';
 $i18n['transsettings'] = 'TRANSAKTION EINSTELLUNGEN';
@@ -87,7 +96,7 @@ $i18n['clientcomesback'] =
 $i18n['formreturndesc'] =
     'In diesem Paket steuert die Datei form-return.php die Signatur und analysiert die Ergebnisse der Zahlung. Der Code ist als Beispiel angegeben. Das Skript prüft zunächst die Signatur und analysiert die Hauptfelder. Es liegt an Ihnen, den Code an Ihren Kontext anzupassen.';
 $i18n['findhelp'] = 'Hilfe finden';
-$i18n['supportrecommends'] = 'Der PayZen-Support empfiehlt dringend, die Dokumentation zu lesen';
+$i18n['supportrecommends'] = 'Der Lyra-Support empfiehlt dringend, die Dokumentation zu lesen';
 /**
  * Debug mode
  */

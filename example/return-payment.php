@@ -1,14 +1,18 @@
 <?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra PHP payment form example. See COPYING.md for license details.
+ *
+ * @author    Lyra Network <https://www.lyra.com>
+ * @copyright Lyra Network
+ * @license   http://www.apache.org/licenses/
+ */
+
 session_start();
 
 // I18N support information here.
-if (isset($_REQUEST['vads_language'])
-    &&
-    in_array($_REQUEST['vads_language'],
-             array ('en', 'fr'),
-             true
-    )
-) {
+if (isset($_REQUEST['vads_language']) 
+    && in_array($_REQUEST['vads_language'], array ('en', 'fr'), true)) {
     $lang = $_REQUEST["vads_language"];
 } else {
     $lang = 'en';
@@ -16,34 +20,22 @@ if (isset($_REQUEST['vads_language'])
 
 // Save language preference.
 $_SESSION["lang"] = $lang;
-include implode(DIRECTORY_SEPARATOR,
-                ['..', 'lib', 'locale', $lang, 'messages.php']
-);
+include implode(DIRECTORY_SEPARATOR, ['..', 'lib', 'locale', $lang, 'messages.php']);
 
 if (isset($_SERVER['HTTP_HOST'])) {
-    $protocol = ((! empty($_SERVER['HTTPS'])
-            &&
-            $_SERVER['HTTPS'] !==
-            'off') ||
-        $_SERVER['SERVER_PORT'] ==
-        443) ? 'https://' : 'http://';
-    $site_url_full = $protocol .
-        $_SERVER['HTTP_HOST'] .
-        $_SERVER['REQUEST_URI'];
-    $uri_parts = explode('?',
-                         $site_url_full
-    );
+    $protocol = ((! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+    $site_url_full = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $uri_parts = explode('?', $site_url_full);
     $site_return_url = (isset($uri_parts[0])) ? $uri_parts[0] : $site_url_full;
-    $site_url = preg_replace('/example\/return-payment.php$/',
-                             '',
-                             $site_return_url
-    );
+    $site_url = preg_replace('/example\/return-payment.php$/', '', $site_return_url);
 } else {
     $site_url = 'http://localhost:8888/';
 }
 
 // Load gateway response.
-require_once implode(DIRECTORY_SEPARATOR, ['..', 'init.php']); // loads the autoloader.
+require_once implode(DIRECTORY_SEPARATOR, ['..', 'init.php']); // Loads the autoloader.
+
 $paymentProcessor = new LyraPaymentProcessor();
 $authentified = $paymentProcessor->checkResponse($_REQUEST);
 
@@ -53,62 +45,44 @@ if ($authentified) {
     // Now the merchant is supposed to compare his order data with the response data and update his database.
     $transStatus = (isset($_REQUEST['vads_trans_status'])) ? $i18n[strtolower($_REQUEST['vads_trans_status'])] : '';
 
-    $authResult = (isset($_REQUEST['vads_auth_result'])
-        &&
-        ! empty($_REQUEST['vads_auth_result'])) ?
-        $i18n['vads_auth_result_' .
-        $_REQUEST['vads_auth_result']] : '';
+    $authResult = (isset($_REQUEST['vads_auth_result']) && ! empty($_REQUEST['vads_auth_result']))
+        ? $i18n['vads_auth_result_' . $_REQUEST['vads_auth_result']] : '';
 
     $result = (isset($_REQUEST['vads_result'])) ? $i18n[$_REQUEST['vads_result']] : '';
 
     $paymentConfig = '';
     if (isset($_REQUEST['vads_result'])) {
-        if (strcmp($_REQUEST['vads_result'],
-                   'SINGLE'
-        )) {
-            $paymentConfig = ':' .
-                $i18n['standard'];
-        } elseif (substr($_REQUEST['vads_result'],
-                         0,
-                         strlen('MULTI')
-            ) ===
-            'MULTI') {
-            $paymentConfig = ':' .
-                $i18n['multi'];
+        if (strcmp($_REQUEST['vads_result'], 'SINGLE')) {
+            $paymentConfig = ':' . $i18n['standard'];
+        } elseif (substr($_REQUEST['vads_result'], 0, strlen('MULTI')) === 'MULTI') {
+            $paymentConfig = ':' . $i18n['multi'];
         }
     }
 
     $warrantyResult = (isset($_REQUEST['vads_warranty_result']) &&
-        ! empty($_REQUEST['vads_warranty_result'])) ?
-        $i18n['vads_warranty_result_' .
-        strtolower($_REQUEST['vads_warranty_result'])]
+        ! empty($_REQUEST['vads_warranty_result']))
+        ? $i18n['vads_warranty_result_' . strtolower($_REQUEST['vads_warranty_result'])]
         : $i18n['vads_warranty_result_x'];
 
     $threedsStatus = (isset($_REQUEST['vads_threeds_status']) &&
-        ! empty($_REQUEST['vads_threeds_status'])) ?
-        $i18n['vads_threeds_status_' .
-        strtolower($_REQUEST['vads_threeds_status'])]
+        ! empty($_REQUEST['vads_threeds_status']))
+        ? $i18n['vads_threeds_status_' . strtolower($_REQUEST['vads_threeds_status'])]
         : $i18n['vads_threeds_status_x'];
 
-    $captureDelay = (isset($_REQUEST['vads_capture_delay'])) ?
-        $_REQUEST['vads_capture_delay'] .
-        " " .
-        $i18n['days'] .
-        "." : '';
+    $captureDelay = (isset($_REQUEST['vads_capture_delay']))
+        ? $_REQUEST['vads_capture_delay'] . " " . $i18n['days'] . "." : '';
 
     $validationMode = (isset($_REQUEST['vads_validation_mode']) &&
-        ! empty($_REQUEST['vads_validation_mode'])) ?
-        $i18n['vads_validation_mode_' .
-        strtolower($_REQUEST['vads_validation_mode'])]
+        ! empty($_REQUEST['vads_validation_mode']))
+        ? $i18n['vads_validation_mode_' . strtolower($_REQUEST['vads_validation_mode'])]
         : $i18n['vads_validation_mode_x'];
-
 }
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
 <head>
     <meta charset="UTF-8">
-    <title>PayZen - VADS PAYMENT PHP</title>
+    <title>LYRA PHP PAYMENT</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
@@ -129,7 +103,7 @@ if ($authentified) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo $site_url; ?>">PayZen</a>
+            <a class="navbar-brand" href="<?php echo $site_url; ?>">Lyra</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -138,17 +112,17 @@ if ($authentified) {
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><?php echo $i18n['contactus']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a target="_blank" href="https://payzen.io/en-EN/support/">English</a></li>
-                        <li><a target="_blank" href="https://payzen.io/fr-FR/support/">French</a></li>
-                        <li><a target="_blank" href="https://payzen.io/de-DE/support/">German</a></li>
-                        <li><a target="_blank" href="https://payzen.io/pt-BR/support/">Portugese</a></li>
-                        <li><a target="_blank" href="https://payzen.io/es-CL/support/">Spanish</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/support/">English</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/fr/support/">French</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/de/support/">German</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/br/suporte/">Portugese</a></li>
+                        <li><a target="_blank" href="https://www.lyra.com/es/contacto/">Spanish</a></li>
                     </ul>
 
                 </li>
 
                 <li>
-                    <a target="_blank" href="https://github.com/payzen">Github</a>
+                    <a target="_blank" href="https://github.com/lyra">Github</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
